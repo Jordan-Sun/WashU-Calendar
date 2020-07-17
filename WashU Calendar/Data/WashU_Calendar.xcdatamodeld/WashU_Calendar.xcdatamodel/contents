@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="20A4300b" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Course" representedClassName=".Course" syncable="YES" codeGenerationType="class">
+        <attribute name="attributes" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="professor" optional="YES" attributeType="String"/>
+        <attribute name="unit" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="courses" inverseEntity="Department"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="course" inverseEntity="Event"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="courses" inverseEntity="Session"/>
+    </entity>
+    <entity name="Department" representedClassName=".Department" syncable="YES" codeGenerationType="class">
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="fullName" optional="YES" attributeType="String"/>
+        <attribute name="shortName" optional="YES" attributeType="String"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="department" inverseEntity="Course"/>
+        <relationship name="school" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="School" inverseName="departments" inverseEntity="School"/>
+    </entity>
+    <entity name="Event" representedClassName=".Event" syncable="YES" codeGenerationType="class">
+        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="events" inverseEntity="Course"/>
+    </entity>
+    <entity name="School" representedClassName="School" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="departments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Department" inverseName="school" inverseEntity="Department"/>
+    </entity>
+    <entity name="Semester" representedClassName="Semester" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="semester" inverseEntity="Session"/>
+    </entity>
+    <entity name="Session" representedClassName="Session" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="session" inverseEntity="Course"/>
+        <relationship name="semester" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Semester" inverseName="sessions" inverseEntity="Semester"/>
+    </entity>
+    <elements>
+        <element name="Event" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="Department" positionX="-54" positionY="18" width="128" height="104"/>
+        <element name="Course" positionX="-36" positionY="45" width="128" height="149"/>
+        <element name="Semester" positionX="-18" positionY="90" width="128" height="59"/>
+        <element name="Session" positionX="0" positionY="99" width="128" height="74"/>
+        <element name="School" positionX="18" positionY="126" width="128" height="59"/>
+    </elements>
+</model>
