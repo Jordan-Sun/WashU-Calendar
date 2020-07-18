@@ -7,20 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E3D6C9A24C27D6F00C832B6 /* School+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C8C24C27D6F00C832B6 /* School+CoreDataClass.swift */; };
-		3E3D6C9B24C27D6F00C832B6 /* School+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C8D24C27D6F00C832B6 /* School+CoreDataProperties.swift */; };
-		3E3D6C9C24C27D6F00C832B6 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C8E24C27D6F00C832B6 /* Course+CoreDataClass.swift */; };
-		3E3D6C9D24C27D6F00C832B6 /* Course+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C8F24C27D6F00C832B6 /* Course+CoreDataProperties.swift */; };
-		3E3D6C9E24C27D6F00C832B6 /* Attribute+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9024C27D6F00C832B6 /* Attribute+CoreDataClass.swift */; };
-		3E3D6C9F24C27D6F00C832B6 /* Attribute+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9124C27D6F00C832B6 /* Attribute+CoreDataProperties.swift */; };
-		3E3D6CA024C27D6F00C832B6 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9224C27D6F00C832B6 /* Session+CoreDataClass.swift */; };
-		3E3D6CA124C27D6F00C832B6 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9324C27D6F00C832B6 /* Session+CoreDataProperties.swift */; };
-		3E3D6CA224C27D6F00C832B6 /* Semester+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9424C27D6F00C832B6 /* Semester+CoreDataClass.swift */; };
-		3E3D6CA324C27D6F00C832B6 /* Semester+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9524C27D6F00C832B6 /* Semester+CoreDataProperties.swift */; };
-		3E3D6CA424C27D6F00C832B6 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9624C27D6F00C832B6 /* Department+CoreDataClass.swift */; };
-		3E3D6CA524C27D6F00C832B6 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9724C27D6F00C832B6 /* Department+CoreDataProperties.swift */; };
-		3E3D6CA624C27D6F00C832B6 /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9824C27D6F00C832B6 /* Event+CoreDataClass.swift */; };
-		3E3D6CA724C27D6F00C832B6 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D6C9924C27D6F00C832B6 /* Event+CoreDataProperties.swift */; };
 		3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2424C23DD700C76056 /* AppDelegate.swift */; };
 		3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2624C23DD700C76056 /* SceneDelegate.swift */; };
 		3E606B2924C23DD700C76056 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2824C23DD700C76056 /* ViewController.swift */; };
@@ -28,24 +14,10 @@
 		3E606B2F24C23DD700C76056 /* WashU_Calendar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2D24C23DD700C76056 /* WashU_Calendar.xcdatamodeld */; };
 		3E606B3124C23DDB00C76056 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E606B3024C23DDB00C76056 /* Assets.xcassets */; };
 		3E606B3424C23DDB00C76056 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */; };
-		3EDD515424C29C9B002C7220 /* ViewController+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515324C29C9B002C7220 /* ViewController+CoreDataClass.swift */; };
+		3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3E3D6C8C24C27D6F00C832B6 /* School+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "School+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E3D6C8D24C27D6F00C832B6 /* School+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "School+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E3D6C8E24C27D6F00C832B6 /* Course+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E3D6C8F24C27D6F00C832B6 /* Course+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E3D6C9024C27D6F00C832B6 /* Attribute+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attribute+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E3D6C9124C27D6F00C832B6 /* Attribute+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attribute+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E3D6C9224C27D6F00C832B6 /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E3D6C9324C27D6F00C832B6 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E3D6C9424C27D6F00C832B6 /* Semester+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Semester+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E3D6C9524C27D6F00C832B6 /* Semester+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Semester+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E3D6C9624C27D6F00C832B6 /* Department+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E3D6C9724C27D6F00C832B6 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3E3D6C9824C27D6F00C832B6 /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3E3D6C9924C27D6F00C832B6 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E606B2124C23DD700C76056 /* WashU Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WashU Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E606B2424C23DD700C76056 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E606B2624C23DD700C76056 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,7 +27,7 @@
 		3E606B3024C23DDB00C76056 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E606B3324C23DDB00C76056 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E606B3524C23DDB00C76056 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3EDD515324C29C9B002C7220 /* ViewController+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				3E606B3B24C23DF700C76056 /* Storyboard */,
+				3EDD515524C38C40002C7220 /* View */,
 				3E606B3C24C23E0D00C76056 /* Delegate */,
 				3E606B3D24C23E2E00C76056 /* Data */,
 				3E606B3024C23DDB00C76056 /* Assets.xcassets */,
@@ -101,7 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				3E606B2824C23DD700C76056 /* ViewController.swift */,
-				3EDD515324C29C9B002C7220 /* ViewController+CoreDataClass.swift */,
 				3E606B2A24C23DD700C76056 /* Main.storyboard */,
 				3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */,
 			);
@@ -121,22 +93,16 @@
 			isa = PBXGroup;
 			children = (
 				3E606B2D24C23DD700C76056 /* WashU_Calendar.xcdatamodeld */,
-				3E3D6C8C24C27D6F00C832B6 /* School+CoreDataClass.swift */,
-				3E3D6C8D24C27D6F00C832B6 /* School+CoreDataProperties.swift */,
-				3E3D6C8E24C27D6F00C832B6 /* Course+CoreDataClass.swift */,
-				3E3D6C8F24C27D6F00C832B6 /* Course+CoreDataProperties.swift */,
-				3E3D6C9024C27D6F00C832B6 /* Attribute+CoreDataClass.swift */,
-				3E3D6C9124C27D6F00C832B6 /* Attribute+CoreDataProperties.swift */,
-				3E3D6C9224C27D6F00C832B6 /* Session+CoreDataClass.swift */,
-				3E3D6C9324C27D6F00C832B6 /* Session+CoreDataProperties.swift */,
-				3E3D6C9424C27D6F00C832B6 /* Semester+CoreDataClass.swift */,
-				3E3D6C9524C27D6F00C832B6 /* Semester+CoreDataProperties.swift */,
-				3E3D6C9624C27D6F00C832B6 /* Department+CoreDataClass.swift */,
-				3E3D6C9724C27D6F00C832B6 /* Department+CoreDataProperties.swift */,
-				3E3D6C9824C27D6F00C832B6 /* Event+CoreDataClass.swift */,
-				3E3D6C9924C27D6F00C832B6 /* Event+CoreDataProperties.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		3EDD515524C38C40002C7220 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,25 +176,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E3D6CA724C27D6F00C832B6 /* Event+CoreDataProperties.swift in Sources */,
-				3E3D6CA424C27D6F00C832B6 /* Department+CoreDataClass.swift in Sources */,
-				3E3D6CA124C27D6F00C832B6 /* Session+CoreDataProperties.swift in Sources */,
+				3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */,
 				3E606B2F24C23DD700C76056 /* WashU_Calendar.xcdatamodeld in Sources */,
-				3E3D6CA624C27D6F00C832B6 /* Event+CoreDataClass.swift in Sources */,
-				3E3D6C9C24C27D6F00C832B6 /* Course+CoreDataClass.swift in Sources */,
 				3E606B2924C23DD700C76056 /* ViewController.swift in Sources */,
-				3E3D6CA524C27D6F00C832B6 /* Department+CoreDataProperties.swift in Sources */,
 				3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */,
-				3E3D6C9B24C27D6F00C832B6 /* School+CoreDataProperties.swift in Sources */,
-				3E3D6C9E24C27D6F00C832B6 /* Attribute+CoreDataClass.swift in Sources */,
-				3E3D6C9F24C27D6F00C832B6 /* Attribute+CoreDataProperties.swift in Sources */,
-				3EDD515424C29C9B002C7220 /* ViewController+CoreDataClass.swift in Sources */,
 				3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */,
-				3E3D6C9D24C27D6F00C832B6 /* Course+CoreDataProperties.swift in Sources */,
-				3E3D6C9A24C27D6F00C832B6 /* School+CoreDataClass.swift in Sources */,
-				3E3D6CA024C27D6F00C832B6 /* Session+CoreDataClass.swift in Sources */,
-				3E3D6CA224C27D6F00C832B6 /* Semester+CoreDataClass.swift in Sources */,
-				3E3D6CA324C27D6F00C832B6 /* Semester+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
