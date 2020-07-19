@@ -17,7 +17,8 @@ extension School {
         return NSFetchRequest<School>(entityName: "School")
     }
 
-    @NSManaged public var name: String?
+    @NSManaged public var fullName: String?
+    @NSManaged public var shortName: String?
     @NSManaged public var departments: NSSet?
 
 }
