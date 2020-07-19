@@ -28,6 +28,10 @@ class ViewController: UIViewController {
     // Debug Component
     /// An array that temporarily stores courses
     var courses = [Course]()
+    var testSchool: School!
+    var testDepartment: Department!
+    var testSemester: Semester!
+    var testSession: Session!
     /// Main section of the collection view
     enum Section {
         case main
@@ -38,6 +42,11 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         configureCollectionDataSource()
         configureCollectionLayout()
+        
+        testSchool = addSchoolToCoreData(fullName: "Test School")
+        testDepartment = addDepartmentToCoreData(fullName: "Test Department", code: "000", to: testSchool)
+        testSemester = addSemesterToCoreData(name: "Test Semester")
+        testSession = addSessionToCoreData(name: "Test Session", semester: testSemester)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -59,14 +68,14 @@ class ViewController: UIViewController {
     
     //Debug functions
     
-//    @IBAction func addTenRandomCourse(_ sender: Any) {
-//        for i in 1 ... 10 {
-//            let newCourse = addCourseToCoreData(name: "Test Course \(i)", id: "000")
-//            for j in 1 ... 10 {
-//                addEventToCoreData(name: "Test Course \(i) Event \(j)",interval: .init(start: Date(), duration: Double.random(in: 1.0 ... 10.0) * 60), to: newCourse)
-//            }
-//        }
-//    }
+    @IBAction func addTenRandomCourse(_ sender: Any) {
+        for i in 1 ... 10 {
+            let newCourse = addCourseToCoreData(name: "Test Course \(i)", id: "000", department: testDepartment, session: testSession)
+            for j in 1 ... 10 {
+                addEventToCoreData(name: "Test Course \(i) Event \(j)",interval: .init(start: Date(), duration: Double.random(in: 1.0 ... 10.0) * 60), to: newCourse)
+            }
+        }
+    }
     
 }
 
@@ -95,7 +104,7 @@ extension ViewController {
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
             
-            let groupColumns = 1
+            let groupColumns = 2
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: groupColumns)
             
