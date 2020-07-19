@@ -21,8 +21,8 @@ extension Department {
     @NSManaged public var fullName: String?
     @NSManaged public var shortName: String?
     @NSManaged public var courses: NSSet?
+    @NSManaged public var professors: NSSet?
     @NSManaged public var school: School?
-    @NSManaged public var professors: Professor?
 
 }
 
@@ -40,5 +40,22 @@ extension Department {
 
     @objc(removeCourses:)
     @NSManaged public func removeFromCourses(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for professors
+extension Department {
+
+    @objc(addProfessorsObject:)
+    @NSManaged public func addToProfessors(_ value: Professor)
+
+    @objc(removeProfessorsObject:)
+    @NSManaged public func removeFromProfessors(_ value: Professor)
+
+    @objc(addProfessors:)
+    @NSManaged public func addToProfessors(_ values: NSSet)
+
+    @objc(removeProfessors:)
+    @NSManaged public func removeFromProfessors(_ values: NSSet)
 
 }

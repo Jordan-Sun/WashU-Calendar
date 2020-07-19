@@ -19,7 +19,7 @@
         <attribute name="fullName" optional="YES" attributeType="String"/>
         <attribute name="shortName" optional="YES" attributeType="String"/>
         <relationship name="courses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Course" inverseName="department" inverseEntity="Course"/>
-        <relationship name="professors" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Professor" inverseName="department" inverseEntity="Professor"/>
+        <relationship name="professors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Professor" inverseName="department" inverseEntity="Professor"/>
         <relationship name="school" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="School" inverseName="departments" inverseEntity="School"/>
     </entity>
     <entity name="Event" representedClassName=".Event" syncable="YES">
@@ -51,11 +51,11 @@
     <elements>
         <element name="Attribute" positionX="-114.3955688476562" positionY="294.6209869384766" width="128" height="73"/>
         <element name="Course" positionX="-111.5020751953125" positionY="-41.6871032714844" width="128" height="163"/>
-        <element name="Department" positionX="265.8276977539062" positionY="-26.5751953125" width="128" height="133"/>
+        <element name="Department" positionX="265.8276977539062" positionY="-26.5751953125" width="128" height="119"/>
         <element name="Event" positionX="-346.8770141601562" positionY="-69.71725463867188" width="128" height="118"/>
         <element name="Professor" positionX="76.510986328125" positionY="120.9300231933594" width="128" height="88"/>
         <element name="School" positionX="462.3850708007812" positionY="18.17024230957037" width="128" height="88"/>
-        <element name="Semester" positionX="-531.83251953125" positionY="128.3060607910156" width="128" height="73"/>
-        <element name="Session" positionX="-348.5177001953126" positionY="113.3808898925781" width="128" height="88"/>
+        <element name="Semester" positionX="256.8345336914062" positionY="289.8518981933594" width="128" height="73"/>
+        <element name="Session" positionX="70.19702148437489" positionY="275.1980743408203" width="128" height="88"/>
     </elements>
 </model>

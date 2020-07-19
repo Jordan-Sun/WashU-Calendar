@@ -18,9 +18,9 @@
 		3E79816A24C3BF770023BE89 /* School+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816824C3BF770023BE89 /* School+CoreDataProperties.swift */; };
 		3E79816F24C3DB0C0023BE89 /* Attribute+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816D24C3DB0C0023BE89 /* Attribute+CoreDataClass.swift */; };
 		3E79817024C3DB0C0023BE89 /* Attribute+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816E24C3DB0C0023BE89 /* Attribute+CoreDataProperties.swift */; };
+		3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */; };
+		3E79817424C3E7430023BE89 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */; };
 		3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */; };
-		3EDD516824C3B766002C7220 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515824C3B766002C7220 /* Department+CoreDataClass.swift */; };
-		3EDD516924C3B766002C7220 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515924C3B766002C7220 /* Department+CoreDataProperties.swift */; };
 		3EDD516A24C3B766002C7220 /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515A24C3B766002C7220 /* Event+CoreDataClass.swift */; };
 		3EDD516B24C3B766002C7220 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515B24C3B766002C7220 /* Event+CoreDataProperties.swift */; };
 		3EDD516E24C3B766002C7220 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515E24C3B766002C7220 /* Session+CoreDataClass.swift */; };
@@ -47,9 +47,9 @@
 		3E79816824C3BF770023BE89 /* School+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "School+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E79816D24C3DB0C0023BE89 /* Attribute+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attribute+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E79816E24C3DB0C0023BE89 /* Attribute+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attribute+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
-		3EDD515824C3B766002C7220 /* Department+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataClass.swift"; sourceTree = "<group>"; };
-		3EDD515924C3B766002C7220 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EDD515A24C3B766002C7220 /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EDD515B24C3B766002C7220 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EDD515E24C3B766002C7220 /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -127,8 +127,8 @@
 				3E606B2D24C23DD700C76056 /* WashU_Calendar.xcdatamodeld */,
 				3E79816724C3BF770023BE89 /* School+CoreDataClass.swift */,
 				3E79816824C3BF770023BE89 /* School+CoreDataProperties.swift */,
-				3EDD515824C3B766002C7220 /* Department+CoreDataClass.swift */,
-				3EDD515924C3B766002C7220 /* Department+CoreDataProperties.swift */,
+				3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */,
+				3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */,
 				3EDD516424C3B766002C7220 /* Course+CoreDataClass.swift */,
 				3EDD516524C3B766002C7220 /* Course+CoreDataProperties.swift */,
 				3EDD515A24C3B766002C7220 /* Event+CoreDataClass.swift */,
@@ -229,6 +229,7 @@
 				3EDD516B24C3B766002C7220 /* Event+CoreDataProperties.swift in Sources */,
 				3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */,
 				3EDD516E24C3B766002C7220 /* Session+CoreDataClass.swift in Sources */,
+				3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */,
 				3E606B2F24C23DD700C76056 /* WashU_Calendar.xcdatamodeld in Sources */,
 				3EDD516A24C3B766002C7220 /* Event+CoreDataClass.swift in Sources */,
 				3EDD517724C3B766002C7220 /* Professor+CoreDataProperties.swift in Sources */,
@@ -239,11 +240,10 @@
 				3E79816F24C3DB0C0023BE89 /* Attribute+CoreDataClass.swift in Sources */,
 				3EDD517024C3B766002C7220 /* Semester+CoreDataClass.swift in Sources */,
 				3EDD516F24C3B766002C7220 /* Session+CoreDataProperties.swift in Sources */,
-				3EDD516824C3B766002C7220 /* Department+CoreDataClass.swift in Sources */,
 				3EDD517624C3B766002C7220 /* Professor+CoreDataClass.swift in Sources */,
 				3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */,
-				3EDD516924C3B766002C7220 /* Department+CoreDataProperties.swift in Sources */,
 				3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */,
+				3E79817424C3E7430023BE89 /* Department+CoreDataProperties.swift in Sources */,
 				3E79817024C3DB0C0023BE89 /* Attribute+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
