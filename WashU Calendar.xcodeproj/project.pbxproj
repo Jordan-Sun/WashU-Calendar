@@ -21,6 +21,8 @@
 		3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */; };
 		3E79817424C3E7430023BE89 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */; };
 		3E87BFF024C4D04D00ADB2CF /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87BFEF24C4D04D00ADB2CF /* CoreDataController.swift */; };
+		3E87BFF224C4E52A00ADB2CF /* JsonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87BFF124C4E52A00ADB2CF /* JsonController.swift */; };
+		3E87BFF424C4F07000ADB2CF /* JsonDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87BFF324C4F07000ADB2CF /* JsonDataType.swift */; };
 		3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */; };
 		3EDD516A24C3B766002C7220 /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515A24C3B766002C7220 /* Event+CoreDataClass.swift */; };
 		3EDD516B24C3B766002C7220 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515B24C3B766002C7220 /* Event+CoreDataProperties.swift */; };
@@ -51,6 +53,8 @@
 		3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E87BFEF24C4D04D00ADB2CF /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
+		3E87BFF124C4E52A00ADB2CF /* JsonController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonController.swift; sourceTree = "<group>"; };
+		3E87BFF324C4F07000ADB2CF /* JsonDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDataType.swift; sourceTree = "<group>"; };
 		3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
 		3EDD515A24C3B766002C7220 /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EDD515B24C3B766002C7220 /* Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 				3EDD515524C38C40002C7220 /* View */,
 				3E606B3C24C23E0D00C76056 /* Delegate */,
 				3E606B3D24C23E2E00C76056 /* Data */,
+				3E87BFF524C4F09600ADB2CF /* JSON */,
 				3E606B3024C23DDB00C76056 /* Assets.xcassets */,
 				3E606B3524C23DDB00C76056 /* Info.plist */,
 			);
@@ -108,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				3E606B2824C23DD700C76056 /* ViewController.swift */,
-				3E87BFEF24C4D04D00ADB2CF /* CoreDataController.swift */,
 				3E606B2A24C23DD700C76056 /* Main.storyboard */,
 				3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */,
 			);
@@ -127,6 +131,7 @@
 		3E606B3D24C23E2E00C76056 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				3E87BFEF24C4D04D00ADB2CF /* CoreDataController.swift */,
 				3E606B2D24C23DD700C76056 /* WashU_Calendar.xcdatamodeld */,
 				3E79816724C3BF770023BE89 /* School+CoreDataClass.swift */,
 				3E79816824C3BF770023BE89 /* School+CoreDataProperties.swift */,
@@ -146,6 +151,15 @@
 				3E79816E24C3DB0C0023BE89 /* Attribute+CoreDataProperties.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		3E87BFF524C4F09600ADB2CF /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				3E87BFF124C4E52A00ADB2CF /* JsonController.swift */,
+				3E87BFF324C4F07000ADB2CF /* JsonDataType.swift */,
+			);
+			path = JSON;
 			sourceTree = "<group>";
 		};
 		3EDD515524C38C40002C7220 /* View */ = {
@@ -230,9 +244,11 @@
 				3EDD517424C3B766002C7220 /* Course+CoreDataClass.swift in Sources */,
 				3EDD517524C3B766002C7220 /* Course+CoreDataProperties.swift in Sources */,
 				3EDD516B24C3B766002C7220 /* Event+CoreDataProperties.swift in Sources */,
+				3E87BFF424C4F07000ADB2CF /* JsonDataType.swift in Sources */,
 				3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */,
 				3EDD516E24C3B766002C7220 /* Session+CoreDataClass.swift in Sources */,
 				3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */,
+				3E87BFF224C4E52A00ADB2CF /* JsonController.swift in Sources */,
 				3E606B2F24C23DD700C76056 /* WashU_Calendar.xcdatamodeld in Sources */,
 				3EDD516A24C3B766002C7220 /* Event+CoreDataClass.swift in Sources */,
 				3EDD517724C3B766002C7220 /* Professor+CoreDataProperties.swift in Sources */,
