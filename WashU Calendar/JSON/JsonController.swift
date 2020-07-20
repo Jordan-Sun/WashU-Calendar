@@ -198,6 +198,9 @@ extension JsonController {
 extension JsonController {
     
     func generateTestData() {
+        
+        print(documentsDirectory?.absoluteString ?? "nil")
+        
         let engineering = JSONSchool(fullName: "McKelvey School of Engineering", shortName: "Engineering")
         generateSchoolResults(schools: [engineering])
         let bme = JSONDepartment(fullName: "Biomedical Engineering", shortName: "BME", code: "E62", school: engineering)
@@ -208,6 +211,7 @@ extension JsonController {
         let general = JSONDepartment(fullName: "General Engineering", code: "E60", school: engineering)
         generateDepartmentResults(departments: [bme,cse,ese,eece,me,general])
         generateDepartmentResults(departments: [bme,cse,ese,eece,me,general], school: engineering)
+        
     }
     
 }

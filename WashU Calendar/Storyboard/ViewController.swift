@@ -24,6 +24,10 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
     /// Core data fetched result controller
     private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
+    // Json Component
+    /// Json controller
+    private var jsonController: JsonController!
+    
     @IBOutlet weak var theCalendar: FSCalendar!
     
     @IBOutlet weak var theTitle: UINavigationItem!
@@ -33,10 +37,16 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+        jsonController = JsonController()
+        
         theCalendar.delegate = self
 //        displayCurrentDate()
         setUpCalendar()
         setUpTableView()
+        
+        jsonController.generateTestData()
         
     }
 
