@@ -9,20 +9,20 @@
 import UIKit
 import CoreData
 
-class AddSthViewController: UIViewController,  UITextFieldDelegate {
+class AddSthViewController: UIViewController, UITextFieldDelegate {
     
     private var appDelegate = UIApplication.shared.delegate as!  AppDelegate
     /// Core data context
     private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
     /// Core data controller
-    private var coreDataController: CoreDataController?
+    private var coreDataController: CoreDataController!
     /// Core data fetched result controller
     private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
     /// Record of user input
     var courseName = ""
-    var startTime: Date!
-    var endTime: Date!
+    var startTime = Date()
+    var endTime = Date()
     
     @IBOutlet weak var courseTextField: UITextField!
     
@@ -38,6 +38,8 @@ class AddSthViewController: UIViewController,  UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+        
         startTimePicker.addTarget(self, action: #selector(AddSthViewController.startTimePickerValueChanged(sender:)), for: .valueChanged)
 
         
@@ -59,7 +61,7 @@ class AddSthViewController: UIViewController,  UITextFieldDelegate {
     }
     
     
-    
+    /// update course name to whatever user input
     @IBAction func courseCompleted(_ sender: Any) {
         courseName = courseTextField.text!
     }
@@ -88,6 +90,8 @@ class AddSthViewController: UIViewController,  UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
+    
+    
     /// save the event to core data
     @IBAction func saveEventToCalendar(_ sender: Any) {
         if courseName == "" || startTimeTextField.hasText == false || endTimeTextField.hasText == false{
@@ -96,16 +100,16 @@ class AddSthViewController: UIViewController,  UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
         }
         else {
-//            let school = coreDataController?.addSchoolToCoreData(fullName: "Engineering")
-//            let department = coreDataController?.addDepartmentToCoreData(fullName: "Computer Science and Engineering", code: "E81", to: school!)
-//            let semester = coreDataController?.addSemesterToCoreData(name: "20FL")
-//            let session = coreDataController?.addSessionToCoreData(name: "All", semester: semester!)
-//            let course = coreDataController?.addCourseToCoreData(name: courseName, id: "", department: department, session: session)
-//            let start = stringOfDateAndTime(startTime)
-//            let end = stringOfDateAndTime(endTime)
-//            coreDataController?.addEventToCoreData(name: courseName, from: startTime, to: endTime, to: course)
-//
-//            print("saved! " + courseName + " from: " + start + " to: " + end)
+            let school = coreDataController.addSchoolToCoreData(fullName: "Engineering")
+            let department = coreDataController.addDepartmentToCoreData(fullName: "Computer Science and Engineering", code: "E81", to: school)
+            let semester = coreDataController.addSemesterToCoreData(name: "20FL")
+            let session = coreDataController.addSessionToCoreData(name: "All", semester: semester)
+            let course = coreDataController.addCourseToCoreData(name: courseName, id: "", department: department, session: session)
+            let start = stringOfDateAndTime(startTime)
+            let end = stringOfDateAndTime(endTime)
+            coreDataController?.addEventToCoreData(name: courseName, from: startTime, to: endTime, to: course)
+
+            print("saved! " + courseName + " from: " + start + " to: " + end)
             dismiss(animated: true, completion: nil)
         }
     }
