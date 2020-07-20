@@ -12,11 +12,15 @@ import CoreData
 
 class CoreDataController {
     
-    // Core Data Component
+    // Environmental Variables
     /// App delegate
     private var appDelegate:  AppDelegate
     /// Core data context
     private var context: NSManagedObjectContext
+    
+    // Fetched Results Controllers
+    /// Core data fetched result controller
+    private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
     // Debug Component
     var testSchool: School!
@@ -27,18 +31,64 @@ class CoreDataController {
     init(appDelegate: AppDelegate, context: NSManagedObjectContext) {
         self.appDelegate = appDelegate
         self.context = context
-
+        
         //debug
         testSchool = addSchoolToCoreData(fullName: "Test School")
         testDepartment = addDepartmentToCoreData(fullName: "Test Department", code: "000", to: testSchool)
         testSemester = addSemesterToCoreData(name: "Test Semester")
         testSession = addSessionToCoreData(name: "Test Session", semester: testSemester)
+        
     }
-    
     
 }
 
-// Core Data Interactions
+// Query
+
+extension CoreDataController {
+    
+    
+    /// Performs an event fetch request.
+    /// - Parameter date: A date that indicates the day that fetched events should take place on, nil if no constraints.
+    /// - Returns: An array of fetched events, nil if no events are fetched or failed to fetch events
+    func fetchEventRequest(on date: Date? = nil) -> [Event]? {
+        
+        // Initialize fetch request
+        let request = Event.fetchRequest() as NSFetchRequest<Event>
+        
+        // Apply predicate if date is not nil
+        if let date = date {
+            let calendar = Calendar.current
+            let dayStart = calendar.startOfDay(for: date) as NSDate
+            guard let dayEnd = calendar.date(byAdding: DateComponents(day: 1), to: dayStart as Date) as NSDate? else {
+                print("Fail to compute the end of day for date: \(date).")
+                return nil
+            }
+            let predicate = NSPredicate(format: "(start >= %@) AND (start <= %@)", dayStart, dayEnd)
+            request.predicate = predicate
+        }
+        
+        // Apply sort descriptors
+        let sort = NSSortDescriptor(key: #keyPath(Event.start), ascending: true)
+        request.sortDescriptors = [sort]
+        
+        // Try to perform fetch request
+        do {
+            eventFetchedResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            try eventFetchedResultController.performFetch()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return eventFetchedResultController.fetchedObjects
+        
+    }
+    
+}
+
+// Save
 
 extension CoreDataController {
     
@@ -178,10 +228,15 @@ extension CoreDataController {
     
     func addTestDataToCoreData() {
         
-        for i in 1 ... 10 {
+        let calendar = Calendar.current
+        var time = calendar.startOfDay(for: Date())
+        let separation = 2.0 * 60.0 * 60.0 // 2 hours
+        
+        for i in 1 ... 14 {
             let newCourse = addCourseToCoreData(name: "Test Course \(i)", id: "000", department: testDepartment, session: testSession)
-            for j in 1 ... 10 {
-                addEventToCoreData(name: "Test Course \(i) Event \(j)",interval: .init(start: Date(), duration: Double.random(in: 1.0 ... 10.0) * 60), to: newCourse)
+            for j in 1 ... 12 {
+                addEventToCoreData(name: "Test Course \(i) Event \(j)",interval: .init(start: time, duration: separation), to: newCourse)
+                time.addTimeInterval(separation)
             }
         }
         

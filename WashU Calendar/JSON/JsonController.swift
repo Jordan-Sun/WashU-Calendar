@@ -199,8 +199,6 @@ extension JsonController {
     
     func generateTestData() {
         
-        print(documentsDirectory?.absoluteString ?? "nil")
-        
         let engineering = JSONSchool(fullName: "McKelvey School of Engineering", shortName: "Engineering")
         generateSchoolResults(schools: [engineering])
         let bme = JSONDepartment(fullName: "Biomedical Engineering", shortName: "BME", code: "E62", school: engineering)
