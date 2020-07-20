@@ -58,7 +58,7 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
     /// back to page of currentday
     @IBAction func backToToday(_ sender: Any) {
         let currentDate = Date()
-        theCalendar.setCurrentPage(currentDate, animated: true)  
+        theCalendar.select(currentDate, scrollToDate: true)
         updateTableView(currentDate)
     }
     
