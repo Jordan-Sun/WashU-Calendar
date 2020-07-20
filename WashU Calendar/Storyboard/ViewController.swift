@@ -14,7 +14,6 @@ import FSCalendar
 
 class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UITableViewDelegate {
     
-    
     // Core Data Component
     /// App delegate
     private var appDelegate = UIApplication.shared.delegate as!  AppDelegate
