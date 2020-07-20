@@ -98,6 +98,7 @@ class AddSthViewController: UIViewController,  UITextFieldDelegate {
     
     @IBAction func startTimeBeginEditing(_ sender: UITextField) {
         self.startTimePicker.isHidden = false
+        self.endTimePicker.isHidden = true
         self.view.endEditing(true)
     }
     
@@ -105,6 +106,7 @@ class AddSthViewController: UIViewController,  UITextFieldDelegate {
     
     @IBAction func endTimeBeginEditing(_ sender: UITextField) {
         self.endTimePicker.isHidden = false
+        self.startTimePicker.isHidden = true
         self.view.endEditing(true)
     }
     
