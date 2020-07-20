@@ -42,14 +42,14 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
         jsonController = JsonController()
         
         theCalendar.delegate = self
-//        displayCurrentDate()
         setUpCalendar()
         setUpTableView()
         
         jsonController.generateTestData()
         
     }
-
+    
+    /// use FSCalendar
     func setUpCalendar() {
         theCalendar.delegate = self
         theCalendar.dataSource = self
@@ -59,15 +59,17 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
         
     }
     
+    /// display schdule list of slected date in theTableView
     func setUpTableView() {
-        
+
     }
     
-    //Debug functions
-    
+
+    /// back to page of currentday
     @IBAction func backToToday(_ sender: Any) {
-        
-//
+        let currentDate = Date()
+        theCalendar.setCurrentPage(currentDate, animated: true)  
+        updateTableView(currentDate)
     }
     
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
@@ -76,6 +78,7 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
         return cell
     }
     
+    /// display date: Example: Jul 17, 2020
     func stringOfDate(_ date: Date) -> String {
 //        let currentDate = Date()
         let formatter = DateFormatter()
@@ -83,13 +86,38 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
         formatter.dateStyle = .medium
         let dateString = formatter.string(from: date)
         return dateString
-//        theTitle.title = dateString
     }
     
-//    display schdule of selected date in the table view
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+    /// display time: Example: 1:30 AM
+    func stringOfTime(_ date:Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        let timeString = formatter.string(from: date)
+        return timeString
         
     }
+    
+    /// when date is selected in the calendar
+    /// table view will display the schdule of selected date
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        updateTableView(date)
+        
+        print(date)
+    }
+    
+    func updateTableView(_ date: Date) {
+//        func (day: Date) -> [Event] {} will be used here
+//        let events = eventFetchedResultController.fetchedObjects!
+//        for event in events {
+//            let startTime = stringOfTime(event.start!)
+//            print(startTime)
+//            let endTime = stringOfTime(event.end!)
+//            print(endTime)
+//        }
+    }
+    
+    
     
     
 }

@@ -37,6 +37,7 @@
 		3E606B3124C23DDB00C76056 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E606B3024C23DDB00C76056 /* Assets.xcassets */; };
 		3E606B3424C23DDB00C76056 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */; };
 		5675CCF124C3095800EF9DB8 /* AddSthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5675CCF024C3095800EF9DB8 /* AddSthViewController.swift */; };
+		5675CD1624C57CB600EF9DB8 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5675CD1524C57CB600EF9DB8 /* TodayViewController.swift */; };
 		CF4B56E802C2012189B1BC5B /* Pods_WashU_Calendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEFAC5894007DA168DE690F /* Pods_WashU_Calendar.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		3E606B3324C23DDB00C76056 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E606B3524C23DDB00C76056 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5675CCF024C3095800EF9DB8 /* AddSthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSthViewController.swift; sourceTree = "<group>"; };
+		5675CD1524C57CB600EF9DB8 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		5AEFAC5894007DA168DE690F /* Pods_WashU_Calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WashU_Calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97AC65BB1A1E22DED4071930 /* Pods-WashU Calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WashU Calendar.release.xcconfig"; path = "Target Support Files/Pods-WashU Calendar/Pods-WashU Calendar.release.xcconfig"; sourceTree = "<group>"; };
 		C60FB8946ED0C57F76ECC3D3 /* Pods-WashU Calendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WashU Calendar.debug.xcconfig"; path = "Target Support Files/Pods-WashU Calendar/Pods-WashU Calendar.debug.xcconfig"; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */,
 				3E606B2A24C23DD700C76056 /* Main.storyboard */,
 				3E606B2824C23DD700C76056 /* ViewController.swift */,
+				5675CD1524C57CB600EF9DB8 /* TodayViewController.swift */,
 				5675CCF024C3095800EF9DB8 /* AddSthViewController.swift */,
 				3E057A6424C59D1C0068A0FB /* ListViewController.swift */,
 				3E057A6024C59BBE0068A0FB /* HeaderCollectionReusableView.swift */,
@@ -335,6 +338,7 @@
 				3E35F77E24C5427F00EF1AB9 /* School+CoreDataProperties.swift in Sources */,
 				3E35F77924C5427F00EF1AB9 /* School+CoreDataClass.swift in Sources */,
 				3E35F78324C5427F00EF1AB9 /* Department+CoreDataProperties.swift in Sources */,
+				5675CD1624C57CB600EF9DB8 /* TodayViewController.swift in Sources */,
 				3E35F77624C5427F00EF1AB9 /* WashU_Calendar.xcdatamodeld in Sources */,
 				3E35F77824C5427F00EF1AB9 /* Session+CoreDataClass.swift in Sources */,
 			);
