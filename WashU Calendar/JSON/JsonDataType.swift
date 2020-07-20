@@ -8,82 +8,82 @@
 
 import Foundation
 
-struct JSONSchool: Codable {
+struct JSONSchool: Codable, Hashable {
     var fullName: String
-    var shortName: String?
+    var shortName: String? = nil
 }
 
-struct JSONSchoolResults: Codable {
+struct JSONSchoolResults: Codable, Hashable {
     var page: Int
     var total_pages: Int
     var schools: [JSONSchool]
 }
 
-struct JSONDepartment: Codable {
+struct JSONDepartment: Codable, Hashable {
     var fullName: String
-    var shortName: String?
+    var shortName: String? = nil
     var code: String
     
     var school: JSONSchool
 }
 
-struct JSONDepartmentResults: Codable {
+struct JSONDepartmentResults: Codable, Hashable {
     var school: JSONSchool?
     var page: Int
     var total_pages: Int
     var departments: [JSONDepartment]
 }
 
-struct JSONProfessor: Codable {
+struct JSONProfessor: Codable, Hashable {
     var name: String
     
     var department: JSONDepartment
 }
 
-struct JSONProfessorResults: Codable {
+struct JSONProfessorResults: Codable, Hashable {
     var department: JSONDepartment?
     var page: Int
     var total_pages: Int
     var professors: [JSONProfessor]
 }
 
-struct JSONSemester: Codable {
+struct JSONSemester: Codable, Hashable {
     var name: String
 }
 
-struct JSONSemesterResults: Codable {
+struct JSONSemesterResults: Codable, Hashable {
     var page: Int
     var total_pages: Int
     var semesters: [JSONSemester]
 }
 
-struct JSONSession: Codable {
+struct JSONSession: Codable, Hashable {
     var name: String
     
     var semester: JSONSemester
 }
 
-struct JSONSessionResults: Codable {
+struct JSONSessionResults: Codable, Hashable {
     var semester: JSONSemester?
     var page: Int
     var total_pages: Int
     var sessions: [JSONSession]
 }
 
-struct JSONAttribute: Codable {
+struct JSONAttribute: Codable, Hashable {
     var name: String
     
     var courses: [JSONCourse]?
 }
 
-struct JSONAttributeResults: Codable {
+struct JSONAttributeResults: Codable, Hashable {
     var course: JSONCourse?
     var page: Int
     var total_pages: Int
     var attributes: [JSONAttribute]
 }
 
-struct JSONCourse: Codable {
+struct JSONCourse: Codable, Hashable {
     var id: String
     var name: String
     var unit: Int
@@ -94,32 +94,32 @@ struct JSONCourse: Codable {
     var attributes: [JSONAttribute]?
 }
 
-struct JSONCourseResultsByDepartment: Codable {
+struct JSONCourseResultsByDepartment: Codable, Hashable {
     var department: JSONDepartment?
     var page: Int
     var total_pages: Int
     var courses: [JSONCourse]
 }
 
-struct JSONCourseResultsBySession: Codable {
+struct JSONCourseResultsBySession: Codable, Hashable {
     var session: JSONSession?
     var page: Int
     var total_pages: Int
     var courses: [JSONCourse]
 }
 
-struct JSONCourseResultsByAttribute: Codable {
+struct JSONCourseResultsByAttribute: Codable, Hashable {
     var attribute: JSONAttribute?
     var page: Int
     var total_pages: Int
     var courses: [JSONCourse]
 }
 
-struct JSONEvent: Codable {
+struct JSONEvent: Codable, Hashable {
     var name: String
     var start: Date
     var end: Date
-    var location: String?
+    var location: String? = nil
     
     var course: JSONCourse
 }
