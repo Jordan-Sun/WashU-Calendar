@@ -96,7 +96,7 @@ extension JsonController {
             let departmentResults = JSONDepartmentResults(school: school, page: page, total_pages: total_pages, departments: Array(departments[startIndex..<endIndex]))
             // Try to encode data.
             guard let data = try? JSONEncoder().encode(departmentResults) else {
-                print("Failed to encode the \(page) page of school results to json data.")
+                print("Failed to encode the \(page) page of department results to json data.")
                 return
             }
             writeDataToDocuments(data, objectKind: "Department", superName: superName, page: page)
@@ -108,7 +108,7 @@ extension JsonController {
         let departmentResults = JSONDepartmentResults(school: school, page: total_pages, total_pages: total_pages, departments: Array(departments[startIndex...]))
         // Try to encode data.
         guard let data = try? JSONEncoder().encode(departmentResults) else {
-            print("Failed to encode the \(total_pages) page of school results to json data.")
+            print("Failed to encode the \(total_pages) page of department results to json data.")
             return
         }
         writeDataToDocuments(data, objectKind: "Department", superName: superName, page: total_pages)
@@ -140,7 +140,7 @@ extension JsonController {
             let professorResults = JSONProfessorResults(department: department, page: page, total_pages: total_pages, professors: Array(professors[startIndex..<endIndex]))
             // Try to encode data.
             guard let data = try? JSONEncoder().encode(professorResults) else {
-                print("Failed to encode the \(page) page of school results to json data.")
+                print("Failed to encode the \(page) page of professor results to json data.")
                 return
             }
             writeDataToDocuments(data, objectKind: "Professor", superName: superName, page: page)
@@ -152,10 +152,42 @@ extension JsonController {
         let professorResults = JSONProfessorResults(department: department, page: total_pages, total_pages: total_pages, professors: Array(professors[startIndex...]))
         // Try to encode data.
         guard let data = try? JSONEncoder().encode(professorResults) else {
-            print("Failed to encode the \(total_pages) page of school results to json data.")
+            print("Failed to encode the \(total_pages) page of professor results to json data.")
             return
         }
         writeDataToDocuments(data, objectKind: "Professor", superName: superName, page: total_pages)
+        
+    }
+    
+    private func generateSemesterResults(semesters: [JSONSemester]) {
+        
+        // Calculate the total number of pages needed to generate.
+        let total_pages = (semesters.count - 1) / 20 + 1
+        
+        // Generate all pages except for the last page.
+        for page in 1 ..< total_pages {
+            // Gather school results.
+            let startIndex = (page - 1) * 20
+            let endIndex = page * 20
+            let semesterResults = JSONSemesterResults(page: page, total_pages: total_pages, semesters: Array(semesters[startIndex..<endIndex]))
+            // Try to encode data.
+            guard let data = try? JSONEncoder().encode(semesterResults) else {
+                print("Failed to encode the \(page) page of semester results to json data.")
+                return
+            }
+            writeDataToDocuments(data, objectKind: "Semester", page: page)
+        }
+        
+        // Generate the last page.
+        // Gather school results.
+        let startIndex = (total_pages - 1) * 20
+        let semesterResults = JSONSemesterResults(page: total_pages, total_pages: total_pages, semesters: Array(semesters[startIndex...]))
+        // Try to encode data.
+        guard let data = try? JSONEncoder().encode(semesterResults) else {
+            print("Failed to encode the \(total_pages) page of semester results to json data.")
+            return
+        }
+        writeDataToDocuments(data, objectKind: "Semester", page: total_pages)
         
     }
     
