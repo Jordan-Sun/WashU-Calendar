@@ -21,6 +21,10 @@ class ViewController: UIViewController {
     /// Core data fetched result controller
     private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
+    // JSON Component
+    /// Json controller
+    private var jsonController: JsonController!
+    
     // Collection View Component
     /// Collection view
     @IBOutlet weak var eventCollectionView: UICollectionView!
@@ -39,8 +43,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+        jsonController = JsonController()
         configureCollectionDataSource()
         configureCollectionLayout()
+        jsonController.generateTestData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
