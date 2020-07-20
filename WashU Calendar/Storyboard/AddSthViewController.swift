@@ -37,6 +37,9 @@ class AddSthViewController: UIViewController,  UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+        
         startTimePicker.addTarget(self, action: #selector(AddSthViewController.startTimePickerValueChanged(sender:)), for: .valueChanged)
 
         
