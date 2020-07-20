@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17162" systemVersion="20A4300b" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Attribute" representedClassName=".Attribute" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="attributes" inverseEntity="Course"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="attributes" inverseEntity="Course"/>
     </entity>
     <entity name="Course" representedClassName=".Course" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="professor" optional="YES" attributeType="String"/>
         <attribute name="unit" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="course" inverseEntity="Attribute"/>
+        <relationship name="attributes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attribute" inverseName="courses" inverseEntity="Attribute"/>
         <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="courses" inverseEntity="Department"/>
-        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="course" inverseEntity="Event"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Event" inverseName="course" inverseEntity="Event"/>
+        <relationship name="professor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Professor" inverseName="courses" inverseEntity="Professor"/>
         <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="courses" inverseEntity="Session"/>
     </entity>
     <entity name="Department" representedClassName=".Department" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String"/>
         <attribute name="fullName" optional="YES" attributeType="String"/>
         <attribute name="shortName" optional="YES" attributeType="String"/>
-        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="department" inverseEntity="Course"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Course" inverseName="department" inverseEntity="Course"/>
+        <relationship name="professors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Professor" inverseName="department" inverseEntity="Professor"/>
         <relationship name="school" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="School" inverseName="departments" inverseEntity="School"/>
     </entity>
     <entity name="Event" representedClassName=".Event" syncable="YES">
@@ -28,13 +29,19 @@
         <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="events" inverseEntity="Course"/>
     </entity>
-    <entity name="School" representedClassName=".School" syncable="YES">
+    <entity name="Professor" representedClassName="Professor" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="departments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Department" inverseName="school" inverseEntity="Department"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Course" inverseName="professor" inverseEntity="Course"/>
+        <relationship name="department" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Department" inverseName="professors" inverseEntity="Department"/>
+    </entity>
+    <entity name="School" representedClassName=".School" syncable="YES">
+        <attribute name="fullName" optional="YES" attributeType="String"/>
+        <attribute name="shortName" optional="YES" attributeType="String"/>
+        <relationship name="departments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Department" inverseName="school" inverseEntity="Department"/>
     </entity>
     <entity name="Semester" representedClassName=".Semester" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="semester" inverseEntity="Session"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Session" inverseName="semester" inverseEntity="Session"/>
     </entity>
     <entity name="Session" representedClassName=".Session" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -42,12 +49,13 @@
         <relationship name="semester" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Semester" inverseName="sessions" inverseEntity="Semester"/>
     </entity>
     <elements>
-        <element name="Attribute" positionX="-18" positionY="81" width="128" height="59"/>
-        <element name="Course" positionX="-36" positionY="45" width="128" height="149"/>
-        <element name="Department" positionX="-54" positionY="18" width="128" height="104"/>
-        <element name="Event" positionX="-63" positionY="-18" width="128" height="104"/>
-        <element name="School" positionX="18" positionY="126" width="128" height="59"/>
-        <element name="Semester" positionX="-18" positionY="90" width="128" height="59"/>
-        <element name="Session" positionX="0" positionY="99" width="128" height="74"/>
+        <element name="Attribute" positionX="-114.3955688476562" positionY="294.6209869384766" width="128" height="73"/>
+        <element name="Course" positionX="-111.5020751953125" positionY="-41.6871032714844" width="128" height="163"/>
+        <element name="Department" positionX="265.8276977539062" positionY="-26.5751953125" width="128" height="119"/>
+        <element name="Event" positionX="-346.8770141601562" positionY="-69.71725463867188" width="128" height="118"/>
+        <element name="Professor" positionX="76.510986328125" positionY="120.9300231933594" width="128" height="88"/>
+        <element name="School" positionX="462.3850708007812" positionY="18.17024230957037" width="128" height="88"/>
+        <element name="Semester" positionX="256.8345336914062" positionY="289.8518981933594" width="128" height="73"/>
+        <element name="Session" positionX="70.19702148437489" positionY="275.1980743408203" width="128" height="88"/>
     </elements>
 </model>
