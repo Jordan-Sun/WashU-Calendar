@@ -1,5 +1,5 @@
 //
-//  Department+CoreDataClass.swift
+//  Section+CoreDataClass.swift
 //  
 //
 //  Created by Zhuoran Sun on 2020/7/20.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-
-public class Department: NSManagedObject {
+@objc(Section)
+public class Section: NSManagedObject {
 
 }

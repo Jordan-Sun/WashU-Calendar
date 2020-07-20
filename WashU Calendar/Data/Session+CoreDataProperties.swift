@@ -1,9 +1,8 @@
 //
 //  Session+CoreDataProperties.swift
-//  WashU Calendar
+//  
 //
-//  Created by Zhuoran Sun on 2020/7/18.
-//  Copyright © 2020 washu. All rights reserved.
+//  Created by Zhuoran Sun on 2020/7/20.
 //
 //
 
@@ -18,6 +17,8 @@ extension Session {
     }
 
     @NSManaged public var name: String?
+    @NSManaged public var start: Date?
+    @NSManaged public var end: Date?
     @NSManaged public var courses: NSSet?
     @NSManaged public var semester: Semester?
 
