@@ -1,5 +1,5 @@
 //
-//  Course+CoreDataClass.swift
+//  Professor+CoreDataClass.swift
 //  WashU Calendar
 //
 //  Created by Zhuoran Sun on 2020/7/18.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-
-public class Course: NSManagedObject {
+@objc(Professor)
+public class Professor: NSManagedObject {
 
 }

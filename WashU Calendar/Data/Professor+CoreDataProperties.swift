@@ -1,5 +1,5 @@
 //
-//  Attribute+CoreDataProperties.swift
+//  Professor+CoreDataProperties.swift
 //  WashU Calendar
 //
 //  Created by Zhuoran Sun on 2020/7/18.
@@ -11,19 +11,20 @@ import Foundation
 import CoreData
 
 
-extension Attribute {
+extension Professor {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Attribute> {
-        return NSFetchRequest<Attribute>(entityName: "Attribute")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Professor> {
+        return NSFetchRequest<Professor>(entityName: "Professor")
     }
 
     @NSManaged public var name: String?
+    @NSManaged public var department: Department?
     @NSManaged public var courses: NSSet?
 
 }
 
 // MARK: Generated accessors for courses
-extension Attribute {
+extension Professor {
 
     @objc(addCoursesObject:)
     @NSManaged public func addToCourses(_ value: Course)

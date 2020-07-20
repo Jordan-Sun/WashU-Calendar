@@ -1,22 +1,16 @@
 //
-//  ViewController.swift
+//  AddSthViewController.swift
 //  WashU Calendar
 //
-//  Created by Zhuoran Sun on 2020/7/17.
+//  Created by Coco Zhu on 7/18/20.
 //  Copyright © 2020 washu. All rights reserved.
 //
 
 import UIKit
 import CoreData
-import FSCalendar
 
-
-
-class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate, UITableViewDelegate {
+class AddSthViewController: UIViewController,  UITextFieldDelegate {
     
-    
-    // Core Data Component
-    /// App delegate
     private var appDelegate = UIApplication.shared.delegate as!  AppDelegate
     /// Core data context
     private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
@@ -24,46 +18,52 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
     private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
     
-    
-    var courses = [Course]()
-    var testSchool: School!
-    var testDepartment: Department!
-    var testSemester: Semester!
-    var testSession: Session!
-//    enum Section {
-//        case main
-//    }
+    var courseName: String!
+    var startTime: Date!
+    var endTime: Date!
     
     
-    
-//   ******************* Coco ******************
 
+    var courses = [Course]()
+    var school: School!
+    var department: Department!
+    var semester: Semester!
+    var session: Session!
     
     
-    @IBOutlet weak var theCalendar: FSCalendar!
+    @IBOutlet weak var courseTextField: UITextField!
     
-    @IBOutlet weak var theTitle: UINavigationItem!
+    @IBOutlet weak var startTimeTextField: UITextField!
     
-    @IBOutlet weak var theTableView: UITableView!
+    @IBOutlet weak var startTimePicker: UIDatePicker!
+    
+    @IBOutlet weak var endTimeTextField: UITextField!
+    
+    @IBOutlet weak var endTimePicker: UIDatePicker!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        theCalendar.delegate = self
-//        displayCurrentDate()
-        setUpCalendar()
-        setUpTableView()
+        startTimePicker.addTarget(self, action: #selector(AddSthViewController.startTimePickerValueChanged(sender:)), for: .valueChanged)
+
+        
+        endTimePicker.addTarget(self, action: #selector(AddSthViewController.endTimePickerValueChanged(sender:)), for: .valueChanged)
+        
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddSthViewController.dismissDatePicker))
+        view.addGestureRecognizer(tapGestureRecognizer)
+        
         
     }
-
-
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Load course data after the view appears.
         do {
             courses = try context.fetch(Course.fetchRequest())
             for course in courses {
-                print(course.id ?? "nil")
+                print(course.name ?? "nil")
             }
         } catch {
             // Replace this implementation with code to handle the error appropriately.
@@ -73,64 +73,90 @@ class ViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate
         }
     }
     
-    func setUpCalendar() {
-        theCalendar.delegate = self
-        theCalendar.dataSource = self
-        theCalendar.register(FSCalendarCell.self, forCellReuseIdentifier: "cell")
-        theCalendar.scrollDirection = .vertical
-        theCalendar.adjustMonthPosition()
-        
+    
+    @objc func startTimePickerValueChanged(sender: UIDatePicker) {
+        startTime = startTimePicker.date
+        startTimeTextField.text = stringOfDate(startTime)
     }
     
-    func setUpTableView() {
-        
+    @objc func endTimePickerValueChanged(sender: UIDatePicker) {
+        endTime = endTimePicker.date
+        endTimeTextField.text = stringOfDate(endTime)
     }
     
-    //Debug functions
     
-    @IBAction func addRandomCourse(_ sender: Any) {
-        print("add course")
-        let newCourse = addCourseToCoreData(name: "Test Course 1", id: "000", department: testDepartment, session: testSession)
-        print(newCourse.id ?? "nil")
+    
+    @IBAction func courseCompleted(_ sender: Any) {
+        courseName = courseTextField.text
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    
+    
+    @IBAction func startTimeBeginEditing(_ sender: UITextField) {
+        self.startTimePicker.isHidden = false
+        self.view.endEditing(true)
+    }
+    
+    
+    
+    @IBAction func endTimeBeginEditing(_ sender: UITextField) {
+        self.endTimePicker.isHidden = false
+        self.view.endEditing(true)
+    }
+    
+    
+    @IBAction func addCourseToCalendar(_ sender: Any) {
+        school = addSchoolToCoreData(fullName: "Engineering")
+        department = addDepartmentToCoreData(fullName: "Computer Science and Engineering", code: "E81", to: school)
+        semester = addSemesterToCoreData(name: "20FL")
+        session = addSessionToCoreData(name: "All", semester: semester)
 
-        addEventToCoreData(name: "Test Course 1 Event 0",interval: .init(start: Date(), duration: Double.random(in: 1.0 ... 10.0) * 60), to: newCourse)
+        let start = stringOfDate(startTime)
+        let end = stringOfDate(endTime)
+        print("saved! " + courseName + " from: " + start + " to: " + end)
+        addCourseToCoreData(name: courseName, id: "", department: department, session: session)
+        addEventToCoreData(name: courseName, from: startTime, to: endTime, to: courses[0])
+        
+//        let vc = storyboard!.instantiateViewController(withIdentifier: "ViewController") as! ViewController
 
     }
-    @IBAction func backToToday(_ sender: Any) {
-        
-//
-    }
     
-    func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
-        let cell = calendar.dequeueReusableCell(withIdentifier: "cell", for: date, at: position)
-        
-        
-        return cell
-    }
-    
-    func stringOfDate(_ date: Date) -> String {
-//        let currentDate = Date()
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .medium
-        let dateString = formatter.string(from: date)
-        return dateString
-//        theTitle.title = dateString
-    }
-    
-//    display schdule of selected date in the table view
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        
+    @objc func dismissDatePicker() {
+        startTimePicker.isHidden = true
+        endTimePicker.isHidden = true
     }
     
     
+    @objc func stringOfDate(_ date: Date) -> String {
+    //        let currentDate = Date()
+            let formatter = DateFormatter()
+            formatter.timeStyle = .medium
+            formatter.dateStyle = .medium
+            let dateString = formatter.string(from: date)
+            return dateString
+    //        theTitle.title = dateString
+        }
+    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
-
 
 
 // Core Data Interactions
 
-extension ViewController {
+extension AddSthViewController {
     
     /// Add a new school to core data.
     /// - Parameters:
@@ -142,7 +168,6 @@ extension ViewController {
         newSchool.fullName = fullName
         newSchool.shortName = shortName ?? fullName
         appDelegate.saveContext()
-//        updateSnapshot()
         return newSchool
     }
     
@@ -160,7 +185,6 @@ extension ViewController {
         newDepartment.code = code
         newDepartment.school = school
         appDelegate.saveContext()
-//        updateSnapshot()
         return newDepartment
     }
     
@@ -174,7 +198,6 @@ extension ViewController {
         newProfessor.name = name
         newProfessor.department = department
         appDelegate.saveContext()
-//        updateSnapshot()
         return newProfessor
     }
     
@@ -185,7 +208,6 @@ extension ViewController {
         let newSemester = Semester(entity: Semester.entity(), insertInto: context)
         newSemester.name = name
         appDelegate.saveContext()
-//        updateSnapshot()
         return newSemester
     }
     
@@ -197,7 +219,6 @@ extension ViewController {
         newSession.name = name
         newSession.semester = semester
         appDelegate.saveContext()
-//        updateSnapshot()
         return newSession
     }
     
@@ -209,7 +230,6 @@ extension ViewController {
         let newAttribute = Attribute(entity: Attribute.entity(), insertInto: context)
         newAttribute.name = name
         appDelegate.saveContext()
-//        updateSnapshot()
         return newAttribute
     }
     
@@ -233,7 +253,6 @@ extension ViewController {
             newCourse.addToAttributes(NSSet(array: attributes))
         }
         appDelegate.saveContext()
-//        updateSnapshot()
         return newCourse
     }
     
@@ -252,7 +271,6 @@ extension ViewController {
         newEvent.location = location
         newEvent.course = course
         appDelegate.saveContext()
-//        updateSnapshot()
         return newEvent
     }
     
@@ -265,7 +283,6 @@ extension ViewController {
         newEvent.location = location
         newEvent.course = course
         appDelegate.saveContext()
-//        updateSnapshot()
         return newEvent
     }
     

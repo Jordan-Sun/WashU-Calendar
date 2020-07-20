@@ -2,7 +2,7 @@
 //  School+CoreDataProperties.swift
 //  WashU Calendar
 //
-//  Created by Zhuoran Sun on 2020/7/17.
+//  Created by Zhuoran Sun on 2020/7/18.
 //  Copyright © 2020 washu. All rights reserved.
 //
 //
@@ -17,7 +17,8 @@ extension School {
         return NSFetchRequest<School>(entityName: "School")
     }
 
-    @NSManaged public var name: String?
+    @NSManaged public var fullName: String?
+    @NSManaged public var shortName: String?
     @NSManaged public var departments: NSSet?
 
 }
