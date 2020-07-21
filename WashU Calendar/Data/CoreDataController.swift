@@ -36,7 +36,8 @@ class CoreDataController {
         testSchool = addSchoolToCoreData(fullName: "Test School")
         testDepartment = addDepartmentToCoreData(fullName: "Test Department", code: "000", to: testSchool)
         testSemester = addSemesterToCoreData(name: "Test Semester")
-        testSession = addSessionToCoreData(name: "Test Session", semester: testSemester)
+        let calendar = Calendar.current
+        testSession = try! addSessionToCoreData(name: "Test Session", start: calendar.date(from: DateComponents(year: 2020, month: 7, day: 1))!, end: calendar.date(from: DateComponents(year: 2020, month: 8, day: 1))!, to: testSemester)
         
     }
     
@@ -92,6 +93,12 @@ extension CoreDataController {
 
 extension CoreDataController {
     
+    enum addToCoreDataError: Error {
+        case endPreceedsStartDay
+        case endPreceedsStartTime
+        case invalidRepeatDays
+    }
+    
     /// Add a new school to core data.
     /// - Parameters:
     ///   - fullName: the full name of the school.
@@ -146,14 +153,30 @@ extension CoreDataController {
     }
     
     /// Add a new session to core data
-    /// - Parameter name: the name of the session.
+    /// - Parameters:
+    ///   - name: the name of the session.
+    ///   - start: the start of the session.
+    ///   - end: the end of the session.
+    ///   - semester: the semester of which the session belongs to.
     /// - Returns: an instance of the created session.
-    @discardableResult func addSessionToCoreData(name: String, semester: Semester) -> Session {
+    /// - Throws: an error if the end date input preceeds the start date input.
+    @discardableResult func addSessionToCoreData(name: String, start: Date, end: Date, to semester: Semester) throws -> Session {
+        
+        let calendar = Calendar.current
+        let startDay = calendar.startOfDay(for: start)
+        let endDay = calendar.startOfDay(for: end)
+        guard startDay <= endDay else {
+            throw addToCoreDataError.endPreceedsStartDay
+        }
+        
         let newSession = Session(entity: Session.entity(), insertInto: context)
         newSession.name = name
+        newSession.start = startDay
+        newSession.end = endDay
         newSession.semester = semester
         appDelegate.saveContext()
         return newSession
+        
     }
     
     /// Add a new attribute to core data
@@ -172,23 +195,83 @@ extension CoreDataController {
     ///   - name: the name of the course.
     ///   - id: the id of the course.
     ///   - department: the department of which the course belongs to.
-    ///   - professor: the professor who teaches the course.
     ///   - session: the session of which the course belongs to.
+    ///   - desc: the description of the course.
+    ///   - professor: the professor who teaches the course.
     ///   - attributes: an array of attributes that the course conforms to.
     /// - Returns: an instance of the created course.
-    @discardableResult func addCourseToCoreData(name: String, id: String, department: Department, session: Session, professor: Professor? = nil, attributes: [Attribute]? = nil) -> Course {
+    @discardableResult func addCourseToCoreData(name: String, id: String, to department: Department, to session: Session, desc: String? = nil, by professor: Professor? = nil, attributes: [Attribute]? = nil) -> Course {
         let newCourse = Course(entity: Course.entity(), insertInto: context)
         newCourse.name = name
         newCourse.id = id
         newCourse.department = department
-        newCourse.professor = professor
         newCourse.session = session
+        newCourse.professor = professor
+        newCourse.desc = desc
         if let attributes = attributes {
             newCourse.addToAttributes(NSSet(array: attributes))
         }
         appDelegate.saveContext()
         return newCourse
     }
+    
+    /// Add a new section to core data.
+    /// - Parameters:
+    ///   - id: the id of the section.
+    ///   - start: the start time and day of the section.
+    ///   - end: the end time and day of the section.
+    ///   - days: a string of length 7 and format #"[M-][T-][W-][R-][F-][S-][U-]"# that indicates the days of a week on which events takes place.
+    ///   - course: the course of which the section belongs to.
+    ///   - desc: the description of the course.
+    ///   - autoGeneratesEvents: a boolean indicating whether the function should automatically generate corresponding events.
+    /// - Returns: an instance of the created section.
+    /// - Throws: an error if the end date input preceeds the start date input.
+    @discardableResult func addSectionToCoreData(id: String, start: Date, end: Date, repeat days: String, to course: Course, desc: String? = nil, autogen autoGeneratesEvents: Bool = true) throws -> Section {
+        
+        let calendar = Calendar.current
+        let startDay = calendar.startOfDay(for: start)
+        let endDay = calendar.startOfDay(for: end)
+        guard startDay <= endDay else {
+            throw addToCoreDataError.endPreceedsStartDay
+        }
+        
+        let startTime = start.timeIntervalSince(startDay)
+        let endTime = end.timeIntervalSince(endDay)
+        guard startTime <= endTime else {
+            throw addToCoreDataError.endPreceedsStartTime
+        }
+        
+        guard days.count == 7 else {
+            throw addToCoreDataError.invalidRepeatDays
+        }
+        guard days.range(of: #"[M-][T-][W-][R-][F-][S-][U-]"#, options: .regularExpression) != nil else {
+            throw addToCoreDataError.invalidRepeatDays
+        }
+        
+        let newSection = Section(entity: Section.entity(), insertInto: context)
+        newSection.id = id
+        newSection.desc = desc
+        newSection.start = start
+        newSection.end = end
+        newSection.days = days
+        newSection.course = course
+        appDelegate.saveContext()
+        
+        if autoGeneratesEvents {
+            let currentDay = startDay
+            while currentDay <= endDay {
+                do {
+                    try addEventToCoreData(name: "\(course.name!) \(id)", from: currentDay.addingTimeInterval(startTime), to: currentDay.addingTimeInterval(endTime), to: newSection)
+                } catch {
+                    print("Fail to auto generate event for section: \(course.name!) \(id)")
+                }
+            }
+        }
+        
+        return newSection
+        
+    }
+    
     
     /// Add a new event to core data.
     /// - Parameters:
@@ -197,27 +280,33 @@ extension CoreDataController {
     ///   - location: the location where the event takes place.
     ///   - course: the course of which the event belongs to.
     /// - Returns: an instance of the created event.
-    @discardableResult func addEventToCoreData(name: String, from start: Date, to end: Date, to course: Course, at location: String? = nil) -> Event {
+    @discardableResult func addEventToCoreData(name: String, from start: Date, to end: Date, to section: Section, at location: String? = nil) throws  -> Event {
+        
+        let calendar = Calendar.current
+        let startDay = calendar.startOfDay(for: start)
+        let endDay = calendar.startOfDay(for: end)
+        guard startDay <= endDay else {
+            throw addToCoreDataError.endPreceedsStartDay
+        }
+        
         let newEvent = Event(entity: Event.entity(), insertInto: context)
         newEvent.name = name
         newEvent.start = start
         newEvent.end = end
         newEvent.location = location
-        newEvent.course = course
+        newEvent.section = section
         appDelegate.saveContext()
         return newEvent
     }
     
     /// An alternative way to add a new event to core data.
-    @discardableResult func addEventToCoreData(name: String, interval: DateInterval, to course: Course, at location: String? = nil) -> Event {
-        let newEvent = Event(entity: Event.entity(), insertInto: context)
-        newEvent.name = name
-        newEvent.start = interval.start
-        newEvent.end = interval.end
-        newEvent.location = location
-        newEvent.course = course
-        appDelegate.saveContext()
-        return newEvent
+    @discardableResult func addEventToCoreData(name: String, interval: DateInterval, to section: Section, at location: String? = nil) throws -> Event {
+        do {
+            let newEvent = try addEventToCoreData(name: name, from: interval.start, to: interval.end, to: section, at: location)
+            return newEvent
+        } catch {
+            throw error
+        }
     }
     
 }
@@ -230,13 +319,18 @@ extension CoreDataController {
         
         let calendar = Calendar.current
         var time = calendar.startOfDay(for: Date())
-        let separation = 2.0 * 60.0 * 60.0 // 2 hours
+        let separation = DateComponents(hour: 2)
+        let length = DateComponents(day: 14,hour: 2)
         
         for i in 1 ... 14 {
-            let newCourse = addCourseToCoreData(name: "Test Course \(i)", id: "000", department: testDepartment, session: testSession)
+            let newCourse = addCourseToCoreData(name: "Test Course \(i)", id: "000", to: testDepartment, to: testSession)
             for j in 1 ... 12 {
-                addEventToCoreData(name: "Test Course \(i) Event \(j)",interval: .init(start: time, duration: separation), to: newCourse)
-                time.addTimeInterval(separation)
+                do {
+                    try addSectionToCoreData(id: String(j), start: time, end: calendar.date(byAdding: length, to: time)!, repeat: "M-W-F-U", to: newCourse)
+                } catch {
+                    print(error)
+                }
+                time = calendar.date(byAdding: separation, to: time)!
             }
         }
         

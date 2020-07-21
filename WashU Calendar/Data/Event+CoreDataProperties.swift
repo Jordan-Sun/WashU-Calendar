@@ -13,14 +13,13 @@ import CoreData
 extension Event {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Event> {
-        return NSFetchRequest<Event>(entityName: "Final")
+        return NSFetchRequest<Event>(entityName: "Event")
     }
 
     @NSManaged public var end: Date?
     @NSManaged public var location: String?
     @NSManaged public var name: String?
     @NSManaged public var start: Date?
-    @NSManaged public var kind: String?
     @NSManaged public var section: Section?
 
 }
