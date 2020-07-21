@@ -13,8 +13,6 @@ class ListViewController: UIViewController {
     // Core Data Component
     /// App delegate
     private var appDelegate = UIApplication.shared.delegate as!  AppDelegate
-    /// Core data context
-    private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
     /// Core data controller
     private var coreDataController: CoreDataController!
     
@@ -24,32 +22,17 @@ class ListViewController: UIViewController {
     /// Collection view data source
     private var eventCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Date,Event>!
     
-    // Debug Component
-    /// An array that temporarily stores courses
-    var courses = [Course]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+//        coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+        coreDataController = appDelegate.coreDataController
         configureCollectionDataSource()
         configureCollectionLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Load course data after the view appears.
-        do {
-            courses = try context.fetch(Course.fetchRequest())
-            for course in courses {
-                print(course.name ?? "nil")
-            }
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
         updateSnapshot()
     }
     

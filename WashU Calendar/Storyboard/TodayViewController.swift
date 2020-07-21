@@ -40,7 +40,7 @@ class TodayViewController: UIViewController, UICollectionViewDelegate, UICollect
     
     /// functionality: set up a one-day view cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = theCollectionView.dequeueReusableCell(withReuseIdentifier: "oneDayCell", for: indexPath) as! OneDayCollectionViewCell
+        let cell = theCollectionView.dequeueReusableCell(withReuseIdentifier: OneDayCollectionViewCell.reuseIdentifier, for: indexPath) as! OneDayCollectionViewCell
         
         /// set up scroll view in collection view cell
         let theScrollView = UIScrollView(frame: cell.frame)

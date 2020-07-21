@@ -10,6 +10,7 @@ import UIKit
 
 class OneDayCollectionViewCell: UICollectionViewCell {
     
+    static let reuseIdentifier = "oneDayCell"
     var date: Date!
     
     @IBOutlet weak var theScrollView: UIScrollView!

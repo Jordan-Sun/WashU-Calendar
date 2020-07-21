@@ -61,6 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
+    
+    lazy var coreDataController: CoreDataController = {
+        return CoreDataController(appDelegate: self, context: persistentContainer.viewContext)
+    }()
 
     // MARK: - Core Data Saving support
 
