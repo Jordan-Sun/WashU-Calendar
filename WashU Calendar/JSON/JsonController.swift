@@ -191,6 +191,110 @@ extension JsonController {
         
     }
     
+    private func generateSessionResults(sessions: [JSONSession], semester: JSONSemester? = nil) {
+        
+        // Validate input.
+        if let semester = semester {
+            for session in sessions {
+                guard session.semester == semester else {
+                    print("Expected that \(session.name) belongs to \(semester.name), but found that it belongs to \(session.semester.name)")
+                    return
+                }
+            }
+        }
+        
+        // Get the name of the school.
+        let superName = semester?.name ?? "All"
+        // Calculate the total number of pages needed to generate.
+        let total_pages = (sessions.count - 1) / 20 + 1
+        
+        // Generate all pages except for the last page.
+        for page in 1 ..< total_pages {
+            // Gather school results.
+            let startIndex = (page - 1) * 20
+            let endIndex = page * 20
+            let sessionResults = JSONSessionResults(semester: semester, page: page, total_pages: total_pages, sessions: Array(sessions[startIndex..<endIndex]))
+            // Try to encode data.
+            guard let data = try? JSONEncoder().encode(sessionResults) else {
+                print("Failed to encode the \(page) page of session results to json data.")
+                return
+            }
+            writeDataToDocuments(data, objectKind: "Session", superName: superName, page: page)
+        }
+        
+        // Generate the last page.
+        // Gather school results.
+        let startIndex = (total_pages - 1) * 20
+        let sessionResults = JSONSessionResults(semester: semester, page: total_pages, total_pages: total_pages, sessions: Array(sessions[startIndex...]))
+        // Try to encode data.
+        guard let data = try? JSONEncoder().encode(sessionResults) else {
+            print("Failed to encode the \(total_pages) page of session results to json data.")
+            return
+        }
+        writeDataToDocuments(data, objectKind: "Session", superName: superName, page: total_pages)
+        
+    }
+    
+    private func generateCourseResults(courses: [JSONCourse], department: JSONDepartment? = nil, session: JSONSession? = nil, attribute: JSONAttribute? = nil) {
+        
+        // Validate input.
+        if let department = department {
+            for course in courses {
+                guard course.department == department else {
+                    print("Expected that \(course.name) belongs to \(department.fullName), but found that it belongs to \(course.department.fullName)")
+                    return
+                }
+            }
+        }
+        if let session = session {
+            for course in courses {
+                guard course.session == session else {
+                    print("Expected that \(course.name) belongs to \(session.name), but found that it belongs to \(course.session.name)")
+                    return
+                }
+            }
+        }
+        if let attribute = attribute {
+            for course in courses {
+                guard course.attributes?.contains(attribute) ?? false else {
+                    print("Expected that \(course.name) has attribute \(attribute.name).")
+                    return
+                }
+            }
+        }
+        
+        // Get the name of the school.
+        let superName = "\(department?.fullName ?? "All")&\(session?.name ?? "All")&\(attribute?.name ?? "All")"
+        // Calculate the total number of pages needed to generate.
+        let total_pages = (courses.count - 1) / 20 + 1
+        
+        // Generate all pages except for the last page.
+        for page in 1 ..< total_pages {
+            // Gather school results.
+            let startIndex = (page - 1) * 20
+            let endIndex = page * 20
+            let courseResults = JSONCourseResults(department: department, session: session, attribute: attribute, page: page, total_pages: total_pages, courses: Array(courses[startIndex..<endIndex]))
+            // Try to encode data.
+            guard let data = try? JSONEncoder().encode(courseResults) else {
+                print("Failed to encode the \(page) page of course results to json data.")
+                return
+            }
+            writeDataToDocuments(data, objectKind: "Course", superName: superName, page: page)
+        }
+        
+        // Generate the last page.
+        // Gather school results.
+        let startIndex = (total_pages - 1) * 20
+        let courseResults = JSONCourseResults(department: department, session: session, attribute: attribute, page: total_pages, total_pages: total_pages, courses: Array(courses[startIndex...]))
+        // Try to encode data.
+        guard let data = try? JSONEncoder().encode(courseResults) else {
+            print("Failed to encode the \(total_pages) page of course results to json data.")
+            return
+        }
+        writeDataToDocuments(data, objectKind: "Course", superName: superName, page: total_pages)
+        
+    }
+    
 }
 
 // Debug functions
