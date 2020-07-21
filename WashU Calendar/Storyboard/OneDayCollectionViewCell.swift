@@ -14,4 +14,6 @@ class OneDayCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var theScrollView: UIScrollView!
     
+
+    
 }
