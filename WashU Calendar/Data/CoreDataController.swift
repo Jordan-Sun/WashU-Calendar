@@ -258,13 +258,14 @@ extension CoreDataController {
         appDelegate.saveContext()
         
         if autoGeneratesEvents {
-            let currentDay = startDay
+            var currentDay = startDay
             while currentDay <= endDay {
                 do {
                     try addEventToCoreData(name: "\(course.name!) \(id)", from: currentDay.addingTimeInterval(startTime), to: currentDay.addingTimeInterval(endTime), to: newSection)
                 } catch {
                     print("Fail to auto generate event for section: \(course.name!) \(id)")
                 }
+                currentDay = calendar.date(byAdding: DateComponents(day: 1), to: currentDay)!
             }
         }
         
@@ -322,7 +323,7 @@ extension CoreDataController {
         let separation = DateComponents(hour: 2)
         let length = DateComponents(day: 14,hour: 2)
         
-        for i in 1 ... 14 {
+        for i in 1 ... 4 {
             let newCourse = addCourseToCoreData(name: "Test Course \(i)", id: "000", to: testDepartment, to: testSession)
             for j in 1 ... 12 {
                 do {

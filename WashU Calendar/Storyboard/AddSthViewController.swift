@@ -103,12 +103,17 @@ class AddSthViewController: UIViewController, UITextFieldDelegate {
         else {
             let school = coreDataController.addSchoolToCoreData(fullName: "Engineering")
             let department = coreDataController.addDepartmentToCoreData(fullName: "Computer Science and Engineering", code: "E81", to: school)
-            let semester = coreDataController.addSemesterToCoreData(name: "20FL")
-            let session = coreDataController.addSessionToCoreData(name: "All", semester: semester)
-            let course = coreDataController.addCourseToCoreData(name: courseName, id: "", department: department, session: session)
+            let semester = coreDataController.addSemesterToCoreData(name: "FL2020")
+            let calendar = Calendar.current
+            let session = try! coreDataController.addSessionToCoreData(name: "All", start: calendar.date(from: DateComponents(year: 2020, month: 7, day: 20))!, end: calendar.date(from: DateComponents(year: 2020, month: 7, day: 30))!, to: semester)
+            let course = coreDataController.addCourseToCoreData(name: courseName, id: "", to: department, to: session)
             let start = stringOfDateAndTime(startTime)
             let end = stringOfDateAndTime(endTime)
-            coreDataController?.addEventToCoreData(name: courseName, from: startTime, to: endTime, to: course)
+            do {
+                try coreDataController.addSectionToCoreData(id: "", start: startTime, end: endTime, repeat: "MTWRFSU", to: course)
+            } catch {
+                print(error)
+            }
 
             print("saved! " + courseName + " from: " + start + " to: " + end)
             dismiss(animated: true, completion: nil)

@@ -48,8 +48,6 @@ class TodayViewController: UIViewController, UICollectionViewDelegate, UICollect
         let cell = theCollectionView.dequeueReusableCell(withReuseIdentifier: "oneDayCell", for: indexPath) as! OneDayCollectionViewCell
 //        cell.theScrollView.backgroundColor = .systemPink
         cell.date = currentDate
-        print(cell.date)
-
             
         return cell
     }
