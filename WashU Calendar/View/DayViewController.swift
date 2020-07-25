@@ -37,9 +37,11 @@ class DayViewController: UIViewController {
     /// Collection view scroll view current y
     private var currentY: Double = 480
     /// The min section
-    private var minDateFromNow = 0
+    private var minDateFromNow = -3
     /// The max section
-    private var maxDateFromNow = 7
+    private var maxDateFromNow = 3
+    /// A boolean indicating whether the collection view should preload cell
+    private var shouldPreloadCell = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,7 @@ class DayViewController: UIViewController {
         super.viewWillAppear(animated)
         // Load course data after the view appears.
         updateSnapshot()
+        dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .left, animated: false)
     }
 
 }
@@ -229,17 +232,21 @@ extension DayViewController {
         }
         
         // Get genre section at the target index path
-        let daysFromNow = indexPath.row
-        
+        let calendar = Calendar.current
+        guard let then = dayCollectionViewDiffableDataSource.itemIdentifier(for: indexPath)?.day else {
+            print("Fail to retrive day from \(indexPath).")
+            return nil
+        }
+        let daysFromNow = calendar.dateComponents([.day], from: calendar.startOfDay(for: appDelegate.currentDate), to: calendar.startOfDay(for: then) )
         // Configure header
         switch daysFromNow {
-        case 0:
+        case DateComponents(day: -1):
+            header.label.text = "Yesterday"
+        case DateComponents(day: 0):
             header.label.text = "Today"
-        case 1:
+        case DateComponents(day: 1):
             header.label.text = "Tomorrow"
         default:
-            let calendar = Calendar.current
-            let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: appDelegate.currentDate)!
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
             dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd, EEEE")
@@ -253,6 +260,7 @@ extension DayViewController {
     /// Updates the snapshot using NSFetchRequest
     private func updateSnapshot() {
         
+        shouldPreloadCell = false
         // Update snapshot
         var snapshot = NSDiffableDataSourceSnapshot<Section,DayEvents>()
         snapshot.appendSections([.main])
@@ -268,25 +276,27 @@ extension DayViewController {
             }
         }
         dayCollectionViewDiffableDataSource.apply(snapshot)
+        shouldPreloadCell = true
         
     }
     
 }
 
+// Collection View Delegate
+
 extension DayViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        // Check if should preload the next section.
-        if indexPath.row + 1 > maxDateFromNow {
-            maxDateFromNow += 1
-            updateSnapshot()
-        }
-        
-        // Check if should preload the next section.
-        if indexPath.row < minDateFromNow {
-            minDateFromNow -= 1
-            updateSnapshot()
+        if shouldPreloadCell {
+            if indexPath.row == 0 {
+                minDateFromNow -= 1
+                updateSnapshot()
+                dayCollectionView.scrollToItem(at: IndexPath(row: 2, section: 0), at: .left, animated: false)
+            } else if indexPath.row == maxDateFromNow - minDateFromNow {
+                maxDateFromNow += 1
+                updateSnapshot()
+            }
         }
         
     }

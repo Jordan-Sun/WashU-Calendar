@@ -27,8 +27,12 @@ class MonthViewController: UIViewController {
     }
     /// Collection view data source
     private var monthCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,DayEvents>!
-    /// Collection view scroll view current y
-    private var currentY: Double = 480
+    /// The min section
+    private var minMonthFromNow = -3
+    /// The max section
+    private var maxMonthFromNow = 3
+    /// A boolean indicating whether the collection view should preload cell
+    private var shouldPreloadCell = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,13 +40,14 @@ class MonthViewController: UIViewController {
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
         configureCollectionDataSource()
         configureCollectionLayout()
-        //dayCollectionView.delegate = self
+        monthCollectionView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Load course data after the view appears.
         updateSnapshot()
+        monthCollectionView.scrollToItem(at: IndexPath(row: 42 * -minMonthFromNow, section: 0), at: .left, animated: false)
     }
     
 }
@@ -161,6 +166,7 @@ extension MonthViewController {
     /// Updates the snapshot using NSFetchRequest
     private func updateSnapshot() {
         
+        shouldPreloadCell = false
         // Update snapshot
         var snapshot = NSDiffableDataSourceSnapshot<Section,DayEvents>()
         snapshot.appendSections([.main])
@@ -169,7 +175,7 @@ extension MonthViewController {
         let monthStart = calendar.date(from: calendar.dateComponents([.year,.month], from: now))!
         let dayStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: monthStart))!
         
-        for daysFromStart in 0 ..< 42 {
+        for daysFromStart in minMonthFromNow * 42 ..< maxMonthFromNow * 42 {
             guard let then = calendar.date(byAdding: DateComponents(day: daysFromStart), to: dayStart) else {
                 print("Fail to compute the date \(daysFromStart) days from month start.")
                 return
@@ -179,7 +185,30 @@ extension MonthViewController {
             }
         }
         monthCollectionViewDiffableDataSource.apply(snapshot)
+        shouldPreloadCell = true
         
     }
     
 }
+
+// Collection View Delegate
+
+extension MonthViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if shouldPreloadCell {
+            if indexPath.row == 0 {
+                minMonthFromNow -= 1
+                updateSnapshot()
+                monthCollectionView.scrollToItem(at: IndexPath(row: 2, section: 0), at: .left, animated: false)
+            } else if indexPath.row == maxMonthFromNow - minMonthFromNow {
+                maxMonthFromNow += 1
+                updateSnapshot()
+            }
+        }
+        
+    }
+    
+}
+
