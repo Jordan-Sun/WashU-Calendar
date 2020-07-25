@@ -59,6 +59,8 @@ struct JSONSemesterResults: Codable, Hashable {
 
 struct JSONSession: Codable, Hashable {
     var name: String
+    var start: Date
+    var end: Date
     
     var semester: JSONSemester
 }
@@ -86,6 +88,7 @@ struct JSONAttributeResults: Codable, Hashable {
 struct JSONCourse: Codable, Hashable {
     var id: String
     var name: String
+    var desc: String? = nil
     var unit: Int
     
     var department: JSONDepartment
@@ -94,32 +97,44 @@ struct JSONCourse: Codable, Hashable {
     var attributes: [JSONAttribute]?
 }
 
-struct JSONCourseResultsByDepartment: Codable, Hashable {
+struct JSONCourseResults: Codable, Hashable {
     var department: JSONDepartment?
-    var page: Int
-    var total_pages: Int
-    var courses: [JSONCourse]
-}
-
-struct JSONCourseResultsBySession: Codable, Hashable {
     var session: JSONSession?
-    var page: Int
-    var total_pages: Int
-    var courses: [JSONCourse]
-}
-
-struct JSONCourseResultsByAttribute: Codable, Hashable {
     var attribute: JSONAttribute?
     var page: Int
     var total_pages: Int
     var courses: [JSONCourse]
 }
 
+struct JSONSection: Codable, Hashable {
+    var id: String
+    var type: String
+    var desc: String? = nil
+    var start: Date
+    var end: Date
+    var days: String
+    
+    var course: JSONCourse
+}
+
+struct JSONSectionResults: Codable, Hashable {
+    var course: JSONCourse?
+    var page: Int
+    var total_pages: Int
+    var sections: [JSONSection]
+}
+
+// This event struct is only for single events.
 struct JSONEvent: Codable, Hashable {
     var name: String
     var start: Date
     var end: Date
     var location: String? = nil
-    
-    var course: JSONCourse
+}
+
+// This result struct is only for single events.
+struct JSONEventResults: Codable, Hashable {
+    var page: Int
+    var total_pages: Int
+    var courses: [JSONEvent]
 }

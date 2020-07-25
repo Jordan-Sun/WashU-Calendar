@@ -1,9 +1,8 @@
 //
 //  Course+CoreDataProperties.swift
-//  WashU Calendar
+//  
 //
-//  Created by Zhuoran Sun on 2020/7/18.
-//  Copyright © 2020 washu. All rights reserved.
+//  Created by Zhuoran Sun on 2020/7/20.
 //
 //
 
@@ -20,11 +19,12 @@ extension Course {
     @NSManaged public var id: String?
     @NSManaged public var name: String?
     @NSManaged public var unit: Int16
+    @NSManaged public var desc: String?
     @NSManaged public var attributes: NSSet?
     @NSManaged public var department: Department?
-    @NSManaged public var events: NSSet?
-    @NSManaged public var session: Session?
+    @NSManaged public var sections: NSSet?
     @NSManaged public var professor: Professor?
+    @NSManaged public var session: Session?
 
 }
 
@@ -45,19 +45,19 @@ extension Course {
 
 }
 
-// MARK: Generated accessors for events
+// MARK: Generated accessors for sections
 extension Course {
 
-    @objc(addEventsObject:)
-    @NSManaged public func addToEvents(_ value: Event)
+    @objc(addSectionsObject:)
+    @NSManaged public func addToSections(_ value: Section)
 
-    @objc(removeEventsObject:)
-    @NSManaged public func removeFromEvents(_ value: Event)
+    @objc(removeSectionsObject:)
+    @NSManaged public func removeFromSections(_ value: Section)
 
-    @objc(addEvents:)
-    @NSManaged public func addToEvents(_ values: NSSet)
+    @objc(addSections:)
+    @NSManaged public func addToSections(_ values: NSSet)
 
-    @objc(removeEvents:)
-    @NSManaged public func removeFromEvents(_ values: NSSet)
+    @objc(removeSections:)
+    @NSManaged public func removeFromSections(_ values: NSSet)
 
 }

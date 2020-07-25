@@ -1,5 +1,5 @@
 //
-//  Event+CoreDataClass.swift
+//  Section+CoreDataClass.swift
 //  WashU Calendar
 //
 //  Created by Zhuoran Sun on 2020/7/21.
@@ -11,6 +11,6 @@ import Foundation
 import CoreData
 
 
-public class Event: NSManagedObject {
+public class Section: NSManagedObject {
 
 }

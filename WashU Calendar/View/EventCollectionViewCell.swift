@@ -10,6 +10,10 @@ import UIKit
 
 class EventCollectionViewCell: UICollectionViewCell {
     
+    static let reuseIdentifier = "eventCell"
+    
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     
 }

@@ -112,7 +112,6 @@
 		3E606B3B24C23DF700C76056 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				3E606B2824C23DD700C76056 /* ViewController.swift */,
 				3E606B2A24C23DD700C76056 /* Main.storyboard */,
 				3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */,
 			);
@@ -165,6 +164,7 @@
 		3EDD515524C38C40002C7220 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3E606B2824C23DD700C76056 /* ViewController.swift */,
 				3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */,
 			);
 			path = View;

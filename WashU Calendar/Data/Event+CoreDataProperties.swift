@@ -2,7 +2,7 @@
 //  Event+CoreDataProperties.swift
 //  WashU Calendar
 //
-//  Created by Zhuoran Sun on 2020/7/18.
+//  Created by Zhuoran Sun on 2020/7/21.
 //  Copyright © 2020 washu. All rights reserved.
 //
 //
@@ -21,6 +21,7 @@ extension Event {
     @NSManaged public var location: String?
     @NSManaged public var name: String?
     @NSManaged public var start: Date?
-    @NSManaged public var course: Course?
+    @NSManaged public var color: NSObject?
+    @NSManaged public var section: Section?
 
 }
