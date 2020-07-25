@@ -516,7 +516,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="h57-Vb-UV1"/>
                     <connections>
-                        <outlet property="dayCollectionView" destination="F0H-Ca-5id" id="s8a-E8-hPu"/>
+                        <outlet property="monthCollectionView" destination="F0H-Ca-5id" id="s8a-E8-hPu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J7q-YD-Fuc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

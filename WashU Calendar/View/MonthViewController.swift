@@ -20,13 +20,13 @@ class MonthViewController: UIViewController {
     
     // Collection View Component
     /// Collection view
-    @IBOutlet weak var dayCollectionView: UICollectionView!
+    @IBOutlet weak var monthCollectionView: UICollectionView!
     /// Collection view section
     enum Section {
         case main
     }
     /// Collection view data source
-    private var dayCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,DayEvents>!
+    private var monthCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,DayEvents>!
     /// Collection view scroll view current y
     private var currentY: Double = 480
 
@@ -53,7 +53,7 @@ extension MonthViewController {
     
     /// Configure the layout of the movie preview collection view
     private func configureCollectionLayout() {
-        dayCollectionView.collectionViewLayout = createLayout()
+        monthCollectionView.collectionViewLayout = createLayout()
     }
     
     /// Create a new collection view compositional layout
@@ -62,16 +62,7 @@ extension MonthViewController {
         let layout = UICollectionViewCompositionalLayout {
             (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
-//            let headerAnchor = NSCollectionLayoutAnchor(edges: [.top], fractionalOffset: CGPoint(x: 0, y: -1))
-//            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-//                                                    heightDimension: .estimated(10))
-//            let header = NSCollectionLayoutSupplementaryItem(
-//                layoutSize: headerSize,
-//                elementKind: "header",
-//                containerAnchor: headerAnchor)
-            
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-//            let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [header])
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             
@@ -102,7 +93,7 @@ extension MonthViewController {
     private func configureCollectionDataSource() {
         
         // Diffable data source cell provider
-        dayCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,DayEvents>(collectionView: self.dayCollectionView) { (collectionView, indexPath, dayevents) -> UICollectionViewCell? in
+        monthCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,DayEvents>(collectionView: self.monthCollectionView) { (collectionView, indexPath, dayevents) -> UICollectionViewCell? in
             
             // Dequeue reuseable cell.
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DayCollectionViewCell.reuseIdentifier, for: indexPath) as? DayCollectionViewCell else {
@@ -122,7 +113,23 @@ extension MonthViewController {
             cell.contentScrollView.contentSize = CGSize(width: frameWidth, height: 480)
             
             // Event subcells
-            var eventViewY = 0.0
+            var eventViewY = 20.0
+            
+            let headerFrame = CGRect(x: 2, y: 2, width: frameWidth - 4, height: 18)
+            let headerView = UILabel(frame: headerFrame)
+            let calendar = Calendar.current
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US")
+            let dayOfMonth = calendar.dateComponents([.day], from: dayevents.day)
+            if dayOfMonth == DateComponents(day: 1) {
+                dateFormatter.setLocalizedDateFormatFromTemplate("MMMd")
+            } else {
+                dateFormatter.setLocalizedDateFormatFromTemplate("d")
+            }
+            headerView.text = dateFormatter.string(from: dayevents.day)
+            headerView.textAlignment = .center
+            headerView.font = .preferredFont(forTextStyle: .headline)
+            cell.contentScrollView.addSubview(headerView)
             
             for event in dayevents.events {
                 
@@ -149,52 +156,6 @@ extension MonthViewController {
             
         }
         
-        // Register header as a supplementary view to the collection view
-        dayCollectionView.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: "header", withReuseIdentifier: HeaderCollectionReusableView.reuseIdentifier)
-        
-        // Diffable data source supplementary view provider
-        dayCollectionViewDiffableDataSource.supplementaryViewProvider = {
-            (collectionView, kind, indexPath) -> UICollectionReusableView? in
-            
-            // Check is proving a rating badge supplementary view
-            switch kind {
-            case "header":
-                return self.createHeader(collectionView: collectionView, indexPath: indexPath)
-            default:
-                return nil
-            }
-            
-        }
-        
-    }
-    
-    private func createHeader(collectionView: UICollectionView, indexPath: IndexPath) -> HeaderCollectionReusableView? {
-        
-        // Dequeue reuseable supplementary view
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: HeaderCollectionReusableView.reuseIdentifier, for: indexPath) as? HeaderCollectionReusableView else {
-            fatalError("Expected reused badge to be of type HeaderCollectionReusableView.")
-        }
-        
-        // Get genre section at the target index path
-        let daysFromNow = indexPath.row
-        
-        // Configure header
-        switch daysFromNow {
-        case 0:
-            header.label.text = "Today"
-        case 1:
-            header.label.text = "Tomorrow"
-        default:
-            let calendar = Calendar.current
-            let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: Date())!
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "en_US")
-            dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd, EEEE")
-            header.label.text = dateFormatter.string(from: then)
-        }
-        
-        return header
-        
     }
     
     /// Updates the snapshot using NSFetchRequest
@@ -204,7 +165,7 @@ extension MonthViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section,DayEvents>()
         snapshot.appendSections([.main])
         let calendar = Calendar.current
-        let now = Date()
+        let now = appDelegate.currentDate
         let monthStart = calendar.date(from: calendar.dateComponents([.year,.month], from: now))!
         let dayStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: monthStart))!
         
@@ -217,7 +178,7 @@ extension MonthViewController {
                 snapshot.appendItems([DayEvents(day: then, events: events)], toSection: .main)
             }
         }
-        dayCollectionViewDiffableDataSource.apply(snapshot)
+        monthCollectionViewDiffableDataSource.apply(snapshot)
         
     }
     

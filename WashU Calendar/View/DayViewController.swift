@@ -239,7 +239,7 @@ extension DayViewController {
             header.label.text = "Tomorrow"
         default:
             let calendar = Calendar.current
-            let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: Date())!
+            let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: appDelegate.currentDate)!
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
             dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd, EEEE")
@@ -257,7 +257,7 @@ extension DayViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section,DayEvents>()
         snapshot.appendSections([.main])
         let calendar = Calendar.current
-        let now = Date()
+        let now = appDelegate.currentDate
         for daysFromNow in minDateFromNow ... maxDateFromNow {
             guard let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: now) else {
                 print("Fail to compute the date \(daysFromNow) days from now.")

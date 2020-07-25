@@ -48,7 +48,7 @@ class ListViewController: UIViewController {
         super.viewWillAppear(animated)
         // Load course data after the view appears.
         updateSnapshot()
-        eventCollectionView.scrollToItem(at: IndexPath(row: 0, section: -minDateFromNow - 1), at: .top, animated: false)
+        eventCollectionView.scrollToItem(at: IndexPath(row: 0, section: -minDateFromNow), at: .top, animated: false)
     }
     
     //Debug functions
@@ -84,6 +84,7 @@ extension ListViewController {
             let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: groupColumns)
             
             let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .estimated(44)), elementKind: "dayHeader", alignment: .top)
+            header.pinToVisibleBounds = true
             let section = NSCollectionLayoutSection(group: group)
             section.boundarySupplementaryItems = [header]
             
@@ -165,6 +166,7 @@ extension ListViewController {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "dayHeader", withReuseIdentifier: HeaderCollectionReusableView.reuseIdentifier, for: indexPath) as? HeaderCollectionReusableView else {
             fatalError("Expected reused badge to be of type HeaderCollectionReusableView.")
         }
+        header.backgroundColor = .systemBackground
         
         // Get genre section at the target index path
         let daysFromNow = indexPath.section + minDateFromNow
@@ -260,50 +262,5 @@ extension ListViewController: UICollectionViewDelegate {
         }
         
     }
-//
-//    func configureGestureRecognizers() {
-//
-//        let upGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeHandler(_:)))
-//        upGestureRecognizer.direction = .up
-//        eventCollectionView.addGestureRecognizer(upGestureRecognizer)
-//
-//        let downGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeHandler(_:)))
-//        downGestureRecognizer.direction = .down
-//        eventCollectionView.addGestureRecognizer(downGestureRecognizer)
-//
-//    }
-//
-//
-//    @objc func swipeHandler(_ gestureRecognizer: UISwipeGestureRecognizer) {
-//
-//        print("recieved swipe.")
-//
-//        if gestureRecognizer.state == .began {
-//            if gestureRecognizer.direction == .up {
-//                print("recieved swipe up.")
-//                // Check if should preload the next section.
-//                guard let maxIndexPath = eventCollectionView.indexPathsForVisibleItems.max() else {
-//                    print("Fail to retrive max visible index path.")
-//                    return
-//                }
-//                if maxIndexPath.section + 1 > maxDateFromNow {
-//                    maxDateFromNow += 1
-//                    updateSnapshot()
-//                }
-//            } else if gestureRecognizer.direction == .down {
-//                print("recieved swipe down.")
-//                // Check if should preload the next section.
-//                guard let minIndexPath = eventCollectionView.indexPathsForVisibleItems.min() else {
-//                    print("Fail to retrive min visible index path.")
-//                    return
-//                }
-//                if minIndexPath.section - 1 < minDateFromNow {
-//                    minDateFromNow -= 1
-//                    updateSnapshot()
-//                }
-//            }
-//        }
-//
-//    }
     
 }
