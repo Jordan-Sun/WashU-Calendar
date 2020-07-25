@@ -1,19 +1,14 @@
 //
-//  DayViewController.swift
+//  MonthViewController.swift
 //  WashU Calendar
 //
-//  Created by Zhuoran Sun on 2020/7/21.
+//  Created by Zhuoran Sun on 2020/7/25.
 //  Copyright © 2020 washu. All rights reserved.
 //
 
 import UIKit
 
-struct DayEvents: Hashable {
-    var day: Date
-    var events: [Event]
-}
-
-class DayViewController: UIViewController {
+class MonthViewController: UIViewController {
     
     // Core Data Component
     /// App delegate
@@ -22,7 +17,7 @@ class DayViewController: UIViewController {
     private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
     /// Core data controller
     private var coreDataController: CoreDataController!
-
+    
     // Collection View Component
     /// Collection view
     @IBOutlet weak var dayCollectionView: UICollectionView!
@@ -32,22 +27,16 @@ class DayViewController: UIViewController {
     }
     /// Collection view data source
     private var dayCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,DayEvents>!
-    /// Collection view per hour height
-    private var hourHeight: Double = 60
     /// Collection view scroll view current y
     private var currentY: Double = 480
-    /// The min section
-    private var minDateFromNow = 0
-    /// The max section
-    private var maxDateFromNow = 7
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
         configureCollectionDataSource()
         configureCollectionLayout()
-        dayCollectionView.delegate = self
+        //dayCollectionView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,12 +44,12 @@ class DayViewController: UIViewController {
         // Load course data after the view appears.
         updateSnapshot()
     }
-
+    
 }
 
 // Collection View Layout
 
-extension DayViewController {
+extension MonthViewController {
     
     /// Configure the layout of the movie preview collection view
     private func configureCollectionLayout() {
@@ -73,22 +62,26 @@ extension DayViewController {
         let layout = UICollectionViewCompositionalLayout {
             (_: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
-            let headerAnchor = NSCollectionLayoutAnchor(edges: [.top], fractionalOffset: CGPoint(x: 0, y: -1))
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .estimated(44))
-            let header = NSCollectionLayoutSupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: "header",
-                containerAnchor: headerAnchor)
+//            let headerAnchor = NSCollectionLayoutAnchor(edges: [.top], fractionalOffset: CGPoint(x: 0, y: -1))
+//            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+//                                                    heightDimension: .estimated(10))
+//            let header = NSCollectionLayoutSupplementaryItem(
+//                layoutSize: headerSize,
+//                elementKind: "header",
+//                containerAnchor: headerAnchor)
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [header])
-            item.contentInsets = NSDirectionalEdgeInsets(top: 44, leading: 8, bottom: 4, trailing: 8)
+//            let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [header])
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let weekGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let weekGroup = NSCollectionLayoutGroup.horizontal(layoutSize: weekGroupSize, subitem: item, count: 7)
             
-            let section = NSCollectionLayoutSection(group: group)
+            let monthGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let monthGroup = NSCollectionLayoutGroup.vertical(layoutSize: monthGroupSize, subitem: weekGroup, count: 6)
+            
+            let section = NSCollectionLayoutSection(group: monthGroup)
             section.orthogonalScrollingBehavior = .groupPaging
             
             return section
@@ -101,10 +94,9 @@ extension DayViewController {
     
 }
 
-
 // Collection View Data Source
 
-extension DayViewController {
+extension MonthViewController {
     
     /// Configure the datasource of the movie preview collection view
     private func configureCollectionDataSource() {
@@ -123,80 +115,35 @@ extension DayViewController {
             }
             
             // Update cell
+            cell.layer.borderWidth = 1
+            cell.layer.borderColor = UIColor.secondarySystemFill.cgColor
             cell.contentScrollView.backgroundColor = .systemBackground
             let frameWidth = Double(cell.bounds.width)
-            cell.contentScrollView.contentSize = CGSize(width: frameWidth, height: self.hourHeight * 24 + 40)
-            
-            // Time sheet
-            for hour in 0 ..< 24 {
-                let hourFrame = CGRect(x: 50, y: self.hourHeight * Double(hour), width: frameWidth - 40, height: self.hourHeight)
-                let hourView = UIView(frame: hourFrame)
-                hourView.backgroundColor = .systemBackground
-                hourView.layer.borderWidth = 1
-                hourView.layer.borderColor = UIColor.secondarySystemFill.cgColor
-                
-                cell.contentScrollView.addSubview(hourView)
-            }
-            for hour in 0 ... 24 {
-                let textFrame = CGRect(x: -10, y: self.hourHeight * (Double(hour) - 0.5), width: 60, height: self.hourHeight)
-                let textView = UILabel(frame: textFrame)
-                textView.text = "\(hour):00"
-                textView.textColor = .label
-                textView.font = .preferredFont(forTextStyle: .body)
-                textView.textAlignment = .right
-                
-                cell.contentScrollView.addSubview(textView)
-            }
-            
-            // Timeline
-            let calendar = Calendar.current
-            let dayStart = calendar.startOfDay(for: dayevents.day)
-            let now = Date()
-            if dayStart == calendar.startOfDay(for: now) {
-                let timelineViewY = DateInterval(start: dayStart, end: now).duration * self.hourHeight / 3600
-                let timelineFrame = CGRect(x: 40, y: timelineViewY - 2, width: frameWidth, height: 4)
-                let timelineView = UIView(frame: timelineFrame)
-                timelineView.backgroundColor = .systemTeal
-            }
+            cell.contentScrollView.contentSize = CGSize(width: frameWidth, height: 480)
             
             // Event subcells
+            var eventViewY = 0.0
+            
             for event in dayevents.events {
                 
-                let eventViewY = DateInterval(start: dayStart, end: event.start!).duration * self.hourHeight / 3600
-                let eventViewHeight = max(DateInterval(start: event.start!, end: event.end!).duration * self.hourHeight / 3600, self.hourHeight/2)
-                let eventFrame = CGRect(x: 54, y: eventViewY + 4, width: frameWidth - 58, height: eventViewHeight - 8)
+                let eventFrame = CGRect(x: 2, y: eventViewY + 2, width: frameWidth - 4, height: 18)
                 let eventView = UIView(frame: eventFrame)
                 eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
                 eventView.layer.cornerRadius = 8
                 
-                let nameFrame = CGRect(x: 4, y: 4, width: frameWidth - 8, height: 30)
+                let nameFrame = CGRect(x: 0, y: 0, width: frameWidth - 4, height: 18)
                 let nameLabel = UILabel(frame: nameFrame)
                 nameLabel.text = event.name
-                nameLabel.font = .preferredFont(forTextStyle: .headline)
+                nameLabel.font = .preferredFont(forTextStyle: .body)
                 nameLabel.textAlignment = .left
                 eventView.addSubview(nameLabel)
                 
-                let timeFrame = CGRect(x: frameWidth/2 - 29, y: 34, width: frameWidth/2 - 33, height: 30)
-                let timeLabel = UILabel(frame: timeFrame)
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "h:mm a"
-                timeLabel.text = "\(dateFormatter.string(from: event.start!))-\(dateFormatter.string(from: event.end!))"
-                timeLabel.font = .preferredFont(forTextStyle: .callout)
-                timeLabel.textAlignment = .right
-                eventView.addSubview(timeLabel)
-                
-                let locationFrame = CGRect(x: 4, y: 34, width: frameWidth/2 - 33, height: 30)
-                let locationLabel = UILabel(frame: locationFrame)
-                locationLabel.text = event.location ?? "TBA"
-                locationLabel.font = .preferredFont(forTextStyle: .body)
-                locationLabel.textAlignment = .left
-                eventView.addSubview(locationLabel)
-                
                 cell.contentScrollView.addSubview(eventView)
+                eventViewY += 20.0
+                
             }
             
             cell.contentScrollView.layoutSubviews()
-            cell.contentScrollView.contentOffset = .init(x: 0, y: self.currentY)
             
             return cell
             
@@ -258,9 +205,12 @@ extension DayViewController {
         snapshot.appendSections([.main])
         let calendar = Calendar.current
         let now = Date()
-        for daysFromNow in minDateFromNow ... maxDateFromNow {
-            guard let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: now) else {
-                print("Fail to compute the date \(daysFromNow) days from now.")
+        let monthStart = calendar.date(from: calendar.dateComponents([.year,.month], from: now))!
+        let dayStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: monthStart))!
+        
+        for daysFromStart in 0 ..< 42 {
+            guard let then = calendar.date(byAdding: DateComponents(day: daysFromStart), to: dayStart) else {
+                print("Fail to compute the date \(daysFromStart) days from month start.")
                 return
             }
             if let events = coreDataController.fetchEventRequest(on: then) {
@@ -268,26 +218,6 @@ extension DayViewController {
             }
         }
         dayCollectionViewDiffableDataSource.apply(snapshot)
-        
-    }
-    
-}
-
-extension DayViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-        // Check if should preload the next section.
-        if indexPath.row + 1 > maxDateFromNow {
-            maxDateFromNow += 1
-            updateSnapshot()
-        }
-        
-        // Check if should preload the next section.
-        if indexPath.row < minDateFromNow {
-            minDateFromNow -= 1
-            updateSnapshot()
-        }
         
     }
     

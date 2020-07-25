@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E33FFB824CC495D0067BA48 /* MonthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FFB724CC495D0067BA48 /* MonthViewController.swift */; };
 		3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2424C23DD700C76056 /* AppDelegate.swift */; };
 		3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2624C23DD700C76056 /* SceneDelegate.swift */; };
 		3E606B2924C23DD700C76056 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2824C23DD700C76056 /* ListViewController.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E33FFB724CC495D0067BA48 /* MonthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewController.swift; sourceTree = "<group>"; };
 		3E606B2124C23DD700C76056 /* WashU Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WashU Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E606B2424C23DD700C76056 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E606B2624C23DD700C76056 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				3E606B2824C23DD700C76056 /* ListViewController.swift */,
 				3EBB55EF24C797DC004DFB5D /* DayViewController.swift */,
+				3E33FFB724CC495D0067BA48 /* MonthViewController.swift */,
 				3E66184724C5957D008A57C8 /* HeaderCollectionReusableView.swift */,
 				3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */,
 				3EBB55F124C798F4004DFB5D /* DayCollectionViewCell.swift */,
@@ -285,6 +288,7 @@
 				3EDD517624C3B766002C7220 /* Professor+CoreDataClass.swift in Sources */,
 				3EBB55FA24C7E603004DFB5D /* Event+CoreDataClass.swift in Sources */,
 				3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */,
+				3E33FFB824CC495D0067BA48 /* MonthViewController.swift in Sources */,
 				3E87BFF024C4D04D00ADB2CF /* CoreDataController.swift in Sources */,
 				3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */,
 				3E79817424C3E7430023BE89 /* Department+CoreDataProperties.swift in Sources */,
