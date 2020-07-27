@@ -15,7 +15,6 @@
 		3E606B2F24C23DD700C76056 /* WashU_Calendar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2D24C23DD700C76056 /* WashU_Calendar.xcdatamodeld */; };
 		3E606B3124C23DDB00C76056 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E606B3024C23DDB00C76056 /* Assets.xcassets */; };
 		3E606B3424C23DDB00C76056 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */; };
-		3E62CF8E24C87F2000D8D38A /* AddCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E62CF8D24C87F2000D8D38A /* AddCourseViewController.swift */; };
 		3E66184824C5957D008A57C8 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E66184724C5957D008A57C8 /* HeaderCollectionReusableView.swift */; };
 		3E79816924C3BF770023BE89 /* School+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816724C3BF770023BE89 /* School+CoreDataClass.swift */; };
 		3E79816A24C3BF770023BE89 /* School+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816824C3BF770023BE89 /* School+CoreDataProperties.swift */; };
@@ -41,6 +40,8 @@
 		3EDD517524C3B766002C7220 /* Course+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516524C3B766002C7220 /* Course+CoreDataProperties.swift */; };
 		3EDD517624C3B766002C7220 /* Professor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516624C3B766002C7220 /* Professor+CoreDataClass.swift */; };
 		3EDD517724C3B766002C7220 /* Professor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516724C3B766002C7220 /* Professor+CoreDataProperties.swift */; };
+		566BB84C24CE902D00EC4221 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566BB84A24CE902D00EC4221 /* AddEventViewController.swift */; };
+		566BB84D24CE902D00EC4221 /* AddEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566BB84B24CE902D00EC4221 /* AddEventViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +55,6 @@
 		3E606B3024C23DDB00C76056 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E606B3324C23DDB00C76056 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3E606B3524C23DDB00C76056 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3E62CF8D24C87F2000D8D38A /* AddCourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseViewController.swift; sourceTree = "<group>"; };
 		3E66184724C5957D008A57C8 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		3E79816724C3BF770023BE89 /* School+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "School+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E79816824C3BF770023BE89 /* School+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "School+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -80,6 +80,8 @@
 		3EDD516524C3B766002C7220 /* Course+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3EDD516624C3B766002C7220 /* Professor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Professor+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3EDD516724C3B766002C7220 /* Professor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Professor+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		566BB84A24CE902D00EC4221 /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
+		566BB84B24CE902D00EC4221 /* AddEventViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddEventViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			children = (
 				3E606B2A24C23DD700C76056 /* Main.storyboard */,
 				3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */,
+				566BB84B24CE902D00EC4221 /* AddEventViewController.xib */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -186,7 +189,7 @@
 				3E66184724C5957D008A57C8 /* HeaderCollectionReusableView.swift */,
 				3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */,
 				3EBB55F124C798F4004DFB5D /* DayCollectionViewCell.swift */,
-				3E62CF8D24C87F2000D8D38A /* AddCourseViewController.swift */,
+				566BB84A24CE902D00EC4221 /* AddEventViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E606B3424C23DDB00C76056 /* LaunchScreen.storyboard in Resources */,
+				566BB84D24CE902D00EC4221 /* AddEventViewController.xib in Resources */,
 				3E606B3124C23DDB00C76056 /* Assets.xcassets in Resources */,
 				3E606B2C24C23DD700C76056 /* Main.storyboard in Resources */,
 			);
@@ -263,13 +267,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EDD517424C3B766002C7220 /* Course+CoreDataClass.swift in Sources */,
+				566BB84C24CE902D00EC4221 /* AddEventViewController.swift in Sources */,
 				3EBB55F224C798F4004DFB5D /* DayCollectionViewCell.swift in Sources */,
 				3EDD517524C3B766002C7220 /* Course+CoreDataProperties.swift in Sources */,
 				3EBB55FB24C7E603004DFB5D /* Event+CoreDataProperties.swift in Sources */,
 				3E87BFF424C4F07000ADB2CF /* JsonDataType.swift in Sources */,
 				3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */,
 				3EDD516E24C3B766002C7220 /* Session+CoreDataClass.swift in Sources */,
-				3E62CF8E24C87F2000D8D38A /* AddCourseViewController.swift in Sources */,
 				3EBB55FE24C7E6AB004DFB5D /* Section+CoreDataClass.swift in Sources */,
 				3EBB55FF24C7E6AB004DFB5D /* Section+CoreDataProperties.swift in Sources */,
 				3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */,

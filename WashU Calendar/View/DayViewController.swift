@@ -58,6 +58,12 @@ class DayViewController: UIViewController {
         updateSnapshot()
         dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .left, animated: false)
     }
+    
+    @IBAction func pushAddView(_ sender: Any) {
+        let newViewController = AddEventViewController()
+        present(newViewController, animated: true, completion: nil)
+
+    }
 
 }
 
