@@ -22,22 +22,10 @@ class CoreDataController {
     /// Core data fetched result controller
     private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
-    // Debug Component
-    var testSchool: School!
-    var testDepartment: Department!
-    var testSemester: Semester!
-    var testSession: Session!
-    
+    // Initialize with app delegate and context
     init(appDelegate: AppDelegate, context: NSManagedObjectContext) {
         self.appDelegate = appDelegate
         self.context = context
-        
-        //debug
-        testSchool = addSchoolToCoreData(fullName: "Test School")
-        testDepartment = addDepartmentToCoreData(fullName: "Test Department", code: "000", to: testSchool)
-        testSemester = addSemesterToCoreData(name: "Test Semester")
-        let calendar = Calendar.current
-        testSession = try! addSessionToCoreData(name: "Test Session", start: calendar.date(from: DateComponents(year: 2020, month: 7, day: 1))!, end: calendar.date(from: DateComponents(year: 2020, month: 9, day: 1))!, to: testSemester)
     }
     
 }
@@ -225,7 +213,7 @@ extension CoreDataController {
     ///   - autoGeneratesEvents: a boolean indicating whether the function should automatically generate corresponding events.
     /// - Returns: an instance of the created section.
     /// - Throws: an error if the end date input preceeds the start date input.
-    @discardableResult func addSectionToCoreData(id: String, start: Date, end: Date, repeat days: String, to course: Course, desc: String? = nil, color: UIColor = .secondarySystemBackground, at location: String? = nil, autogen autoGeneratesEvents: Bool = true) throws -> Section {
+    @discardableResult func addSectionToCoreData(id: String, start: Date, end: Date, repeat days: String, to course: Course? = nil, desc: String? = nil, color: UIColor = .secondarySystemBackground, at location: String? = nil, autogen autoGeneratesEvents: Bool = true) throws -> Section {
         
         let calendar = Calendar.current
         let startDay = calendar.startOfDay(for: start)
@@ -265,9 +253,9 @@ extension CoreDataController {
                 let weekday = weekdayDict[calendar.component(.weekday, from: currentDay)]
                 if days.contains(weekday) {
                     do {
-                        try addEventToCoreData(name: "\(course.name!) \(id)", from: currentDay.addingTimeInterval(startTime), to: currentDay.addingTimeInterval(endTime), to: newSection, color: color,at: location)
+                        try addEventToCoreData(name: "\(course?.name ?? "") \(id)", from: currentDay.addingTimeInterval(startTime), to: currentDay.addingTimeInterval(endTime), to: newSection, color: color,at: location)
                     } catch {
-                        print("Fail to auto generate event for section: \(course.name!) \(id)")
+                        print("Fail to auto generate event for section: \(course?.name ?? "") \(id)")
                     }
                 }
                 currentDay = calendar.date(byAdding: DateComponents(day: 1), to: currentDay)!
@@ -286,7 +274,7 @@ extension CoreDataController {
     ///   - location: the location where the event takes place.
     ///   - course: the course of which the event belongs to.
     /// - Returns: an instance of the created event.
-    @discardableResult func addEventToCoreData(name: String, from start: Date, to end: Date, to section: Section, color: UIColor = .secondarySystemBackground, at location: String? = nil) throws  -> Event {
+    @discardableResult func addEventToCoreData(name: String, from start: Date, to end: Date, to section: Section? = nil, color: UIColor = .secondarySystemBackground, at location: String? = nil) throws  -> Event {
         
         let calendar = Calendar.current
         let startDay = calendar.startOfDay(for: start)
@@ -307,7 +295,7 @@ extension CoreDataController {
     }
     
     /// An alternative way to add a new event to core data.
-    @discardableResult func addEventToCoreData(name: String, interval: DateInterval, to section: Section, color: UIColor = .secondarySystemBackground, at location: String? = nil) throws -> Event {
+    @discardableResult func addEventToCoreData(name: String, interval: DateInterval, to section: Section? = nil, color: UIColor = .secondarySystemBackground, at location: String? = nil) throws -> Event {
         do {
             let newEvent = try addEventToCoreData(name: name, from: interval.start, to: interval.end, to: section, color: color, at: location)
             return newEvent
@@ -327,7 +315,18 @@ extension CoreDataController {
         let calendar = Calendar.current
         let startTime = calendar.startOfDay(for: Date())
         let endTime = calendar.date(byAdding: DateComponents(day: 14), to: startTime)!
-        let cse131 = addCourseToCoreData(name: "Introduction to Computer Science", id: "131", to: testDepartment, to: testSession)
+        
+        let engineering = addSchoolToCoreData(fullName: "McKelvey School of Engineering", shortName: "Engineering")
+        let cse = addDepartmentToCoreData(fullName: "Computer Science and Engineering", shortName: "CSE", code: "E81", to: engineering)
+        
+        let fl2020 = addSemesterToCoreData(name: "FL2020")
+        guard let regDelay = try? addSessionToCoreData(name: "REG-DELAY", start: calendar.date(from: DateComponents(year: 2020, month:9, day: 14))!, end: calendar.date(from: DateComponents(year: 2021, month:1, day: 10))!, to: fl2020) else {
+            print("Fail to generate reg-delay session.")
+            return
+        }
+        
+        let cse131 = addCourseToCoreData(name: "Introduction to Computer Science", id: "131", to: cse, to: regDelay)
+        
         do {
             try addSectionToCoreData(id: "11", start: calendar.date(byAdding: DateComponents(hour: 11, minute: 30), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 12, minute: 50), to: endTime)!, repeat: "-T-R---", to: cse131, color: .systemRed, at: "Urbauer / 222")
             try addSectionToCoreData(id: "22", start: calendar.date(byAdding: DateComponents(hour: 13, minute: 00), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 14, minute: 20), to: endTime)!, repeat: "-T-R---", to: cse131, color: .systemPink, at: "Urbauer / 218")
