@@ -19,7 +19,8 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
     /// Record of user input
     var eventName = ""
     var startTime = Date()
-    var endTime = Date()
+    var endTime = Date(timeInterval: 3600, since: Date())
+    var repeatEndDate = Date()
     var loc: String?
     var color = UIColor.systemOrange
     var section: Section?
@@ -37,7 +38,9 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var locTextField: UITextField!
     
-    @IBOutlet weak var colorLabel: UILabel!
+    @IBOutlet weak var repeatEndDateTextField: UITextField!
+    
+    @IBOutlet weak var repeatEndDateTimePicker: UIDatePicker!
     
     @IBOutlet weak var colorSelectedButton: UIButton!
     
@@ -61,13 +64,11 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
         
-        self.colorCollection.isHidden = true
-        self.dayOfWeekCollection.isHidden = true
-        
         startTimePicker.addTarget(self, action: #selector(AddEventViewController.startTimePickerValueChanged(sender:)), for: .valueChanged)
 
-        
         endTimePicker.addTarget(self, action: #selector(AddEventViewController.endTimePickerValueChanged(sender:)), for: .valueChanged)
+        
+        repeatEndDateTimePicker.addTarget(self, action: #selector(AddEventViewController.repeatEndDateTimePickerValueChanged(sender:)), for: .valueChanged)
         
         /// tapping outside the date picker leads to hide it
         let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddEventViewController.dismissDatePicker))
@@ -82,6 +83,11 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
     @objc func endTimePickerValueChanged(sender: UIDatePicker) {
         endTime = endTimePicker.date
         endTimeTextField.text = stringOfDateAndTime(endTime)
+    }
+    
+    @objc func repeatEndDateTimePickerValueChanged(sender: UIDatePicker) {
+        repeatEndDate = repeatEndDateTimePicker.date
+        repeatEndDateTextField.text = stringOfDate(repeatEndDate)
     }
        
     @IBAction func eventBeginEditing(_ sender: UITextField) {
@@ -102,37 +108,43 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
         loc = locTextField.text!
     }
     
-    
     @IBAction func startTimeBeginEditing(_ sender: UITextField) {
         self.startTimePicker.isHidden = false
         self.endTimePicker.isHidden = true
-        if startTimeTextField.hasText {
-            startTimePicker.date = startTime
-            startTimeTextField.text = stringOfDateAndTime(startTime)
-        } else {
-            startTimeTextField.text = stringOfDateAndTime(Date())
-        }
-        if endTimeTextField.hasText {
-            startTimePicker.maximumDate = endTimePicker.date
-        }
+        startTimePicker.date = startTime
+        startTimeTextField.text = stringOfDateAndTime(startTime)
         self.view.endEditing(true)
     }
-    
        
     @IBAction func endTimeBeginEditing(_ sender: Any) {
         self.endTimePicker.isHidden = false
         self.startTimePicker.isHidden = true
+        endTime = Date(timeInterval: 3600, since: startTime)
+        /// set end time no earlier than start time
         if startTimeTextField.hasText {
             endTimePicker.minimumDate = startTimePicker.date
+            let dateString = stringOfDate(startTime)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "YYYY/MM/dd HH:mm"
+            let maxEndTime = formatter.date(from: "\(dateString) 23:59")!
+            endTimePicker.maximumDate = maxEndTime
+            endTimePicker.date = endTime
         }
         if endTimeTextField.hasText {
             endTimePicker.date = endTime
-            endTimeTextField.text = stringOfDateAndTime(endTime)
-        } else {
-            endTimeTextField.text = stringOfDateAndTime(Date())
         }
+        endTimeTextField.text = stringOfDateAndTime(endTime)
         self.view.endEditing(true)
     }
+    
+    @IBAction func repeatEndDateBeginEditing(_ sender: UITextField) {
+        self.repeatEndDateTimePicker.isHidden = false
+        repeatEndDateTimePicker.minimumDate = startTime
+        repeatEndDateTimePicker.date = repeatEndDate
+        repeatEndDateTextField.text = stringOfDate(repeatEndDate)
+        self.view.endEditing(true)
+    }
+    
     
     @IBAction func selectColor(_ sender: Any) {
         if self.colorCollection.isHidden == false {
@@ -155,9 +167,11 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
     @IBAction func repeatSwitched(_ sender: UISwitch) {
         if sender.isOn {
             self.dayOfWeekCollection.isHidden = false
+            self.repeatEndDateTextField.isHidden = false
         } else {
             self.dayOfWeekCollection.isHidden = true
-            repeatString = "-------"
+            self.repeatEndDateTextField.isHidden = true
+            self.repeatEndDateTimePicker.isHidden = true
         }
         startTimePicker.isHidden = true
         endTimePicker.isHidden = true
@@ -200,8 +214,6 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
                 repeatString = replace(repeatString, at: 6, with: "-")
             }
         }
-        
-        print(repeatString)
     }
     
     func replace(_ myString: String, at index: Int, with newChar: Character) -> String {
@@ -214,22 +226,61 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func saveEventToCalendar(_ sender: Any) {
         if eventName == "" || startTimeTextField.hasText == false || endTimeTextField.hasText == false{
-            let alert = UIAlertController(title: "Can't Add Event", message: "Please enter a valid title/start time/end time!", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Failed to Add Event", message: "Please enter a valid title/start time/end time!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else if startTime > endTime {
+            let alert = UIAlertController(title: "Failed to Add Event", message: "Start time cannot be later than end time.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else if stringOfDate(startTime) != stringOfDate(endTime){
+            let alert = UIAlertController(title: "Failed to Add Event", message: "Start time and end time should be on the same date.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         else {
-            do {
-                section = try coreDataController.addSectionToCoreData(id: eventName, start: startTime, end: endTime, repeat: repeatString)
-                
-                try coreDataController.addEventToCoreData(name: eventName, from: startTime, to: endTime, to: section, color: color, at: loc)
-            } catch {
-                print(error)
+            /// repeat event
+            if repeatSwitch.isOn {
+                do {
+                    let endDateAndTime = generateRepeatEndDateAndTime(time: endTime, date: repeatEndDate
+                    )
+                    try coreDataController.addSectionToCoreData(id: eventName, start: startTime, end: endDateAndTime, repeat: repeatString, color: color)
+                } catch {
+                    switch error {
+                    case CoreDataController.AddToCoreDataError.endPreceedsStartDay:
+                        //Do sth.
+                        print()
+                    case CoreDataController.AddToCoreDataError.endPreceedsStartTime:
+                        //Do sth.
+                        print()
+                    default:
+                        print("Uncaught exception: \(error)")
+                    }
+                    print(error)
+                }
             }
-
+            /// one-time event
+            else {
+                do {
+                    try coreDataController.addEventToCoreData(name: eventName, from: startTime, to: endTime, to: nil, color: color, at: loc)
+                } catch {
+                    switch error {
+                    case CoreDataController.AddToCoreDataError.endPreceedsStartDay:
+                        //Do sth.
+                        print()
+                    case CoreDataController.AddToCoreDataError.endPreceedsStartTime:
+                        //Do sth.
+                        print()
+                    default:
+                        print("Uncaught exception: \(error)")
+                    }
+                    print(error)
+                }
+            }
             print("saved!")
             dismiss(animated: true, completion: nil)
-            
         }
     }
     
@@ -241,6 +292,7 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
     @objc func dismissDatePicker() {
         startTimePicker.isHidden = true
         endTimePicker.isHidden = true
+        repeatEndDateTimePicker.isHidden = true
         colorCollection.isHidden = true
         self.view.endEditing(true)
     }
@@ -250,6 +302,26 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.dateStyle = .short
+        let dateString = formatter.string(from: date)
+        return dateString
+    }
+    
+    ///
+    func generateRepeatEndDateAndTime(time: Date, date: Date) -> Date {
+        let dateString = stringOfDate(date)
+        let hour = NSCalendar.current.component(.hour, from: time)
+        let minutes = NSCalendar.current.component(.minute, from: time)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYYY/MM/dd HH:mm"
+        let endDateTime = formatter.date(from: "\(dateString) \(hour):\(minutes)")!
+        return endDateTime
+    }
+
+    
+    func stringOfDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateFormat = "YYYY/MM/dd"
         let dateString = formatter.string(from: date)
         return dateString
     }

@@ -80,7 +80,7 @@ extension CoreDataController {
 
 extension CoreDataController {
     
-    enum addToCoreDataError: Error {
+    public enum AddToCoreDataError: Error {
         case endPreceedsStartDay
         case endPreceedsStartTime
         case invalidRepeatDays
@@ -153,7 +153,7 @@ extension CoreDataController {
         let startDay = calendar.startOfDay(for: start)
         let endDay = calendar.startOfDay(for: end)
         guard startDay <= endDay else {
-            throw addToCoreDataError.endPreceedsStartDay
+            throw AddToCoreDataError.endPreceedsStartDay
         }
         
         let newSession = Session(entity: Session.entity(), insertInto: context)
@@ -219,20 +219,20 @@ extension CoreDataController {
         let startDay = calendar.startOfDay(for: start)
         let endDay = calendar.startOfDay(for: end)
         guard startDay <= endDay else {
-            throw addToCoreDataError.endPreceedsStartDay
+            throw AddToCoreDataError.endPreceedsStartDay
         }
         
         let startTime = start.timeIntervalSince(startDay)
         let endTime = end.timeIntervalSince(endDay)
         guard startTime <= endTime else {
-            throw addToCoreDataError.endPreceedsStartTime
+            throw AddToCoreDataError.endPreceedsStartTime
         }
         
         guard days.count == 7 else {
-            throw addToCoreDataError.invalidRepeatDays
+            throw AddToCoreDataError.invalidRepeatDays
         }
         guard days.range(of: #"[M-][T-][W-][R-][F-][S-][U-]"#, options: .regularExpression) != nil else {
-            throw addToCoreDataError.invalidRepeatDays
+            throw AddToCoreDataError.invalidRepeatDays
         }
         
         let newSection = Section(entity: Section.entity(), insertInto: context)
@@ -280,7 +280,7 @@ extension CoreDataController {
         let startDay = calendar.startOfDay(for: start)
         let endDay = calendar.startOfDay(for: end)
         guard startDay <= endDay else {
-            throw addToCoreDataError.endPreceedsStartDay
+            throw AddToCoreDataError.endPreceedsStartDay
         }
         
         let newEvent = Event(entity: Event.entity(), insertInto: context)
