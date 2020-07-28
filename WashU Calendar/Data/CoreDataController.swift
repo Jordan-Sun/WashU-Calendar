@@ -253,7 +253,11 @@ extension CoreDataController {
                 let weekday = weekdayDict[calendar.component(.weekday, from: currentDay)]
                 if days.contains(weekday) {
                     do {
-                        try addEventToCoreData(name: "\(course?.name ?? "") \(id)", from: currentDay.addingTimeInterval(startTime), to: currentDay.addingTimeInterval(endTime), to: newSection, color: color,at: location)
+                        if let courseName = course?.name {
+                            try addEventToCoreData(name: "\(courseName) \(id)", from: currentDay.addingTimeInterval(startTime), to: currentDay.addingTimeInterval(endTime), to: newSection, color: color,at: location)
+                        } else {
+                            try addEventToCoreData(name: "\(id)", from: currentDay.addingTimeInterval(startTime), to: currentDay.addingTimeInterval(endTime), to: newSection, color: color,at: location)
+                        }
                     } catch {
                         print("Fail to auto generate event for section: \(course?.name ?? "") \(id)")
                     }
@@ -308,34 +312,34 @@ extension CoreDataController {
 
 // Debug functions
 
-extension CoreDataController {
-    
-    func addTestDataToCoreData() {
-        
-        let calendar = Calendar.current
-        let startTime = calendar.startOfDay(for: Date())
-        let endTime = calendar.date(byAdding: DateComponents(day: 14), to: startTime)!
-        
-        let engineering = addSchoolToCoreData(fullName: "McKelvey School of Engineering", shortName: "Engineering")
-        let cse = addDepartmentToCoreData(fullName: "Computer Science and Engineering", shortName: "CSE", code: "E81", to: engineering)
-        
-        let fl2020 = addSemesterToCoreData(name: "FL2020")
-        guard let regDelay = try? addSessionToCoreData(name: "REG-DELAY", start: calendar.date(from: DateComponents(year: 2020, month:9, day: 14))!, end: calendar.date(from: DateComponents(year: 2021, month:1, day: 10))!, to: fl2020) else {
-            print("Fail to generate reg-delay session.")
-            return
-        }
-        
-        let cse131 = addCourseToCoreData(name: "Introduction to Computer Science", id: "131", to: cse, to: regDelay)
-        
-        do {
-            try addSectionToCoreData(id: "11", start: calendar.date(byAdding: DateComponents(hour: 11, minute: 30), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 12, minute: 50), to: endTime)!, repeat: "-T-R---", to: cse131, color: .systemRed, at: "Urbauer / 222")
-            try addSectionToCoreData(id: "22", start: calendar.date(byAdding: DateComponents(hour: 13, minute: 00), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 14, minute: 20), to: endTime)!, repeat: "-T-R---", to: cse131, color: .systemPink, at: "Urbauer / 218")
-            try addSectionToCoreData(id: "33", start: calendar.date(byAdding: DateComponents(hour: 14, minute: 30), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 15, minute: 50), to: endTime)!, repeat: "M-W----", to: cse131, color: .systemIndigo, at: "Urbauer / 216")
-            try addSectionToCoreData(id: "44", start: calendar.date(byAdding: DateComponents(hour: 16, minute: 00), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 17, minute: 20), to: endTime)!, repeat: "M-W----", to: cse131, color: .systemPurple, at: "Urbauer / 214")
-        } catch {
-            print(error)
-        }
-        
-    }
-    
-}
+//extension CoreDataController {
+//
+//    func addTestDataToCoreData() {
+//
+//        let calendar = Calendar.current
+//        let startTime = calendar.startOfDay(for: Date())
+//        let endTime = calendar.date(byAdding: DateComponents(day: 14), to: startTime)!
+//
+//        let engineering = addSchoolToCoreData(fullName: "McKelvey School of Engineering", shortName: "Engineering")
+//        let cse = addDepartmentToCoreData(fullName: "Computer Science and Engineering", shortName: "CSE", code: "E81", to: engineering)
+//
+//        let fl2020 = addSemesterToCoreData(name: "FL2020")
+//        guard let regDelay = try? addSessionToCoreData(name: "REG-DELAY", start: calendar.date(from: DateComponents(year: 2020, month:9, day: 14))!, end: calendar.date(from: DateComponents(year: 2021, month:1, day: 10))!, to: fl2020) else {
+//            print("Fail to generate reg-delay session.")
+//            return
+//        }
+//
+//        let cse131 = addCourseToCoreData(name: "Introduction to Computer Science", id: "131", to: cse, to: regDelay)
+//
+//        do {
+//            try addSectionToCoreData(id: "11", start: calendar.date(byAdding: DateComponents(hour: 11, minute: 30), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 12, minute: 50), to: endTime)!, repeat: "-T-R---", to: cse131, color: .systemRed, at: "Urbauer / 222")
+//            try addSectionToCoreData(id: "22", start: calendar.date(byAdding: DateComponents(hour: 13, minute: 00), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 14, minute: 20), to: endTime)!, repeat: "-T-R---", to: cse131, color: .systemPink, at: "Urbauer / 218")
+//            try addSectionToCoreData(id: "33", start: calendar.date(byAdding: DateComponents(hour: 14, minute: 30), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 15, minute: 50), to: endTime)!, repeat: "M-W----", to: cse131, color: .systemIndigo, at: "Urbauer / 216")
+//            try addSectionToCoreData(id: "44", start: calendar.date(byAdding: DateComponents(hour: 16, minute: 00), to: startTime)!, end: calendar.date(byAdding: DateComponents(hour: 17, minute: 20), to: endTime)!, repeat: "M-W----", to: cse131, color: .systemPurple, at: "Urbauer / 214")
+//        } catch {
+//            print(error)
+//        }
+//
+//    }
+//
+//}
