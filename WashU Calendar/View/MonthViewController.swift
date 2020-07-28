@@ -26,7 +26,7 @@ class MonthViewController: UIViewController {
         case main
     }
     /// Collection view data source
-    private var monthCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,DayEvents>!
+    private var monthCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,Date>!
     /// The min section
     private var minMonthFromNow = -3
     /// The max section
@@ -104,7 +104,7 @@ extension MonthViewController {
     private func configureCollectionDataSource() {
         
         // Diffable data source cell provider
-        monthCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,DayEvents>(collectionView: self.monthCollectionView) { (collectionView, indexPath, dayevents) -> UICollectionViewCell? in
+        monthCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,Date>(collectionView: self.monthCollectionView) { (collectionView, indexPath, date) -> UICollectionViewCell? in
             
             // Dequeue reuseable cell.
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DayCollectionViewCell.reuseIdentifier, for: indexPath) as? DayCollectionViewCell else {
@@ -124,40 +124,44 @@ extension MonthViewController {
             cell.contentScrollView.contentSize = CGSize(width: frameWidth, height: 480)
             
             // Event subcells
-            var eventViewY = 20.0
-            
             let headerFrame = CGRect(x: 2, y: 2, width: frameWidth - 4, height: 18)
             let headerView = UILabel(frame: headerFrame)
             let calendar = Calendar.current
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
-            let dayOfMonth = calendar.dateComponents([.day], from: dayevents.day)
+            let dayOfMonth = calendar.dateComponents([.day], from: date)
             if dayOfMonth == DateComponents(day: 1) {
                 dateFormatter.setLocalizedDateFormatFromTemplate("MMMd")
             } else {
                 dateFormatter.setLocalizedDateFormatFromTemplate("d")
             }
-            headerView.text = dateFormatter.string(from: dayevents.day)
+            headerView.text = dateFormatter.string(from: date)
             headerView.textAlignment = .center
             headerView.font = .preferredFont(forTextStyle: .headline)
             cell.contentScrollView.addSubview(headerView)
             
-            for event in dayevents.events {
+            if let events = self.coreDataController.fetchEventRequest(on: date) {
                 
-                let eventFrame = CGRect(x: 2, y: eventViewY + 2, width: frameWidth - 4, height: 18)
-                let eventView = UIView(frame: eventFrame)
-                eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
-                eventView.layer.cornerRadius = 8
+                var eventViewY = 20.0
                 
-                let nameFrame = CGRect(x: 0, y: 0, width: frameWidth - 4, height: 18)
-                let nameLabel = UILabel(frame: nameFrame)
-                nameLabel.text = event.name
-                nameLabel.font = .preferredFont(forTextStyle: .body)
-                nameLabel.textAlignment = .left
-                eventView.addSubview(nameLabel)
-                
-                cell.contentScrollView.addSubview(eventView)
-                eventViewY += 20.0
+                for event in events {
+                    
+                    let eventFrame = CGRect(x: 2, y: eventViewY + 2, width: frameWidth - 4, height: 18)
+                    let eventView = UIView(frame: eventFrame)
+                    eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
+                    eventView.layer.cornerRadius = 8
+                    
+                    let nameFrame = CGRect(x: 0, y: 0, width: frameWidth - 4, height: 18)
+                    let nameLabel = UILabel(frame: nameFrame)
+                    nameLabel.text = event.name
+                    nameLabel.font = .preferredFont(forTextStyle: .body)
+                    nameLabel.textAlignment = .left
+                    eventView.addSubview(nameLabel)
+                    
+                    cell.contentScrollView.addSubview(eventView)
+                    eventViewY += 20.0
+                    
+                }
                 
             }
             
@@ -174,7 +178,7 @@ extension MonthViewController {
         
         shouldPreloadCell = false
         // Update snapshot
-        var snapshot = NSDiffableDataSourceSnapshot<Section,DayEvents>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section,Date>()
         snapshot.appendSections([.main])
         let calendar = Calendar.current
         let now = appDelegate.currentDate
@@ -186,9 +190,7 @@ extension MonthViewController {
                 print("Fail to compute the date \(daysFromStart) days from month start.")
                 return
             }
-            if let events = coreDataController.fetchEventRequest(on: then) {
-                snapshot.appendItems([DayEvents(day: then, events: events)], toSection: .main)
-            }
+            snapshot.appendItems([then], toSection: .main)
         }
         monthCollectionViewDiffableDataSource.apply(snapshot)
         shouldPreloadCell = true

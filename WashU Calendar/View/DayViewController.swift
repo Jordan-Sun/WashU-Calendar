@@ -8,11 +8,6 @@
 
 import UIKit
 
-struct DayEvents: Hashable {
-    var day: Date
-    var events: [Event]
-}
-
 class DayViewController: UIViewController {
     
     // Core Data Component
@@ -31,7 +26,7 @@ class DayViewController: UIViewController {
         case main
     }
     /// Collection view data source
-    private var dayCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,DayEvents>!
+    private var dayCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,Date>!
     /// Collection view per hour height
     private var hourHeight: Double = 60
     /// Collection view scroll view current y
@@ -119,7 +114,7 @@ extension DayViewController {
     private func configureCollectionDataSource() {
         
         // Diffable data source cell provider
-        dayCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,DayEvents>(collectionView: self.dayCollectionView) { (collectionView, indexPath, dayevents) -> UICollectionViewCell? in
+        dayCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,Date>(collectionView: self.dayCollectionView) { (collectionView, indexPath, date) -> UICollectionViewCell? in
             
             // Dequeue reuseable cell.
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DayCollectionViewCell.reuseIdentifier, for: indexPath) as? DayCollectionViewCell else {
@@ -157,51 +152,61 @@ extension DayViewController {
                 cell.contentScrollView.addSubview(textView)
             }
             
-            // Timeline
+            // Get start of day
             let calendar = Calendar.current
-            let dayStart = calendar.startOfDay(for: dayevents.day)
-            let now = Date()
-            if dayStart == calendar.startOfDay(for: now) {
-                let timelineViewY = DateInterval(start: dayStart, end: now).duration * self.hourHeight / 3600
-                let timelineFrame = CGRect(x: 40, y: timelineViewY - 2, width: frameWidth, height: 4)
-                let timelineView = UIView(frame: timelineFrame)
-                timelineView.backgroundColor = .systemTeal
-            }
+            let dayStart = calendar.startOfDay(for: date)
             
             // Event subcells
-            for event in dayevents.events {
+            if let events = self.coreDataController.fetchEventRequest(on: date) {
                 
-                let eventViewY = DateInterval(start: dayStart, end: event.start!).duration * self.hourHeight / 3600
-                let eventViewHeight = max(DateInterval(start: event.start!, end: event.end!).duration * self.hourHeight / 3600, self.hourHeight)
-                let eventFrame = CGRect(x: 54, y: eventViewY + 4, width: frameWidth - 58, height: eventViewHeight - 8)
-                let eventView = UIView(frame: eventFrame)
-                eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
-                eventView.layer.cornerRadius = 8
+                for event in events {
+                    
+                    let eventViewY = DateInterval(start: dayStart, end: event.start!).duration * self.hourHeight / 3600
+                    let eventViewHeight = max(DateInterval(start: event.start!, end: event.end!).duration * self.hourHeight / 3600, self.hourHeight)
+                    let eventFrame = CGRect(x: 54, y: eventViewY + 4, width: frameWidth - 58, height: eventViewHeight - 8)
+                    let eventView = UIView(frame: eventFrame)
+                    eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
+                    eventView.layer.cornerRadius = 8
+                    
+                    let nameFrame = CGRect(x: 4, y: 4, width: frameWidth - 8, height: 20)
+                    let nameLabel = UILabel(frame: nameFrame)
+                    nameLabel.text = event.name
+                    nameLabel.font = .preferredFont(forTextStyle: .headline)
+                    nameLabel.textAlignment = .left
+                    eventView.addSubview(nameLabel)
+                    
+                    let timeFrame = CGRect(x: frameWidth/2 - 29, y: 24, width: frameWidth/2 - 33, height: 20)
+                    let timeLabel = UILabel(frame: timeFrame)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "h:mm a"
+                    timeLabel.text = "\(dateFormatter.string(from: event.start!))-\(dateFormatter.string(from: event.end!))"
+                    timeLabel.font = .preferredFont(forTextStyle: .callout)
+                    timeLabel.textAlignment = .right
+                    eventView.addSubview(timeLabel)
+                    
+                    let locationFrame = CGRect(x: 4, y: 24, width: frameWidth/2 - 33, height: 30)
+                    let locationLabel = UILabel(frame: locationFrame)
+                    locationLabel.text = event.location ?? "TBA"
+                    locationLabel.font = .preferredFont(forTextStyle: .body)
+                    locationLabel.textAlignment = .left
+                    eventView.addSubview(locationLabel)
+                    
+                    cell.contentScrollView.addSubview(eventView)
+                    
+                }
                 
-                let nameFrame = CGRect(x: 4, y: 4, width: frameWidth - 8, height: 20)
-                let nameLabel = UILabel(frame: nameFrame)
-                nameLabel.text = event.name
-                nameLabel.font = .preferredFont(forTextStyle: .headline)
-                nameLabel.textAlignment = .left
-                eventView.addSubview(nameLabel)
+            }
+            
+            // Timeline
+            let now = Date()
+            if dayStart == calendar.startOfDay(for: now) {
                 
-                let timeFrame = CGRect(x: frameWidth/2 - 29, y: 24, width: frameWidth/2 - 33, height: 20)
-                let timeLabel = UILabel(frame: timeFrame)
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "h:mm a"
-                timeLabel.text = "\(dateFormatter.string(from: event.start!))-\(dateFormatter.string(from: event.end!))"
-                timeLabel.font = .preferredFont(forTextStyle: .callout)
-                timeLabel.textAlignment = .right
-                eventView.addSubview(timeLabel)
+                let timelineViewY = DateInterval(start: dayStart, end: now).duration * self.hourHeight / 3600
+                let timelineFrame = CGRect(x: 40, y: timelineViewY - 2, width: frameWidth, height: 2)
+                let timelineView = UIView(frame: timelineFrame)
+                timelineView.backgroundColor = .systemBlue
+                cell.contentScrollView.addSubview(timelineView)
                 
-                let locationFrame = CGRect(x: 4, y: 24, width: frameWidth/2 - 33, height: 30)
-                let locationLabel = UILabel(frame: locationFrame)
-                locationLabel.text = event.location ?? "TBA"
-                locationLabel.font = .preferredFont(forTextStyle: .body)
-                locationLabel.textAlignment = .left
-                eventView.addSubview(locationLabel)
-                
-                cell.contentScrollView.addSubview(eventView)
             }
             
             cell.contentScrollView.layoutSubviews()
@@ -239,7 +244,7 @@ extension DayViewController {
         
         // Get genre section at the target index path
         let calendar = Calendar.current
-        guard let then = dayCollectionViewDiffableDataSource.itemIdentifier(for: indexPath)?.day else {
+        guard let then = dayCollectionViewDiffableDataSource.itemIdentifier(for: indexPath) else {
             print("Fail to retrive day from \(indexPath).")
             return nil
         }
@@ -268,7 +273,7 @@ extension DayViewController {
         
         shouldPreloadCell = false
         // Update snapshot
-        var snapshot = NSDiffableDataSourceSnapshot<Section,DayEvents>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section,Date>()
         snapshot.appendSections([.main])
         let calendar = Calendar.current
         let now = appDelegate.currentDate
@@ -277,9 +282,7 @@ extension DayViewController {
                 print("Fail to compute the date \(daysFromNow) days from now.")
                 return
             }
-            if let events = coreDataController.fetchEventRequest(on: then) {
-                snapshot.appendItems([DayEvents(day: then, events: events)], toSection: .main)
-            }
+            snapshot.appendItems([then], toSection: .main)
         }
         dayCollectionViewDiffableDataSource.apply(snapshot)
         shouldPreloadCell = true
@@ -297,12 +300,10 @@ extension DayViewController: UICollectionViewDelegate {
         if shouldPreloadCell {
             if indexPath.row == 0 {
                 minDateFromNow -= 1
-                updateSnapshot()
-                dayCollectionView.scrollToItem(at: IndexPath(row: 2, section: 0), at: .left, animated: false)
             } else if indexPath.row == maxDateFromNow - minDateFromNow {
                 maxDateFromNow += 1
-                updateSnapshot()
             }
+            updateSnapshot()
         }
         
     }
