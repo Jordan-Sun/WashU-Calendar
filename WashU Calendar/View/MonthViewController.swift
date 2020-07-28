@@ -165,6 +165,14 @@ extension MonthViewController {
                 
             }
             
+            let month = calendar.dateComponents([.month], from: date).month!
+            let sectionMonth = calendar.dateComponents([.second], from: date).second!
+            if month == sectionMonth {
+                cell.contentScrollView.backgroundColor = .systemBackground
+            } else {
+                cell.contentScrollView.backgroundColor = .secondarySystemBackground
+            }
+            
             cell.contentScrollView.layoutSubviews()
             
             return cell
@@ -182,16 +190,27 @@ extension MonthViewController {
         snapshot.appendSections([.main])
         let calendar = Calendar.current
         let now = appDelegate.currentDate
-        let monthStart = calendar.date(from: calendar.dateComponents([.year,.month], from: now))!
-        let dayStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: monthStart))!
+        let nowMonthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
         
-        for daysFromStart in minMonthFromNow * 42 ..< maxMonthFromNow * 42 {
-            guard let then = calendar.date(byAdding: DateComponents(day: daysFromStart), to: dayStart) else {
-                print("Fail to compute the date \(daysFromStart) days from month start.")
-                return
+        for monthsFromStart in minMonthFromNow ..< maxMonthFromNow {
+            
+            let monthStart = calendar.date(byAdding: DateComponents(month: monthsFromStart), to: nowMonthStart)!
+            let month = calendar.dateComponents([.month], from: monthStart).month!
+            let weekStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: monthStart))!
+            let start = calendar.date(byAdding: DateComponents(second: month), to: weekStart)!
+            
+            var days = [Date]()
+            for daysFromStart in 0 ..< 42 {
+                guard let then = calendar.date(byAdding: DateComponents(day: daysFromStart), to: start) else {
+                    print("Fail to compute the date \(daysFromStart) days from month start.")
+                    return
+                }
+                days.append(then)
             }
-            snapshot.appendItems([then], toSection: .main)
+            snapshot.appendItems(days, toSection: .main)
+            
         }
+        
         monthCollectionViewDiffableDataSource.apply(snapshot)
         shouldPreloadCell = true
         
@@ -210,7 +229,7 @@ extension MonthViewController: UICollectionViewDelegate {
                 minMonthFromNow -= 1
                 updateSnapshot()
                 monthCollectionView.scrollToItem(at: IndexPath(row: 2, section: 0), at: .left, animated: false)
-            } else if indexPath.row == maxMonthFromNow - minMonthFromNow {
+            } else if indexPath.row == (maxMonthFromNow - minMonthFromNow) * 42 - 10 {
                 maxMonthFromNow += 1
                 updateSnapshot()
             }

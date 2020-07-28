@@ -51,7 +51,6 @@ class DayViewController: UIViewController {
         super.viewWillAppear(animated)
         // Load course data after the view appears.
         updateSnapshot()
-        dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .left, animated: false)
     }
     
     @IBAction func pushAddView(_ sender: Any) {
@@ -248,7 +247,7 @@ extension DayViewController {
             print("Fail to retrive day from \(indexPath).")
             return nil
         }
-        let daysFromNow = calendar.dateComponents([.day], from: calendar.startOfDay(for: appDelegate.currentDate), to: calendar.startOfDay(for: then) )
+        let daysFromNow = calendar.dateComponents([.day], from: calendar.startOfDay(for: Date()), to: calendar.startOfDay(for: then) )
         // Configure header
         switch daysFromNow {
         case DateComponents(day: -1):
@@ -304,8 +303,16 @@ extension DayViewController: UICollectionViewDelegate {
                 maxDateFromNow += 1
             }
             updateSnapshot()
+//            if let date = dayCollectionViewDiffableDataSource.itemIdentifier(for: indexPath) {
+//                appDelegate.currentDate = date
+//                updateSnapshot()
+//            }
         }
         
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .left, animated: true)
     }
     
 }

@@ -18,10 +18,6 @@ class ListViewController: UIViewController {
     /// Core data controller
     private var coreDataController: CoreDataController!
     
-    // JSON Component
-    /// Json controller
-    private var jsonController: JsonController!
-    
     // Collection View Component
     /// Collection view
     @IBOutlet weak var eventCollectionView: UICollectionView!
@@ -36,12 +32,10 @@ class ListViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
-        jsonController = JsonController()
         configureCollectionDataSource()
         configureCollectionLayout()
 //        configureGestureRecognizers()
         eventCollectionView.delegate = self
-        jsonController.generateTestData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -114,7 +108,7 @@ extension ListViewController {
                 fatalError("Expected reused cell to be of type EventCollectionViewCell.")
             }
             
-            guard event.start != nil else {
+            guard event.end != nil else {
                 
                 // Provide exception cell
                 cell.nameLabel.text = event.name
@@ -170,17 +164,22 @@ extension ListViewController {
         header.backgroundColor = .systemBackground
         
         // Get genre section at the target index path
-        let daysFromNow = indexPath.section + minDateFromNow
+        let calendar = Calendar.current
+        guard let then = eventCollectionViewDiffableDataSource.itemIdentifier(for: indexPath)?.start else {
+            print("Fail to retrive day from \(indexPath).")
+            return nil
+        }
+        let daysFromNow = calendar.dateComponents([.day], from: calendar.startOfDay(for: Date()), to: calendar.startOfDay(for: then) ).day!
         
         // Configure header
         switch daysFromNow {
+        case -1:
+            header.label.text = "Yesterday"
         case 0:
             header.label.text = "Today"
         case 1:
             header.label.text = "Tomorrow"
         default:
-            let calendar = Calendar.current
-            let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: Date())!
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
             dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd, EEEE")
@@ -201,6 +200,7 @@ extension ListViewController {
             if events.isEmpty {
                 let nilEvent = Event(entity: Event.entity(), insertInto: nil)
                 nilEvent.name = "Nothing planned today"
+                nilEvent.start = date
                 snapshot.appendItems([nilEvent], toSection: date)
             } else {
                 snapshot.appendItems(events, toSection: date)
@@ -208,6 +208,7 @@ extension ListViewController {
         } else {
             let failEvent = Event(entity: Event.entity(), insertInto: nil)
             failEvent.name = "Fail to fetch event data"
+            failEvent.start = date
             snapshot.appendItems([failEvent], toSection: date)
         }
     }
