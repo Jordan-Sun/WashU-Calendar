@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -54,7 +54,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <action selector="eventBeginEditing:" destination="-1" eventType="editingDidBegin" id="Ls1-Kq-98W"/>
-                                                <action selector="eventCompleted:" destination="-1" eventType="editingDidEnd" id="X6E-9t-ws5"/>
+                                                <action selector="eventCompleted:" destination="-1" eventType="editingChanged" id="mDt-mL-3De"/>
                                             </connections>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0En-Oh-1Aa">
@@ -73,7 +73,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <action selector="locationBeginEditing:" destination="-1" eventType="editingDidBegin" id="q4r-tW-IGP"/>
-                                                <action selector="locationCompleted:" destination="-1" eventType="editingDidEnd" id="lSJ-f6-SdR"/>
+                                                <action selector="locationCompleted:" destination="-1" eventType="editingChanged" id="wfJ-ze-Hbb"/>
                                             </connections>
                                         </textField>
                                     </subviews>
@@ -123,8 +123,8 @@
                                                 <constraint firstAttribute="height" constant="40" id="IIt-ZG-Ho6"/>
                                             </constraints>
                                         </stackView>
-                                        <datePicker hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="10" translatesAutoresizingMaskIntoConstraints="NO" id="URF-Yx-rqz">
-                                            <rect key="frame" x="0.0" y="40" width="320" height="100"/>
+                                        <datePicker hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="URF-Yx-rqz">
+                                            <rect key="frame" x="0.0" y="40" width="382" height="100"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="100" id="Fgv-Ki-vj2"/>
                                             </constraints>
@@ -158,8 +158,8 @@
                                                 <constraint firstAttribute="height" constant="40" id="9uM-Nz-tqD"/>
                                             </constraints>
                                         </stackView>
-                                        <datePicker hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Um-C6-giX">
-                                            <rect key="frame" x="0.0" y="81" width="320" height="100"/>
+                                        <datePicker hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="4Um-C6-giX">
+                                            <rect key="frame" x="0.0" y="81" width="382" height="100"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="100" id="HLY-i7-jb6"/>
                                             </constraints>
@@ -431,11 +431,13 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="k9U-H4-ggn" secondAttribute="trailing" id="7AR-mB-EeW"/>
+                                        <constraint firstAttribute="trailing" secondItem="URF-Yx-rqz" secondAttribute="trailing" constant="16" id="7Mv-cf-Rkn"/>
                                         <constraint firstAttribute="trailing" secondItem="Hw8-Nx-J7g" secondAttribute="trailing" id="Pw6-WB-CxE"/>
                                         <constraint firstAttribute="trailing" secondItem="bdy-oJ-z3d" secondAttribute="trailing" constant="16" id="T1n-hy-jhJ"/>
                                         <constraint firstAttribute="trailing" secondItem="h7N-OS-smd" secondAttribute="trailing" constant="16" id="TWN-an-Tfu"/>
                                         <constraint firstAttribute="trailing" secondItem="nGE-mq-3Hl" secondAttribute="trailing" constant="16" id="YMh-ch-iSp"/>
                                         <constraint firstAttribute="trailing" secondItem="YAu-9J-Ghg" secondAttribute="trailing" id="Z4r-Hz-7BI"/>
+                                        <constraint firstAttribute="trailing" secondItem="4Um-C6-giX" secondAttribute="trailing" constant="16" id="aP8-yD-tMG"/>
                                         <constraint firstAttribute="trailing" secondItem="i0n-NX-O6r" secondAttribute="trailing" constant="16" id="bBt-9b-bfZ"/>
                                         <constraint firstAttribute="trailing" secondItem="waA-Tj-7RZ" secondAttribute="trailing" constant="16" id="fly-sM-7VX"/>
                                         <constraint firstAttribute="trailing" secondItem="dVE-8u-m2F" secondAttribute="trailing" constant="16" id="jtR-Ea-bbr"/>
