@@ -51,10 +51,11 @@ class ListViewController: UIViewController {
         eventCollectionView.scrollToItem(at: IndexPath(row: 0, section: -minDateFromNow), at: .top, animated: false)
     }
     
-    //Debug functions
-    @IBAction func addTestData(_ sender: Any) {
-        coreDataController.addTestDataToCoreData()
-        updateSnapshot()
+    
+    @IBAction func pushAddView(_ sender: Any) {
+        let newViewController = AddEventViewController()
+        present(newViewController, animated: true, completion: nil)
+
     }
     
 }

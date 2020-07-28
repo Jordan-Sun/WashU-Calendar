@@ -134,7 +134,7 @@ extension DayViewController {
             // Update cell
             cell.contentScrollView.backgroundColor = .systemBackground
             let frameWidth = Double(cell.bounds.width)
-            cell.contentScrollView.contentSize = CGSize(width: frameWidth, height: self.hourHeight * 24 + 40)
+            cell.contentScrollView.contentSize = CGSize(width: frameWidth, height: self.hourHeight * 24 + 80)
             
             // Time sheet
             for hour in 0 ..< 24 {
@@ -172,20 +172,20 @@ extension DayViewController {
             for event in dayevents.events {
                 
                 let eventViewY = DateInterval(start: dayStart, end: event.start!).duration * self.hourHeight / 3600
-                let eventViewHeight = max(DateInterval(start: event.start!, end: event.end!).duration * self.hourHeight / 3600, self.hourHeight/2)
+                let eventViewHeight = max(DateInterval(start: event.start!, end: event.end!).duration * self.hourHeight / 3600, self.hourHeight)
                 let eventFrame = CGRect(x: 54, y: eventViewY + 4, width: frameWidth - 58, height: eventViewHeight - 8)
                 let eventView = UIView(frame: eventFrame)
                 eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
                 eventView.layer.cornerRadius = 8
                 
-                let nameFrame = CGRect(x: 4, y: 4, width: frameWidth - 8, height: 30)
+                let nameFrame = CGRect(x: 4, y: 4, width: frameWidth - 8, height: 20)
                 let nameLabel = UILabel(frame: nameFrame)
                 nameLabel.text = event.name
                 nameLabel.font = .preferredFont(forTextStyle: .headline)
                 nameLabel.textAlignment = .left
                 eventView.addSubview(nameLabel)
                 
-                let timeFrame = CGRect(x: frameWidth/2 - 29, y: 34, width: frameWidth/2 - 33, height: 30)
+                let timeFrame = CGRect(x: frameWidth/2 - 29, y: 24, width: frameWidth/2 - 33, height: 20)
                 let timeLabel = UILabel(frame: timeFrame)
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "h:mm a"
@@ -194,7 +194,7 @@ extension DayViewController {
                 timeLabel.textAlignment = .right
                 eventView.addSubview(timeLabel)
                 
-                let locationFrame = CGRect(x: 4, y: 34, width: frameWidth/2 - 33, height: 30)
+                let locationFrame = CGRect(x: 4, y: 24, width: frameWidth/2 - 33, height: 30)
                 let locationLabel = UILabel(frame: locationFrame)
                 locationLabel.text = event.location ?? "TBA"
                 locationLabel.font = .preferredFont(forTextStyle: .body)

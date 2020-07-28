@@ -50,6 +50,12 @@ class MonthViewController: UIViewController {
         monthCollectionView.scrollToItem(at: IndexPath(row: 42 * -minMonthFromNow, section: 0), at: .left, animated: false)
     }
     
+    @IBAction func pushAddView(_ sender: Any) {
+        let newViewController = AddEventViewController()
+        present(newViewController, animated: true, completion: nil)
+
+    }
+    
 }
 
 // Collection View Layout
