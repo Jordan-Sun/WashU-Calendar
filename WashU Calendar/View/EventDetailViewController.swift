@@ -15,6 +15,7 @@ class EventDetailViewController: UIViewController {
     
     @IBOutlet weak var eventView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var repeatLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
@@ -28,6 +29,8 @@ class EventDetailViewController: UIViewController {
         nameLabel.text = event.name
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd, EEEE")
+        dateLabel.text = dateFormatter.string(from: event.start!)
         dateFormatter.setLocalizedDateFormatFromTemplate("hh:mm a")
         timeLabel.text = "\(dateFormatter.string(from: event.start!)) - \(dateFormatter.string(from: event.end!))"
         if let days = event.section?.days {

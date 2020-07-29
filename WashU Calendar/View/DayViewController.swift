@@ -196,9 +196,10 @@ extension DayViewController {
                 let eventViewY = DateInterval(start: dayStart, end: event.start!).duration * self.hourHeight / 3600
                 let eventViewHeight = max(DateInterval(start: event.start!, end: event.end!).duration * self.hourHeight / 3600, self.hourHeight)
                 let eventFrame = CGRect(x: 54, y: eventViewY + 4, width: frameWidth - 58, height: eventViewHeight - 8)
-                let eventView = UIView(frame: eventFrame)
+                let eventView = EventView(frame: eventFrame)
                 eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
                 eventView.layer.cornerRadius = 8
+                eventView.event = event
                 
                 let nameFrame = CGRect(x: 4, y: 4, width: frameWidth - 8, height: 20)
                 let nameLabel = UILabel(frame: nameFrame)
@@ -223,6 +224,12 @@ extension DayViewController {
                 locationLabel.textAlignment = .left
                 eventView.addSubview(locationLabel)
                 
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didSelectEventViewAt(_:)))
+                tapGestureRecognizer.numberOfTapsRequired = 1
+                tapGestureRecognizer.numberOfTouchesRequired = 1
+                eventView.addGestureRecognizer(tapGestureRecognizer)
+                eventView.isUserInteractionEnabled = true
+                
                 cell.contentScrollView.addSubview(eventView)
                 
             }
@@ -238,8 +245,6 @@ extension DayViewController {
                 cell.contentScrollView.addSubview(timelineView)
                 
             }
-            
-            let gestureRecognizer = UIGestureRecognizer(target: <#T##Any?#>, action: <#T##Selector?#>)
             
             cell.contentScrollView.layoutSubviews()
             cell.contentScrollView.contentOffset = .init(x: 0, y: self.currentY)
@@ -343,6 +348,20 @@ extension DayViewController: UICollectionViewDelegate {
 //                updateSnapshot()
 //            }
         }
+        
+    }
+    
+    @objc func didSelectEventViewAt(_ sender: UIGestureRecognizer) {
+        
+        guard let senderView = sender.view as? EventView else {
+            print("Fail to get the event view attached to the UIGestureRecognizer")
+            return
+        }
+        
+        let detailView = EventDetailViewController()
+        detailView.event = senderView.event
+        detailView.coreDataController = coreDataController
+        navigationController?.pushViewController(detailView, animated: true)
         
     }
     

@@ -172,9 +172,10 @@ extension MonthViewController {
             for event in events {
                 
                 let eventFrame = CGRect(x: 2, y: eventViewY + 2, width: frameWidth - 4, height: 18)
-                let eventView = UIView(frame: eventFrame)
+                let eventView = EventView(frame: eventFrame)
                 eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
                 eventView.layer.cornerRadius = 8
+                eventView.event = event
                 
                 let nameFrame = CGRect(x: 0, y: 0, width: frameWidth - 4, height: 18)
                 let nameLabel = UILabel(frame: nameFrame)
@@ -182,6 +183,12 @@ extension MonthViewController {
                 nameLabel.font = .preferredFont(forTextStyle: .body)
                 nameLabel.textAlignment = .left
                 eventView.addSubview(nameLabel)
+                
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didSelectEventViewAt(_:)))
+                tapGestureRecognizer.numberOfTapsRequired = 1
+                tapGestureRecognizer.numberOfTouchesRequired = 1
+                eventView.addGestureRecognizer(tapGestureRecognizer)
+                eventView.isUserInteractionEnabled = true
                 
                 cell.contentScrollView.addSubview(eventView)
                 eventViewY += 20.0
@@ -258,6 +265,20 @@ extension MonthViewController: UICollectionViewDelegate {
                 updateSnapshot()
             }
         }
+        
+    }
+    
+    @objc func didSelectEventViewAt(_ sender: UIGestureRecognizer) {
+        
+        guard let senderView = sender.view as? EventView else {
+            print("Fail to get the event view attached to the UIGestureRecognizer")
+            return
+        }
+        
+        let detailView = EventDetailViewController()
+        detailView.event = senderView.event
+        detailView.coreDataController = coreDataController
+        navigationController?.pushViewController(detailView, animated: true)
         
     }
     
