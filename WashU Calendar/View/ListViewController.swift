@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ListViewController: UIViewController {
     
@@ -17,10 +18,8 @@ class ListViewController: UIViewController {
     private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
     /// Core data controller
     private var coreDataController: CoreDataController!
-    
-    // JSON Component
-    /// Json controller
-    private var jsonController: JsonController!
+    /// Core data fetched result controller
+    private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
     // Collection View Component
     /// Collection view
@@ -31,17 +30,20 @@ class ListViewController: UIViewController {
     private var minDateFromNow = -3
     /// The max section
     private var maxDateFromNow = 14
+    /// A boolean indicating whether the collection view should preload cell
+    private var shouldPreloadCell = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
-        jsonController = JsonController()
+        coreDataController.delegate = self
+        
         configureCollectionDataSource()
         configureCollectionLayout()
 //        configureGestureRecognizers()
         eventCollectionView.delegate = self
-        jsonController.generateTestData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -53,9 +55,28 @@ class ListViewController: UIViewController {
     
     
     @IBAction func pushAddView(_ sender: Any) {
-        let newViewController = AddEventViewController()
-        present(newViewController, animated: true, completion: nil)
-
+        let actionSheet = UIAlertController(title: "Add a new event ...", message: nil, preferredStyle: .actionSheet)
+        
+        let manualAction = UIAlertAction(title: "Manually", style: .default, handler: {
+            action in
+            let newViewController = AddEventViewController()
+            newViewController.coreDataController = self.coreDataController
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(manualAction)
+        
+        let courseListingAction = UIAlertAction(title: "via CourseListing", style: .default, handler: {
+            action in
+            let newViewController = AddCourseListingViewController()
+            newViewController.coreDataController = self.coreDataController
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(courseListingAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
     }
     
 }
@@ -114,7 +135,7 @@ extension ListViewController {
                 fatalError("Expected reused cell to be of type EventCollectionViewCell.")
             }
             
-            guard event.start != nil else {
+            guard event.end != nil else {
                 
                 // Provide exception cell
                 cell.nameLabel.text = event.name
@@ -170,17 +191,22 @@ extension ListViewController {
         header.backgroundColor = .systemBackground
         
         // Get genre section at the target index path
-        let daysFromNow = indexPath.section + minDateFromNow
+        let calendar = Calendar.current
+        guard let then = eventCollectionViewDiffableDataSource.itemIdentifier(for: indexPath)?.start else {
+            print("Fail to retrive day from \(indexPath).")
+            return nil
+        }
+        let daysFromNow = calendar.dateComponents([.day], from: calendar.startOfDay(for: Date()), to: calendar.startOfDay(for: then) ).day!
         
         // Configure header
         switch daysFromNow {
+        case -1:
+            header.label.text = "Yesterday"
         case 0:
             header.label.text = "Today"
         case 1:
             header.label.text = "Tomorrow"
         default:
-            let calendar = Calendar.current
-            let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: Date())!
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
             dateFormatter.setLocalizedDateFormatFromTemplate("MMMMd, EEEE")
@@ -201,6 +227,7 @@ extension ListViewController {
             if events.isEmpty {
                 let nilEvent = Event(entity: Event.entity(), insertInto: nil)
                 nilEvent.name = "Nothing planned today"
+                nilEvent.start = date
                 snapshot.appendItems([nilEvent], toSection: date)
             } else {
                 snapshot.appendItems(events, toSection: date)
@@ -208,12 +235,15 @@ extension ListViewController {
         } else {
             let failEvent = Event(entity: Event.entity(), insertInto: nil)
             failEvent.name = "Fail to fetch event data"
+            failEvent.start = date
             snapshot.appendItems([failEvent], toSection: date)
         }
     }
     
     /// Initialize the snapshot using NSFetchRequest
     private func updateSnapshot() {
+        
+        shouldPreloadCell = false
         
         // Initialize a new snapshot
         var snapshot = NSDiffableDataSourceSnapshot<Date,Event>()
@@ -234,6 +264,8 @@ extension ListViewController {
         // Apply snapshot
         eventCollectionViewDiffableDataSource.apply(newSnapshot)
         
+        shouldPreloadCell = true
+        
     }
     
 }
@@ -242,26 +274,47 @@ extension ListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        // Check if should preload the next section.
-        if indexPath.section + 1 > maxDateFromNow - minDateFromNow {
-            maxDateFromNow += 1
-            updateSnapshot()
+        if shouldPreloadCell {
+            // Check if should preload the next section.
+            if indexPath.section + 1 > maxDateFromNow - minDateFromNow {
+                maxDateFromNow += 1
+                updateSnapshot()
+            }
         }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let detailView = EventDetailViewController()
+        detailView.event = eventCollectionViewDiffableDataSource.itemIdentifier(for: indexPath)
+        detailView.coreDataController = coreDataController
+        navigationController?.pushViewController(detailView, animated: true)
         
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        guard let minVisibleIndexPath = eventCollectionView.indexPathsForVisibleItems.min() else {
-            print("Fail to get min visible index path for event collection view.")
-            return
+        if shouldPreloadCell {
+            guard let minVisibleIndexPath = eventCollectionView.indexPathsForVisibleItems.min() else {
+                print("Fail to get min visible index path for event collection view.")
+                return
+            }
+            
+            if minVisibleIndexPath.section == 0 {
+                minDateFromNow -= 1
+                updateSnapshot()
+            }
         }
         
-        if minVisibleIndexPath.section == 0 {
-            minDateFromNow -= 1
-            updateSnapshot()
-        }
-        
+    }
+    
+}
+
+extension ListViewController: CoreDataControllerDelegate {
+    
+    func controllerDidChangeContent() {
+        self.updateSnapshot()
     }
     
 }

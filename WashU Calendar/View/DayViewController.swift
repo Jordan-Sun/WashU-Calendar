@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 struct DayEvents: Hashable {
     var day: Date
@@ -22,6 +23,8 @@ class DayViewController: UIViewController {
     private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
     /// Core data controller
     private var coreDataController: CoreDataController!
+    /// Core data fetched result controller
+    private var eventFetchedResultController: NSFetchedResultsController<Event>!
 
     // Collection View Component
     /// Collection view
@@ -46,7 +49,10 @@ class DayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+        coreDataController.delegate = self
+        
         configureCollectionDataSource()
         configureCollectionLayout()
         dayCollectionView.delegate = self
@@ -56,12 +62,32 @@ class DayViewController: UIViewController {
         super.viewWillAppear(animated)
         // Load course data after the view appears.
         updateSnapshot()
-        dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .left, animated: false)
+        dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .top, animated: false)
     }
     
     @IBAction func pushAddView(_ sender: Any) {
-        let newViewController = AddEventViewController()
-        present(newViewController, animated: true, completion: nil)
+        let actionSheet = UIAlertController(title: "Add a new event ...", message: nil, preferredStyle: .actionSheet)
+        
+        let manualAction = UIAlertAction(title: "Manually", style: .default, handler: {
+            action in
+            let newViewController = AddEventViewController()
+            newViewController.coreDataController = self.coreDataController
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(manualAction)
+        
+        let courseListingAction = UIAlertAction(title: "via CourseListing", style: .default, handler: {
+            action in
+            let newViewController = AddCourseListingViewController()
+            newViewController.coreDataController = self.coreDataController
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(courseListingAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
 
     }
 
@@ -119,7 +145,7 @@ extension DayViewController {
     private func configureCollectionDataSource() {
         
         // Diffable data source cell provider
-        dayCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,DayEvents>(collectionView: self.dayCollectionView) { (collectionView, indexPath, dayevents) -> UICollectionViewCell? in
+        dayCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,DayEvents>(collectionView: self.dayCollectionView) { (collectionView, indexPath, dayEvents) -> UICollectionViewCell? in
             
             // Dequeue reuseable cell.
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DayCollectionViewCell.reuseIdentifier, for: indexPath) as? DayCollectionViewCell else {
@@ -130,6 +156,7 @@ extension DayViewController {
             for subview in cell.contentScrollView.subviews {
                 subview.removeFromSuperview()
             }
+            
             
             // Update cell
             cell.contentScrollView.backgroundColor = .systemBackground
@@ -157,26 +184,22 @@ extension DayViewController {
                 cell.contentScrollView.addSubview(textView)
             }
             
-            // Timeline
+            // Get start of day
+            let date = dayEvents.day
             let calendar = Calendar.current
-            let dayStart = calendar.startOfDay(for: dayevents.day)
-            let now = Date()
-            if dayStart == calendar.startOfDay(for: now) {
-                let timelineViewY = DateInterval(start: dayStart, end: now).duration * self.hourHeight / 3600
-                let timelineFrame = CGRect(x: 40, y: timelineViewY - 2, width: frameWidth, height: 4)
-                let timelineView = UIView(frame: timelineFrame)
-                timelineView.backgroundColor = .systemTeal
-            }
+            let dayStart = calendar.startOfDay(for: date)
             
             // Event subcells
-            for event in dayevents.events {
+            let events = dayEvents.events
+            for event in events {
                 
                 let eventViewY = DateInterval(start: dayStart, end: event.start!).duration * self.hourHeight / 3600
                 let eventViewHeight = max(DateInterval(start: event.start!, end: event.end!).duration * self.hourHeight / 3600, self.hourHeight)
                 let eventFrame = CGRect(x: 54, y: eventViewY + 4, width: frameWidth - 58, height: eventViewHeight - 8)
-                let eventView = UIView(frame: eventFrame)
+                let eventView = EventView(frame: eventFrame)
                 eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
                 eventView.layer.cornerRadius = 8
+                eventView.event = event
                 
                 let nameFrame = CGRect(x: 4, y: 4, width: frameWidth - 8, height: 20)
                 let nameLabel = UILabel(frame: nameFrame)
@@ -201,7 +224,26 @@ extension DayViewController {
                 locationLabel.textAlignment = .left
                 eventView.addSubview(locationLabel)
                 
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didSelectEventViewAt(_:)))
+                tapGestureRecognizer.numberOfTapsRequired = 1
+                tapGestureRecognizer.numberOfTouchesRequired = 1
+                eventView.addGestureRecognizer(tapGestureRecognizer)
+                eventView.isUserInteractionEnabled = true
+                
                 cell.contentScrollView.addSubview(eventView)
+                
+            }
+            
+            // Timeline
+            let now = Date()
+            if dayStart == calendar.startOfDay(for: now) {
+                
+                let timelineViewY = DateInterval(start: dayStart, end: now).duration * self.hourHeight / 3600
+                let timelineFrame = CGRect(x: 40, y: timelineViewY - 2, width: frameWidth, height: 2)
+                let timelineView = UIView(frame: timelineFrame)
+                timelineView.backgroundColor = .systemBlue
+                cell.contentScrollView.addSubview(timelineView)
+                
             }
             
             cell.contentScrollView.layoutSubviews()
@@ -239,11 +281,12 @@ extension DayViewController {
         
         // Get genre section at the target index path
         let calendar = Calendar.current
-        guard let then = dayCollectionViewDiffableDataSource.itemIdentifier(for: indexPath)?.day else {
+        guard let thenEvents = dayCollectionViewDiffableDataSource.itemIdentifier(for: indexPath) else {
             print("Fail to retrive day from \(indexPath).")
             return nil
         }
-        let daysFromNow = calendar.dateComponents([.day], from: calendar.startOfDay(for: appDelegate.currentDate), to: calendar.startOfDay(for: then) )
+        let then = thenEvents.day
+        let daysFromNow = calendar.dateComponents([.day], from: calendar.startOfDay(for: Date()), to: calendar.startOfDay(for: then) )
         // Configure header
         switch daysFromNow {
         case DateComponents(day: -1):
@@ -277,9 +320,8 @@ extension DayViewController {
                 print("Fail to compute the date \(daysFromNow) days from now.")
                 return
             }
-            if let events = coreDataController.fetchEventRequest(on: then) {
-                snapshot.appendItems([DayEvents(day: then, events: events)], toSection: .main)
-            }
+            let events = coreDataController.fetchEventRequest(on: then) ?? [Event]()
+            snapshot.appendItems([DayEvents(day: then, events: events)], toSection: .main)
         }
         dayCollectionViewDiffableDataSource.apply(snapshot)
         shouldPreloadCell = true
@@ -297,14 +339,42 @@ extension DayViewController: UICollectionViewDelegate {
         if shouldPreloadCell {
             if indexPath.row == 0 {
                 minDateFromNow -= 1
-                updateSnapshot()
-                dayCollectionView.scrollToItem(at: IndexPath(row: 2, section: 0), at: .left, animated: false)
             } else if indexPath.row == maxDateFromNow - minDateFromNow {
                 maxDateFromNow += 1
-                updateSnapshot()
             }
+            updateSnapshot()
+//            if let date = dayCollectionViewDiffableDataSource.itemIdentifier(for: indexPath) {
+//                appDelegate.currentDate = date
+//                updateSnapshot()
+//            }
         }
         
+    }
+    
+    @objc func didSelectEventViewAt(_ sender: UIGestureRecognizer) {
+        
+        guard let senderView = sender.view as? EventView else {
+            print("Fail to get the event view attached to the UIGestureRecognizer")
+            return
+        }
+        
+        let detailView = EventDetailViewController()
+        detailView.event = senderView.event
+        detailView.coreDataController = coreDataController
+        navigationController?.pushViewController(detailView, animated: true)
+        
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .left, animated: true)
+    }
+    
+}
+
+extension DayViewController: CoreDataControllerDelegate {
+    
+    func controllerDidChangeContent() {
+        self.updateSnapshot()
     }
     
 }

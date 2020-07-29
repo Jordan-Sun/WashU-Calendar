@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class MonthViewController: UIViewController {
     
@@ -17,6 +18,8 @@ class MonthViewController: UIViewController {
     private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
     /// Core data controller
     private var coreDataController: CoreDataController!
+    /// Core data fetched result controller
+    private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
     // Collection View Component
     /// Collection view
@@ -37,7 +40,10 @@ class MonthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+        coreDataController.delegate = self
+        
         configureCollectionDataSource()
         configureCollectionLayout()
         monthCollectionView.delegate = self
@@ -51,9 +57,28 @@ class MonthViewController: UIViewController {
     }
     
     @IBAction func pushAddView(_ sender: Any) {
-        let newViewController = AddEventViewController()
-        present(newViewController, animated: true, completion: nil)
-
+        let actionSheet = UIAlertController(title: "Add a new event ...", message: nil, preferredStyle: .actionSheet)
+        
+        let manualAction = UIAlertAction(title: "Manually", style: .default, handler: {
+            action in
+            let newViewController = AddEventViewController()
+            newViewController.coreDataController = self.coreDataController
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(manualAction)
+        
+        let courseListingAction = UIAlertAction(title: "via CourseListing", style: .default, handler: {
+            action in
+            let newViewController = AddCourseListingViewController()
+            newViewController.coreDataController = self.coreDataController
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(courseListingAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
     }
     
 }
@@ -104,7 +129,7 @@ extension MonthViewController {
     private func configureCollectionDataSource() {
         
         // Diffable data source cell provider
-        monthCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,DayEvents>(collectionView: self.monthCollectionView) { (collectionView, indexPath, dayevents) -> UICollectionViewCell? in
+        monthCollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<Section,DayEvents>(collectionView: self.monthCollectionView) { (collectionView, indexPath, dayEvents) -> UICollectionViewCell? in
             
             // Dequeue reuseable cell.
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DayCollectionViewCell.reuseIdentifier, for: indexPath) as? DayCollectionViewCell else {
@@ -124,30 +149,33 @@ extension MonthViewController {
             cell.contentScrollView.contentSize = CGSize(width: frameWidth, height: 480)
             
             // Event subcells
-            var eventViewY = 20.0
-            
+            let date = dayEvents.day
             let headerFrame = CGRect(x: 2, y: 2, width: frameWidth - 4, height: 18)
             let headerView = UILabel(frame: headerFrame)
             let calendar = Calendar.current
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
-            let dayOfMonth = calendar.dateComponents([.day], from: dayevents.day)
+            let dayOfMonth = calendar.dateComponents([.day], from: date)
             if dayOfMonth == DateComponents(day: 1) {
                 dateFormatter.setLocalizedDateFormatFromTemplate("MMMd")
             } else {
                 dateFormatter.setLocalizedDateFormatFromTemplate("d")
             }
-            headerView.text = dateFormatter.string(from: dayevents.day)
+            headerView.text = dateFormatter.string(from: date)
             headerView.textAlignment = .center
             headerView.font = .preferredFont(forTextStyle: .headline)
             cell.contentScrollView.addSubview(headerView)
             
-            for event in dayevents.events {
+            let events = dayEvents.events
+            var eventViewY = 20.0
+            
+            for event in events {
                 
                 let eventFrame = CGRect(x: 2, y: eventViewY + 2, width: frameWidth - 4, height: 18)
-                let eventView = UIView(frame: eventFrame)
+                let eventView = EventView(frame: eventFrame)
                 eventView.backgroundColor = (event.color as? UIColor) ?? .secondarySystemBackground
                 eventView.layer.cornerRadius = 8
+                eventView.event = event
                 
                 let nameFrame = CGRect(x: 0, y: 0, width: frameWidth - 4, height: 18)
                 let nameLabel = UILabel(frame: nameFrame)
@@ -156,9 +184,23 @@ extension MonthViewController {
                 nameLabel.textAlignment = .left
                 eventView.addSubview(nameLabel)
                 
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didSelectEventViewAt(_:)))
+                tapGestureRecognizer.numberOfTapsRequired = 1
+                tapGestureRecognizer.numberOfTouchesRequired = 1
+                eventView.addGestureRecognizer(tapGestureRecognizer)
+                eventView.isUserInteractionEnabled = true
+                
                 cell.contentScrollView.addSubview(eventView)
                 eventViewY += 20.0
                 
+            }
+            
+            let month = calendar.dateComponents([.month], from: date).month!
+            let sectionMonth = calendar.dateComponents([.second], from: date).second!
+            if month == sectionMonth {
+                cell.contentScrollView.backgroundColor = .systemBackground
+            } else {
+                cell.contentScrollView.backgroundColor = .secondarySystemBackground
             }
             
             cell.contentScrollView.layoutSubviews()
@@ -178,18 +220,28 @@ extension MonthViewController {
         snapshot.appendSections([.main])
         let calendar = Calendar.current
         let now = appDelegate.currentDate
-        let monthStart = calendar.date(from: calendar.dateComponents([.year,.month], from: now))!
-        let dayStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: monthStart))!
+        let nowMonthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
         
-        for daysFromStart in minMonthFromNow * 42 ..< maxMonthFromNow * 42 {
-            guard let then = calendar.date(byAdding: DateComponents(day: daysFromStart), to: dayStart) else {
-                print("Fail to compute the date \(daysFromStart) days from month start.")
-                return
+        for monthsFromStart in minMonthFromNow ..< maxMonthFromNow {
+            
+            let monthStart = calendar.date(byAdding: DateComponents(month: monthsFromStart), to: nowMonthStart)!
+            let month = calendar.dateComponents([.month], from: monthStart).month!
+            let weekStart = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: monthStart))!
+            let start = calendar.date(byAdding: DateComponents(second: month), to: weekStart)!
+            
+            var daysEvents = [DayEvents]()
+            for daysFromStart in 0 ..< 42 {
+                guard let then = calendar.date(byAdding: DateComponents(day: daysFromStart), to: start) else {
+                    print("Fail to compute the date \(daysFromStart) days from month start.")
+                    return
+                }
+                let events = coreDataController.fetchEventRequest(on: then) ?? [Event]()
+                daysEvents.append(DayEvents(day: then, events: events))
             }
-            if let events = coreDataController.fetchEventRequest(on: then) {
-                snapshot.appendItems([DayEvents(day: then, events: events)], toSection: .main)
-            }
+            snapshot.appendItems(daysEvents, toSection: .main)
+            
         }
+        
         monthCollectionViewDiffableDataSource.apply(snapshot)
         shouldPreloadCell = true
         
@@ -208,7 +260,7 @@ extension MonthViewController: UICollectionViewDelegate {
                 minMonthFromNow -= 1
                 updateSnapshot()
                 monthCollectionView.scrollToItem(at: IndexPath(row: 2, section: 0), at: .left, animated: false)
-            } else if indexPath.row == maxMonthFromNow - minMonthFromNow {
+            } else if indexPath.row == (maxMonthFromNow - minMonthFromNow) * 42 - 10 {
                 maxMonthFromNow += 1
                 updateSnapshot()
             }
@@ -216,5 +268,26 @@ extension MonthViewController: UICollectionViewDelegate {
         
     }
     
+    @objc func didSelectEventViewAt(_ sender: UIGestureRecognizer) {
+        
+        guard let senderView = sender.view as? EventView else {
+            print("Fail to get the event view attached to the UIGestureRecognizer")
+            return
+        }
+        
+        let detailView = EventDetailViewController()
+        detailView.event = senderView.event
+        detailView.coreDataController = coreDataController
+        navigationController?.pushViewController(detailView, animated: true)
+        
+    }
+    
 }
 
+extension MonthViewController: CoreDataControllerDelegate {
+    
+    func controllerDidChangeContent() {
+        self.updateSnapshot()
+    }
+    
+}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddCourseListingViewController" customModule="WashU_Calendar" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="gTs-PJ-65l" id="EoB-sB-3uN"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Z9M-x5-Uut"/>
+                <outlet property="webView" destination="uv3-Mt-P6c" id="xF3-Hp-7aP"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bZZ-u8-ldv">
+                    <rect key="frame" x="0.0" y="64" width="414" height="744"/>
+                    <subviews>
+                        <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uv3-Mt-P6c">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                            <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <wkWebViewConfiguration key="configuration">
+                                <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                <wkPreferences key="preferences"/>
+                            </wkWebViewConfiguration>
+                        </wkWebView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAC-kn-Vjf">
+                            <rect key="frame" x="185.5" y="724" width="43" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="TOT-Ex-e50"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <state key="normal" title="Parse"/>
+                            <connections>
+                                <action selector="parseButton:" destination="-1" eventType="touchUpInside" id="jV1-fT-ttR"/>
+                            </connections>
+                        </button>
+                        <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gTs-PJ-65l">
+                            <rect key="frame" x="0.0" y="744" width="414" height="600"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="600" id="tSk-L8-4Pt"/>
+                            </constraints>
+                            <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SjM-VX-GsY">
+                                <size key="itemSize" width="414" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                            <cells/>
+                        </collectionView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="gTs-PJ-65l" firstAttribute="leading" secondItem="bZZ-u8-ldv" secondAttribute="leading" id="75r-3K-U4f"/>
+                        <constraint firstAttribute="trailing" secondItem="gTs-PJ-65l" secondAttribute="trailing" id="J7p-xl-xaX"/>
+                        <constraint firstItem="uv3-Mt-P6c" firstAttribute="width" secondItem="bZZ-u8-ldv" secondAttribute="width" id="ta5-T9-g4H"/>
+                    </constraints>
+                </stackView>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hF1-Uz-4AU">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                    <items>
+                        <navigationItem title="Add Event" id="jmV-Cc-PKn">
+                            <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="f05-Yx-HcJ">
+                                <connections>
+                                    <action selector="cancelAdding:" destination="-1" id="E5l-IJ-6Tz"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="hF1-Uz-4AU" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="2jj-Tt-q28"/>
+                <constraint firstItem="hF1-Uz-4AU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="CC6-Uv-72n"/>
+                <constraint firstItem="bZZ-u8-ldv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="F5Y-RB-3Xh"/>
+                <constraint firstItem="bZZ-u8-ldv" firstAttribute="top" secondItem="hF1-Uz-4AU" secondAttribute="bottom" constant="8" id="NO1-Ho-4Nf"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bZZ-u8-ldv" secondAttribute="trailing" id="cO4-cc-K5M"/>
+                <constraint firstItem="hF1-Uz-4AU" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="chT-VZ-SrD"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="bZZ-u8-ldv" secondAttribute="bottom" id="eTW-IE-aY3"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="139" y="145"/>
+        </view>
+    </objects>
+</document>

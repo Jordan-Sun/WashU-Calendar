@@ -10,6 +10,10 @@ import UIKit
 import Foundation
 import CoreData
 
+protocol CoreDataControllerDelegate {
+    func controllerDidChangeContent()
+}
+
 class CoreDataController {
     
     // Environmental Variables
@@ -21,6 +25,10 @@ class CoreDataController {
     // Fetched Results Controllers
     /// Core data fetched result controller
     private var eventFetchedResultController: NSFetchedResultsController<Event>!
+    /// Core data fetched result controller
+    private var courseFetchedResultController: NSFetchedResultsController<Course>!
+    /// Core data fetched result controller delegate
+    var delegate: CoreDataControllerDelegate?
     
     // Initialize with app delegate and context
     init(appDelegate: AppDelegate, context: NSManagedObjectContext) {
@@ -74,6 +82,46 @@ extension CoreDataController {
         
     }
     
+    func fetchCourseRequest(name: String? = nil, id: String? = nil, exact: Bool = false) -> [Course]? {
+        
+        // Initialize fetch request
+        let request = Course.fetchRequest() as NSFetchRequest<Course>
+        
+        var predicate: NSPredicate!
+        if let courseName = name {
+            if let courseId = id {
+                predicate = exact ? NSPredicate(format: "(name ==[cd] %@) AND (id == %@)", courseName, courseId) : NSPredicate(format: "(name CONTAINS[cd] %@) AND (id == %@)", courseName, courseId)
+            } else {
+                predicate = exact ? NSPredicate(format: "name ==[cd] %@", courseName) : NSPredicate(format: "name CONTAINS[cd] %@", courseName)
+            }
+        } else {
+            if let courseId = id {
+               predicate = exact ? NSPredicate(format: "id == %@", courseId) : NSPredicate(format: "id == %@", courseId)
+            } else {
+                return [Course]()
+            }
+        }
+        request.predicate = predicate
+        
+        // Apply sort descriptors
+        let sort = NSSortDescriptor(key: #keyPath(Course.id), ascending: true)
+        request.sortDescriptors = [sort]
+        
+        // Try to perform fetch request
+        do {
+            courseFetchedResultController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            try courseFetchedResultController.performFetch()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        return courseFetchedResultController.fetchedObjects
+        
+    }
+    
 }
 
 // Save
@@ -96,6 +144,7 @@ extension CoreDataController {
         newSchool.fullName = fullName
         newSchool.shortName = shortName ?? fullName
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newSchool
     }
     
@@ -106,13 +155,14 @@ extension CoreDataController {
     ///   - code: the code of the department.
     ///   - school: the school of which the department belongs to.
     /// - Returns: an instance of the created department.
-    @discardableResult func addDepartmentToCoreData(fullName: String, shortName: String? = nil, code: String, to school: School) -> Department {
+    @discardableResult func addDepartmentToCoreData(fullName: String, shortName: String? = nil, code: String, to school: School? = nil) -> Department {
         let newDepartment = Department(entity: Department.entity(), insertInto: context)
         newDepartment.fullName = fullName
         newDepartment.shortName = shortName ?? fullName
         newDepartment.code = code
         newDepartment.school = school
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newDepartment
     }
     
@@ -121,11 +171,12 @@ extension CoreDataController {
     ///   - name: the name of the professor.
     ///   - department: the department of which the professor belongs to.
     /// - Returns: an instance of the created professor.
-    @discardableResult func addProfessorToCoreData(name: String, to department: Department) -> Professor {
+    @discardableResult func addProfessorToCoreData(name: String, to department: Department? = nil) -> Professor {
         let newProfessor = Professor(entity: Professor.entity(), insertInto: context)
         newProfessor.name = name
         newProfessor.department = department
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newProfessor
     }
     
@@ -136,6 +187,7 @@ extension CoreDataController {
         let newSemester = Semester(entity: Semester.entity(), insertInto: context)
         newSemester.name = name
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newSemester
     }
     
@@ -147,7 +199,7 @@ extension CoreDataController {
     ///   - semester: the semester of which the session belongs to.
     /// - Returns: an instance of the created session.
     /// - Throws: an error if the end date input preceeds the start date input.
-    @discardableResult func addSessionToCoreData(name: String, start: Date, end: Date, to semester: Semester) throws -> Session {
+    @discardableResult func addSessionToCoreData(name: String, start: Date, end: Date, to semester: Semester? = nil) throws -> Session {
         
         let calendar = Calendar.current
         let startDay = calendar.startOfDay(for: start)
@@ -162,6 +214,7 @@ extension CoreDataController {
         newSession.end = endDay
         newSession.semester = semester
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newSession
         
     }
@@ -174,6 +227,7 @@ extension CoreDataController {
         let newAttribute = Attribute(entity: Attribute.entity(), insertInto: context)
         newAttribute.name = name
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newAttribute
     }
     
@@ -187,7 +241,7 @@ extension CoreDataController {
     ///   - professor: the professor who teaches the course.
     ///   - attributes: an array of attributes that the course conforms to.
     /// - Returns: an instance of the created course.
-    @discardableResult func addCourseToCoreData(name: String, id: String, to department: Department, to session: Session, desc: String? = nil, by professor: Professor? = nil, attributes: [Attribute]? = nil) -> Course {
+    @discardableResult func addCourseToCoreData(name: String, id: String, to department: Department? = nil, to session: Session? = nil, desc: String? = nil, by professor: Professor? = nil, attributes: [Attribute]? = nil) -> Course {
         let newCourse = Course(entity: Course.entity(), insertInto: context)
         newCourse.name = name
         newCourse.id = id
@@ -199,6 +253,7 @@ extension CoreDataController {
             newCourse.addToAttributes(NSSet(array: attributes))
         }
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newCourse
     }
     
@@ -231,7 +286,7 @@ extension CoreDataController {
         guard days.count == 7 else {
             throw AddToCoreDataError.invalidRepeatDays
         }
-        guard days.range(of: #"[M-][T-][W-][R-][F-][S-][U-]"#, options: .regularExpression) != nil else {
+        guard days.range(of: #"[M-][T-][W-][R-][F-][S-][S-]"#, options: .regularExpression) != nil else {
             throw AddToCoreDataError.invalidRepeatDays
         }
         
@@ -245,13 +300,14 @@ extension CoreDataController {
         newSection.color = color
         newSection.location = location
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         
-        let weekdayDict = ["-","U","M","T","W","R","F","S"]
         if autoGeneratesEvents {
             var currentDay = startDay
             while currentDay <= endDay {
-                let weekday = weekdayDict[calendar.component(.weekday, from: currentDay)]
-                if days.contains(weekday) {
+                let offset = (calendar.component(.weekday, from: currentDay)+5) % 7
+                let index = days.index(days.startIndex, offsetBy: offset)
+                if days[index] != "-" {
                     do {
                         if let courseName = course?.name {
                             try addEventToCoreData(name: "\(courseName) \(id)", from: currentDay.addingTimeInterval(startTime), to: currentDay.addingTimeInterval(endTime), to: newSection, color: color,at: location)
@@ -295,6 +351,7 @@ extension CoreDataController {
         newEvent.color = color
         newEvent.location = location
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newEvent
     }
     
@@ -306,6 +363,18 @@ extension CoreDataController {
         } catch {
             throw error
         }
+    }
+    
+}
+
+// Delete
+
+extension CoreDataController {
+    
+    func deleteFromCoreData<T>(_ object: T) where T: NSManagedObject {
+        context.delete(object)
+        appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
     }
     
 }

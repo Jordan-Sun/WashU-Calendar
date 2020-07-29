@@ -10,11 +10,8 @@ import UIKit
 
 class AddEventViewController: UIViewController, UITextFieldDelegate {
     
-    private var appDelegate = UIApplication.shared.delegate as!  AppDelegate
-    /// Core data context
-    private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
     /// Core data controller
-    private var coreDataController: CoreDataController!
+    var coreDataController: CoreDataController!
     
     /// Record of user input
     var eventName = ""
@@ -62,7 +59,6 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
         
         startTimePicker.addTarget(self, action: #selector(AddEventViewController.startTimePickerValueChanged(sender:)), for: .valueChanged)
 
@@ -194,7 +190,7 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
             } else if sender == saturdayButton {
                 repeatString = replace(repeatString, at: 5, with: "S")
             } else if sender == sundayButton {
-                repeatString = replace(repeatString, at: 6, with: "U")
+                repeatString = replace(repeatString, at: 6, with: "S")
             }
         } else {
             sender.tintColor = UIColor.systemGray3
