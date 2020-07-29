@@ -194,7 +194,7 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
             } else if sender == saturdayButton {
                 repeatString = replace(repeatString, at: 5, with: "S")
             } else if sender == sundayButton {
-                repeatString = replace(repeatString, at: 6, with: "U")
+                repeatString = replace(repeatString, at: 6, with: "S")
             }
         } else {
             sender.tintColor = UIColor.systemGray3

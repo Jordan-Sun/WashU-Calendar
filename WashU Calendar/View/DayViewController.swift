@@ -51,11 +51,30 @@ class DayViewController: UIViewController {
         super.viewWillAppear(animated)
         // Load course data after the view appears.
         updateSnapshot()
+        dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .top, animated: false)
     }
     
     @IBAction func pushAddView(_ sender: Any) {
-        let newViewController = AddEventViewController()
-        present(newViewController, animated: true, completion: nil)
+        let actionSheet = UIAlertController(title: "Add a new event ...", message: nil, preferredStyle: .actionSheet)
+        
+        let manualAction = UIAlertAction(title: "Manually", style: .default, handler: {
+            action in
+            let newViewController = AddEventViewController()
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(manualAction)
+        
+        let courseListingAction = UIAlertAction(title: "via CourseListing", style: .default, handler: {
+            action in
+            let newViewController = AddCourseListingViewController()
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(courseListingAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
 
     }
 

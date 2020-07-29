@@ -27,6 +27,8 @@ class ListViewController: UIViewController {
     private var minDateFromNow = -3
     /// The max section
     private var maxDateFromNow = 14
+    /// A boolean indicating whether the collection view should preload cell
+    private var shouldPreloadCell = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +49,26 @@ class ListViewController: UIViewController {
     
     
     @IBAction func pushAddView(_ sender: Any) {
-        let newViewController = AddEventViewController()
-        present(newViewController, animated: true, completion: nil)
-
+        let actionSheet = UIAlertController(title: "Add a new event ...", message: nil, preferredStyle: .actionSheet)
+        
+        let manualAction = UIAlertAction(title: "Manually", style: .default, handler: {
+            action in
+            let newViewController = AddEventViewController()
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(manualAction)
+        
+        let courseListingAction = UIAlertAction(title: "via CourseListing", style: .default, handler: {
+            action in
+            let newViewController = AddCourseListingViewController()
+            self.present(newViewController, animated: true, completion: nil)
+        })
+        actionSheet.addAction(courseListingAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
     }
     
 }
@@ -216,6 +235,8 @@ extension ListViewController {
     /// Initialize the snapshot using NSFetchRequest
     private func updateSnapshot() {
         
+        shouldPreloadCell = false
+        
         // Initialize a new snapshot
         var snapshot = NSDiffableDataSourceSnapshot<Date,Event>()
         
@@ -235,6 +256,8 @@ extension ListViewController {
         // Apply snapshot
         eventCollectionViewDiffableDataSource.apply(newSnapshot)
         
+        shouldPreloadCell = true
+        
     }
     
 }
@@ -243,24 +266,28 @@ extension ListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
-        // Check if should preload the next section.
-        if indexPath.section + 1 > maxDateFromNow - minDateFromNow {
-            maxDateFromNow += 1
-            updateSnapshot()
+        if shouldPreloadCell {
+            // Check if should preload the next section.
+            if indexPath.section + 1 > maxDateFromNow - minDateFromNow {
+                maxDateFromNow += 1
+                updateSnapshot()
+            }
         }
         
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        guard let minVisibleIndexPath = eventCollectionView.indexPathsForVisibleItems.min() else {
-            print("Fail to get min visible index path for event collection view.")
-            return
-        }
-        
-        if minVisibleIndexPath.section == 0 {
-            minDateFromNow -= 1
-            updateSnapshot()
+        if shouldPreloadCell {
+            guard let minVisibleIndexPath = eventCollectionView.indexPathsForVisibleItems.min() else {
+                print("Fail to get min visible index path for event collection view.")
+                return
+            }
+            
+            if minVisibleIndexPath.section == 0 {
+                minDateFromNow -= 1
+                updateSnapshot()
+            }
         }
         
     }

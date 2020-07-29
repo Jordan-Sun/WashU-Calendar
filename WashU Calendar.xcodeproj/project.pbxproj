@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E2AE82E24D0DF20003BF6EF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2AE82C24D0DF13003BF6EF /* WebKit.framework */; };
+		3E2AE83224D0E1B6003BF6EF /* AddCourseListingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2AE83124D0E1B6003BF6EF /* AddCourseListingViewController.xib */; };
+		3E2AE83924D0EB57003BF6EF /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AE83724D0EB57003BF6EF /* CollectionViewCell.swift */; };
+		3E2AE83A24D0EB57003BF6EF /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2AE83824D0EB57003BF6EF /* CollectionViewCell.xib */; };
 		3E33FFB824CC495D0067BA48 /* MonthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FFB724CC495D0067BA48 /* MonthViewController.swift */; };
 		3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2424C23DD700C76056 /* AppDelegate.swift */; };
 		3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2624C23DD700C76056 /* SceneDelegate.swift */; };
@@ -23,8 +27,16 @@
 		3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */; };
 		3E79817424C3E7430023BE89 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */; };
 		3E87BFF024C4D04D00ADB2CF /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87BFEF24C4D04D00ADB2CF /* CoreDataController.swift */; };
-		3E87BFF224C4E52A00ADB2CF /* JsonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87BFF124C4E52A00ADB2CF /* JsonController.swift */; };
-		3E87BFF424C4F07000ADB2CF /* JsonDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87BFF324C4F07000ADB2CF /* JsonDataType.swift */; };
+		3EA2FCEC24D0B46200F34E56 /* AddCourseListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */; };
+		3EA2FCED24D0B46200F34E56 /* JsonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE024D0B46200F34E56 /* JsonController.swift */; };
+		3EA2FCEE24D0B46200F34E56 /* JsonProfessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE224D0B46200F34E56 /* JsonProfessor.swift */; };
+		3EA2FCEF24D0B46200F34E56 /* JsonSchool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE324D0B46200F34E56 /* JsonSchool.swift */; };
+		3EA2FCF024D0B46200F34E56 /* JsonSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE424D0B46200F34E56 /* JsonSession.swift */; };
+		3EA2FCF124D0B46200F34E56 /* JsonSemester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE524D0B46200F34E56 /* JsonSemester.swift */; };
+		3EA2FCF224D0B46200F34E56 /* JsonCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE624D0B46200F34E56 /* JsonCourse.swift */; };
+		3EA2FCF324D0B46200F34E56 /* JsonDepartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE724D0B46200F34E56 /* JsonDepartment.swift */; };
+		3EA2FCF424D0B46200F34E56 /* JsonSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE824D0B46200F34E56 /* JsonSection.swift */; };
+		3EA2FCF924D0B56700F34E56 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA2FCF824D0B56700F34E56 /* SwiftSoup */; };
 		3EBB55F024C797DC004DFB5D /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55EF24C797DC004DFB5D /* DayViewController.swift */; };
 		3EBB55F224C798F4004DFB5D /* DayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55F124C798F4004DFB5D /* DayCollectionViewCell.swift */; };
 		3EBB55FA24C7E603004DFB5D /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55F624C7E603004DFB5D /* Event+CoreDataClass.swift */; };
@@ -45,6 +57,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E2AE82C24D0DF13003BF6EF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		3E2AE83124D0E1B6003BF6EF /* AddCourseListingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddCourseListingViewController.xib; sourceTree = "<group>"; };
+		3E2AE83724D0EB57003BF6EF /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		3E2AE83824D0EB57003BF6EF /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		3E33FFB724CC495D0067BA48 /* MonthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewController.swift; sourceTree = "<group>"; };
 		3E606B2124C23DD700C76056 /* WashU Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WashU Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E606B2424C23DD700C76056 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,8 +79,15 @@
 		3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E87BFEF24C4D04D00ADB2CF /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
-		3E87BFF124C4E52A00ADB2CF /* JsonController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonController.swift; sourceTree = "<group>"; };
-		3E87BFF324C4F07000ADB2CF /* JsonDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDataType.swift; sourceTree = "<group>"; };
+		3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCourseListingViewController.swift; sourceTree = "<group>"; };
+		3EA2FCE024D0B46200F34E56 /* JsonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonController.swift; sourceTree = "<group>"; };
+		3EA2FCE224D0B46200F34E56 /* JsonProfessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonProfessor.swift; sourceTree = "<group>"; };
+		3EA2FCE324D0B46200F34E56 /* JsonSchool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSchool.swift; sourceTree = "<group>"; };
+		3EA2FCE424D0B46200F34E56 /* JsonSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSession.swift; sourceTree = "<group>"; };
+		3EA2FCE524D0B46200F34E56 /* JsonSemester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSemester.swift; sourceTree = "<group>"; };
+		3EA2FCE624D0B46200F34E56 /* JsonCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonCourse.swift; sourceTree = "<group>"; };
+		3EA2FCE724D0B46200F34E56 /* JsonDepartment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDepartment.swift; sourceTree = "<group>"; };
+		3EA2FCE824D0B46200F34E56 /* JsonSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSection.swift; sourceTree = "<group>"; };
 		3EBB55EF24C797DC004DFB5D /* DayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		3EBB55F124C798F4004DFB5D /* DayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCollectionViewCell.swift; sourceTree = "<group>"; };
 		3EBB55F624C7E603004DFB5D /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -89,17 +112,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E2AE82E24D0DF20003BF6EF /* WebKit.framework in Frameworks */,
+				3EA2FCF924D0B56700F34E56 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E2AE82B24D0DF13003BF6EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E2AE82C24D0DF13003BF6EF /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3E606B1824C23DD700C76056 = {
 			isa = PBXGroup;
 			children = (
 				3E606B2324C23DD700C76056 /* WashU Calendar */,
 				3E606B2224C23DD700C76056 /* Products */,
+				3E2AE82B24D0DF13003BF6EF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +165,8 @@
 				3E606B2A24C23DD700C76056 /* Main.storyboard */,
 				3E606B3224C23DDB00C76056 /* LaunchScreen.storyboard */,
 				566BB84B24CE902D00EC4221 /* AddEventViewController.xib */,
+				3E2AE83124D0E1B6003BF6EF /* AddCourseListingViewController.xib */,
+				3E2AE83824D0EB57003BF6EF /* CollectionViewCell.xib */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -174,10 +210,24 @@
 		3E87BFF524C4F09600ADB2CF /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				3E87BFF124C4E52A00ADB2CF /* JsonController.swift */,
-				3E87BFF324C4F07000ADB2CF /* JsonDataType.swift */,
+				3EA2FCE024D0B46200F34E56 /* JsonController.swift */,
+				3EA2FCE124D0B46200F34E56 /* Data Types */,
 			);
 			path = JSON;
+			sourceTree = "<group>";
+		};
+		3EA2FCE124D0B46200F34E56 /* Data Types */ = {
+			isa = PBXGroup;
+			children = (
+				3EA2FCE224D0B46200F34E56 /* JsonProfessor.swift */,
+				3EA2FCE324D0B46200F34E56 /* JsonSchool.swift */,
+				3EA2FCE424D0B46200F34E56 /* JsonSession.swift */,
+				3EA2FCE524D0B46200F34E56 /* JsonSemester.swift */,
+				3EA2FCE624D0B46200F34E56 /* JsonCourse.swift */,
+				3EA2FCE724D0B46200F34E56 /* JsonDepartment.swift */,
+				3EA2FCE824D0B46200F34E56 /* JsonSection.swift */,
+			);
+			path = "Data Types";
 			sourceTree = "<group>";
 		};
 		3EDD515524C38C40002C7220 /* View */ = {
@@ -186,10 +236,12 @@
 				3E606B2824C23DD700C76056 /* ListViewController.swift */,
 				3EBB55EF24C797DC004DFB5D /* DayViewController.swift */,
 				3E33FFB724CC495D0067BA48 /* MonthViewController.swift */,
+				566BB84A24CE902D00EC4221 /* AddEventViewController.swift */,
+				3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */,
 				3E66184724C5957D008A57C8 /* HeaderCollectionReusableView.swift */,
 				3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */,
 				3EBB55F124C798F4004DFB5D /* DayCollectionViewCell.swift */,
-				566BB84A24CE902D00EC4221 /* AddEventViewController.swift */,
+				3E2AE83724D0EB57003BF6EF /* CollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -210,6 +262,9 @@
 			dependencies = (
 			);
 			name = "WashU Calendar";
+			packageProductDependencies = (
+				3EA2FCF824D0B56700F34E56 /* SwiftSoup */,
+			);
 			productName = "WashU Calendar";
 			productReference = 3E606B2124C23DD700C76056 /* WashU Calendar.app */;
 			productType = "com.apple.product-type.application";
@@ -221,7 +276,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1160;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = washu;
 				TargetAttributes = {
 					3E606B2024C23DD700C76056 = {
@@ -238,6 +293,9 @@
 				Base,
 			);
 			mainGroup = 3E606B1824C23DD700C76056;
+			packageReferences = (
+				3EA2FCF724D0B56700F34E56 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			productRefGroup = 3E606B2224C23DD700C76056 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -253,6 +311,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E606B3424C23DDB00C76056 /* LaunchScreen.storyboard in Resources */,
+				3E2AE83224D0E1B6003BF6EF /* AddCourseListingViewController.xib in Resources */,
+				3E2AE83A24D0EB57003BF6EF /* CollectionViewCell.xib in Resources */,
 				566BB84D24CE902D00EC4221 /* AddEventViewController.xib in Resources */,
 				3E606B3124C23DDB00C76056 /* Assets.xcassets in Resources */,
 				3E606B2C24C23DD700C76056 /* Main.storyboard in Resources */,
@@ -266,25 +326,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA2FCF124D0B46200F34E56 /* JsonSemester.swift in Sources */,
+				3EA2FCEC24D0B46200F34E56 /* AddCourseListingViewController.swift in Sources */,
 				3EDD517424C3B766002C7220 /* Course+CoreDataClass.swift in Sources */,
+				3EA2FCF324D0B46200F34E56 /* JsonDepartment.swift in Sources */,
 				566BB84C24CE902D00EC4221 /* AddEventViewController.swift in Sources */,
 				3EBB55F224C798F4004DFB5D /* DayCollectionViewCell.swift in Sources */,
 				3EDD517524C3B766002C7220 /* Course+CoreDataProperties.swift in Sources */,
 				3EBB55FB24C7E603004DFB5D /* Event+CoreDataProperties.swift in Sources */,
-				3E87BFF424C4F07000ADB2CF /* JsonDataType.swift in Sources */,
+				3E2AE83924D0EB57003BF6EF /* CollectionViewCell.swift in Sources */,
 				3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */,
 				3EDD516E24C3B766002C7220 /* Session+CoreDataClass.swift in Sources */,
 				3EBB55FE24C7E6AB004DFB5D /* Section+CoreDataClass.swift in Sources */,
 				3EBB55FF24C7E6AB004DFB5D /* Section+CoreDataProperties.swift in Sources */,
 				3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */,
-				3E87BFF224C4E52A00ADB2CF /* JsonController.swift in Sources */,
+				3EA2FCEE24D0B46200F34E56 /* JsonProfessor.swift in Sources */,
 				3E66184824C5957D008A57C8 /* HeaderCollectionReusableView.swift in Sources */,
 				3E606B2F24C23DD700C76056 /* WashU_Calendar.xcdatamodeld in Sources */,
+				3EA2FCED24D0B46200F34E56 /* JsonController.swift in Sources */,
 				3EDD517724C3B766002C7220 /* Professor+CoreDataProperties.swift in Sources */,
 				3E79816A24C3BF770023BE89 /* School+CoreDataProperties.swift in Sources */,
+				3EA2FCF424D0B46200F34E56 /* JsonSection.swift in Sources */,
 				3E79816924C3BF770023BE89 /* School+CoreDataClass.swift in Sources */,
 				3EDD517124C3B766002C7220 /* Semester+CoreDataProperties.swift in Sources */,
 				3E606B2924C23DD700C76056 /* ListViewController.swift in Sources */,
+				3EA2FCF024D0B46200F34E56 /* JsonSession.swift in Sources */,
 				3E79816F24C3DB0C0023BE89 /* Attribute+CoreDataClass.swift in Sources */,
 				3EBB55F024C797DC004DFB5D /* DayViewController.swift in Sources */,
 				3EDD517024C3B766002C7220 /* Semester+CoreDataClass.swift in Sources */,
@@ -297,6 +363,8 @@
 				3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */,
 				3E79817424C3E7430023BE89 /* Department+CoreDataProperties.swift in Sources */,
 				3E79817024C3DB0C0023BE89 /* Attribute+CoreDataProperties.swift in Sources */,
+				3EA2FCF224D0B46200F34E56 /* JsonCourse.swift in Sources */,
+				3EA2FCEF24D0B46200F34E56 /* JsonSchool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +416,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -408,6 +477,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -442,7 +512,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200728a;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 48QJL4Q43T;
 				INFOPLIST_FILE = "WashU Calendar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
@@ -450,8 +520,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "1.0.0-beta";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.washu.WashU-Calendar";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.washu.zhuoransun.washu-calendar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -465,7 +535,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200728a;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 48QJL4Q43T;
 				INFOPLIST_FILE = "WashU Calendar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
@@ -473,8 +543,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "1.0.0-beta";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.washu.WashU-Calendar";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.washu.zhuoransun.washu-calendar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -504,6 +574,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3EA2FCF724D0B56700F34E56 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3EA2FCF824D0B56700F34E56 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EA2FCF724D0B56700F34E56 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		3E606B2D24C23DD700C76056 /* WashU_Calendar.xcdatamodeld */ = {
