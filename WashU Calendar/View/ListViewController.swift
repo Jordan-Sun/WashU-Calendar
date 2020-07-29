@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ListViewController: UIViewController {
     
@@ -17,6 +18,8 @@ class ListViewController: UIViewController {
     private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
     /// Core data controller
     private var coreDataController: CoreDataController!
+    /// Core data fetched result controller
+    private var eventFetchedResultController: NSFetchedResultsController<Event>!
     
     // Collection View Component
     /// Collection view
@@ -33,7 +36,10 @@ class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
+        coreDataController.delegate = self
+        
         configureCollectionDataSource()
         configureCollectionLayout()
 //        configureGestureRecognizers()
@@ -54,6 +60,7 @@ class ListViewController: UIViewController {
         let manualAction = UIAlertAction(title: "Manually", style: .default, handler: {
             action in
             let newViewController = AddEventViewController()
+            newViewController.coreDataController = self.coreDataController
             self.present(newViewController, animated: true, completion: nil)
         })
         actionSheet.addAction(manualAction)
@@ -61,6 +68,7 @@ class ListViewController: UIViewController {
         let courseListingAction = UIAlertAction(title: "via CourseListing", style: .default, handler: {
             action in
             let newViewController = AddCourseListingViewController()
+            newViewController.coreDataController = self.coreDataController
             self.present(newViewController, animated: true, completion: nil)
         })
         actionSheet.addAction(courseListingAction)
@@ -276,6 +284,15 @@ extension ListViewController: UICollectionViewDelegate {
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let detailView = EventDetailViewController()
+        detailView.event = eventCollectionViewDiffableDataSource.itemIdentifier(for: indexPath)
+        detailView.coreDataController = coreDataController
+        navigationController?.pushViewController(detailView, animated: true)
+        
+    }
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
         if shouldPreloadCell {
@@ -290,6 +307,14 @@ extension ListViewController: UICollectionViewDelegate {
             }
         }
         
+    }
+    
+}
+
+extension ListViewController: CoreDataControllerDelegate {
+    
+    func controllerDidChangeContent() {
+        self.updateSnapshot()
     }
     
 }

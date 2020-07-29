@@ -12,13 +12,7 @@ import SwiftSoup
 
 class AddCourseListingViewController: UIViewController {
 
-    // Core Data Component
-    /// App delegate
-    private var appDelegate = UIApplication.shared.delegate as!  AppDelegate
-    /// Core data context
-    private var context = (UIApplication.shared.delegate as!  AppDelegate).persistentContainer.viewContext
-    /// Core data controller
-    private var coreDataController: CoreDataController!
+    var coreDataController: CoreDataController!
     
     /// Web view outlet
     @IBOutlet weak var webView: WKWebView!
@@ -37,7 +31,6 @@ class AddCourseListingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        coreDataController = CoreDataController(appDelegate: appDelegate, context: context)
         loadWebView()
         configureCollectionLayout()
         configureCollectionDataSource()

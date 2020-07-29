@@ -10,6 +10,10 @@ import UIKit
 import Foundation
 import CoreData
 
+protocol CoreDataControllerDelegate {
+    func controllerDidChangeContent()
+}
+
 class CoreDataController {
     
     // Environmental Variables
@@ -23,6 +27,8 @@ class CoreDataController {
     private var eventFetchedResultController: NSFetchedResultsController<Event>!
     /// Core data fetched result controller
     private var courseFetchedResultController: NSFetchedResultsController<Course>!
+    /// Core data fetched result controller delegate
+    var delegate: CoreDataControllerDelegate?
     
     // Initialize with app delegate and context
     init(appDelegate: AppDelegate, context: NSManagedObjectContext) {
@@ -138,6 +144,7 @@ extension CoreDataController {
         newSchool.fullName = fullName
         newSchool.shortName = shortName ?? fullName
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newSchool
     }
     
@@ -155,6 +162,7 @@ extension CoreDataController {
         newDepartment.code = code
         newDepartment.school = school
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newDepartment
     }
     
@@ -168,6 +176,7 @@ extension CoreDataController {
         newProfessor.name = name
         newProfessor.department = department
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newProfessor
     }
     
@@ -178,6 +187,7 @@ extension CoreDataController {
         let newSemester = Semester(entity: Semester.entity(), insertInto: context)
         newSemester.name = name
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newSemester
     }
     
@@ -204,6 +214,7 @@ extension CoreDataController {
         newSession.end = endDay
         newSession.semester = semester
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newSession
         
     }
@@ -216,6 +227,7 @@ extension CoreDataController {
         let newAttribute = Attribute(entity: Attribute.entity(), insertInto: context)
         newAttribute.name = name
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newAttribute
     }
     
@@ -241,6 +253,7 @@ extension CoreDataController {
             newCourse.addToAttributes(NSSet(array: attributes))
         }
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newCourse
     }
     
@@ -287,6 +300,7 @@ extension CoreDataController {
         newSection.color = color
         newSection.location = location
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         
         if autoGeneratesEvents {
             var currentDay = startDay
@@ -337,6 +351,7 @@ extension CoreDataController {
         newEvent.color = color
         newEvent.location = location
         appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
         return newEvent
     }
     
@@ -348,6 +363,18 @@ extension CoreDataController {
         } catch {
             throw error
         }
+    }
+    
+}
+
+// Delete
+
+extension CoreDataController {
+    
+    func deleteFromCoreData<T>(_ object: T) where T: NSManagedObject {
+        context.delete(object)
+        appDelegate.saveContext()
+        delegate?.controllerDidChangeContent()
     }
     
 }

@@ -11,6 +11,8 @@
 		3E2AE83224D0E1B6003BF6EF /* AddCourseListingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2AE83124D0E1B6003BF6EF /* AddCourseListingViewController.xib */; };
 		3E2AE83924D0EB57003BF6EF /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AE83724D0EB57003BF6EF /* CollectionViewCell.swift */; };
 		3E2AE83A24D0EB57003BF6EF /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2AE83824D0EB57003BF6EF /* CollectionViewCell.xib */; };
+		3E2AE84124D11902003BF6EF /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AE83F24D11902003BF6EF /* EventDetailViewController.swift */; };
+		3E2AE84224D11902003BF6EF /* EventDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2AE84024D11902003BF6EF /* EventDetailViewController.xib */; };
 		3E33FFB824CC495D0067BA48 /* MonthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FFB724CC495D0067BA48 /* MonthViewController.swift */; };
 		3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2424C23DD700C76056 /* AppDelegate.swift */; };
 		3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2624C23DD700C76056 /* SceneDelegate.swift */; };
@@ -61,6 +63,8 @@
 		3E2AE83124D0E1B6003BF6EF /* AddCourseListingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddCourseListingViewController.xib; sourceTree = "<group>"; };
 		3E2AE83724D0EB57003BF6EF /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		3E2AE83824D0EB57003BF6EF /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
+		3E2AE83F24D11902003BF6EF /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		3E2AE84024D11902003BF6EF /* EventDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventDetailViewController.xib; sourceTree = "<group>"; };
 		3E33FFB724CC495D0067BA48 /* MonthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewController.swift; sourceTree = "<group>"; };
 		3E606B2124C23DD700C76056 /* WashU Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WashU Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E606B2424C23DD700C76056 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				566BB84B24CE902D00EC4221 /* AddEventViewController.xib */,
 				3E2AE83124D0E1B6003BF6EF /* AddCourseListingViewController.xib */,
 				3E2AE83824D0EB57003BF6EF /* CollectionViewCell.xib */,
+				3E2AE84024D11902003BF6EF /* EventDetailViewController.xib */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				3E33FFB724CC495D0067BA48 /* MonthViewController.swift */,
 				566BB84A24CE902D00EC4221 /* AddEventViewController.swift */,
 				3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */,
+				3E2AE83F24D11902003BF6EF /* EventDetailViewController.swift */,
 				3E66184724C5957D008A57C8 /* HeaderCollectionReusableView.swift */,
 				3EDD515624C38C88002C7220 /* EventCollectionViewCell.swift */,
 				3EBB55F124C798F4004DFB5D /* DayCollectionViewCell.swift */,
@@ -310,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E2AE84224D11902003BF6EF /* EventDetailViewController.xib in Resources */,
 				3E606B3424C23DDB00C76056 /* LaunchScreen.storyboard in Resources */,
 				3E2AE83224D0E1B6003BF6EF /* AddCourseListingViewController.xib in Resources */,
 				3E2AE83A24D0EB57003BF6EF /* CollectionViewCell.xib in Resources */,
@@ -356,6 +363,7 @@
 				3EDD517024C3B766002C7220 /* Semester+CoreDataClass.swift in Sources */,
 				3EDD516F24C3B766002C7220 /* Session+CoreDataProperties.swift in Sources */,
 				3EDD517624C3B766002C7220 /* Professor+CoreDataClass.swift in Sources */,
+				3E2AE84124D11902003BF6EF /* EventDetailViewController.swift in Sources */,
 				3EBB55FA24C7E603004DFB5D /* Event+CoreDataClass.swift in Sources */,
 				3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */,
 				3E33FFB824CC495D0067BA48 /* MonthViewController.swift in Sources */,
