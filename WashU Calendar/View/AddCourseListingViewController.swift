@@ -11,7 +11,7 @@ import WebKit
 import SwiftSoup
 
 class AddCourseListingViewController: UIViewController {
-
+    
     var coreDataController: CoreDataController!
     
     /// Web view outlet
@@ -113,7 +113,7 @@ extension AddCourseListingViewController {
         
         // Diffable data source cell provider
         collectionViewDiffableDataSource = UICollectionViewDiffableDataSource<JSONCourse,JSONSection>(collectionView: self.collectionView) { (collectionView, indexPath, section) -> UICollectionViewCell? in
-                
+            
             // Dequeue reuseable cell
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.reuseIdentifier, for: indexPath) as? CollectionViewCell else {
                 fatalError("Expected reused cell to be of type CollectionViewCell.")
@@ -150,7 +150,7 @@ extension AddCourseListingViewController {
         // Diffable data source supplementary view provider
         collectionViewDiffableDataSource.supplementaryViewProvider = {
             (collectionView, kind, indexPath) -> UICollectionReusableView? in
-
+            
             // Check is proving a rating badge supplementary view
             switch kind {
             case "courseHeader":
@@ -158,13 +158,13 @@ extension AddCourseListingViewController {
             default:
                 return nil
             }
-
+            
         }
         
     }
     
     private func createHeader(collectionView: UICollectionView, indexPath: IndexPath) -> HeaderCollectionReusableView? {
-
+        
         // Dequeue reuseable supplementary view
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "courseHeader", withReuseIdentifier: HeaderCollectionReusableView.reuseIdentifier, for: indexPath) as? HeaderCollectionReusableView else {
             fatalError("Expected reused badge to be of type HeaderCollectionReusableView.")
@@ -182,9 +182,9 @@ extension AddCourseListingViewController {
         } else {
             header.label.text = "Unknown Course"
         }
-
+        
         return header
-
+        
     }
     
     /// Initialize the snapshot using NSFetchRequest
@@ -271,7 +271,7 @@ extension AddCourseListingViewController: WKNavigationDelegate {
             return
         }
         
-// Scrap department info
+        // Scrap department info
         
         // Find department bar
         guard let deptBars: Elements = try? bodyDivResults.select("table#tabDeptBar0") else {
@@ -301,7 +301,7 @@ extension AddCourseListingViewController: WKNavigationDelegate {
             
         }
         
-// Scrap course info
+        // Scrap course info
         // Find <div class="Crs****">
         guard let courseDivs: Elements = try? bodyDivResults.select("div[class^=Crs]") else {
             print("Body div course div element not found in document.")
@@ -323,7 +323,7 @@ extension AddCourseListingViewController: WKNavigationDelegate {
             if courseInfoSplit.count == 3 {
                 let departmentCode = String(courseInfoSplit[0])
                 let departmentIndex = findDeptIndexByCode(code: departmentCode)
-//                let departmentAbbrivation = String(courseInfoSplit[1])
+                //                let departmentAbbrivation = String(courseInfoSplit[1])
                 let courseId = String(courseInfoSplit[2])
                 newCourse = JSONCourse(id: courseId, name: "Unknown Course", desc: nil, department: jsonDepartments[departmentIndex], professor: nil, session: nil)
             } else {
@@ -341,16 +341,16 @@ extension AddCourseListingViewController: WKNavigationDelegate {
             
             // Assign course name
             newCourse.name = courseNameTd
-
+            
             // Find <div id="dvDetail*" class="DivDetail" style="margin-left: 6px; width: 100%; display: none;">
             guard let courseDetailDiv: Element = try? courseDiv.select("div.DivDetail").first() else {
                 print("Course div detail div not found in document.")
                 return
             }
-//
-//            // Assign session name
-//            let courseDivId = courseDetailDiv.id()
-//            let sessionName = String(courseDivId[courseDivId.index(courseDivId.startIndex, offsetBy: 8) ..< courseDivId.index(courseDivId.startIndex, offsetBy: 14)])
+            //
+            //            // Assign session name
+            //            let courseDivId = courseDetailDiv.id()
+            //            let sessionName = String(courseDivId[courseDivId.index(courseDivId.startIndex, offsetBy: 8) ..< courseDivId.index(courseDivId.startIndex, offsetBy: 14)])
             
             // Find <td style="width:91%;">
             guard let courseDescTd: Element = try? courseDetailDiv.select("td[style=\"width:91%;\"]").first() else {
@@ -374,15 +374,15 @@ extension AddCourseListingViewController: WKNavigationDelegate {
             for sectionResultRow2Div in sectionResultRow2Divs {
                 
                 // Find <a style="text-align:left; color:#0000ff;" class="lnkSubSemester" sem="*">
-//                guard let sectionResultLnkSubSemester: Element = try? sectionResultRow2Div.select("a.lnkSubSemester").first() else {
-//                    print("Course div result table div result row 2 div lnk sub semester a not found in document.")
-//                    return
-//                }
-//                guard let semesterName = try? sectionResultLnkSubSemester.attr("sem") else {
-//                    print("Course div result table div result row 2 div lnk sub semester a sem attribute not found in document.")
-//                    return
-//                }
-//                print(semesterName)
+                //                guard let sectionResultLnkSubSemester: Element = try? sectionResultRow2Div.select("a.lnkSubSemester").first() else {
+                //                    print("Course div result table div result row 2 div lnk sub semester a not found in document.")
+                //                    return
+                //                }
+                //                guard let semesterName = try? sectionResultLnkSubSemester.attr("sem") else {
+                //                    print("Course div result table div result row 2 div lnk sub semester a sem attribute not found in document.")
+                //                    return
+                //                }
+                //                print(semesterName)
                 
                 // Find <td style="width:250px;">
                 var startDayString = ""
@@ -421,13 +421,16 @@ extension AddCourseListingViewController: WKNavigationDelegate {
                 // Assign section
                 let timeSplits = resultStrings[2].split(separator: "-")
                 if (!startDayString.isEmpty) && (!endDayString.isEmpty) && (timeSplits.count == 2) {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = " MM/dd/yyyy hh:mma"
-                    let startDateString = startDayString + " " + String(timeSplits[0]) + "M"
-                    let startDate = dateFormatter.date(from: startDateString)!
-                    let endDateString = endDayString + " " + String(timeSplits[1]) + "M"
-                    let endDate = dateFormatter.date(from: endDateString)!
-                    let _ = JSONSection(id: resultStrings[0], desc: desc, start: startDate, end: endDate, days: resultStrings[1], location: resultStrings[3], course: newCourse)
+                    
+                    if let startDate = convertDateStringToDate(dayString: startDayString, timeString: String(timeSplits[0])) {
+                        if let endDate = convertDateStringToDate(dayString: endDayString, timeString: String(timeSplits[1])) {
+                            let _ = JSONSection(id: resultStrings[0], desc: desc, start: startDate, end: endDate, days: resultStrings[1], location: resultStrings[3], course: newCourse)
+                        } else {
+                            print("Fail to cast end time from string to date")
+                        }
+                    } else {
+                        print("Fail to cast start time from string to date")
+                    }
                 } else {
                     print("Fail to cast course div result table div result row 2 div item row td into json section")
                 }
@@ -445,6 +448,25 @@ extension AddCourseListingViewController: WKNavigationDelegate {
         
     }
     
+    func convertDateStringToDate(dayString: String, timeString: String) -> Date? {
+        
+        var string = dayString
+        let _ = string.removeFirst()
+        string.append(", ")
+        string.append(timeString)
+        let apChar = string.removeLast()
+        string.append(" ")
+        string.append(apChar)
+        string.append("M")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yyyy hh:mma")
+        
+        return dateFormatter.date(from: string)
+        
+    }
+    
     /// Find a department in the cache array with a given department code, and create one if not found.
     /// - Parameter code: A string indicating the department code of the department.
     /// - Returns: The index of the department in the cache array.
@@ -458,17 +480,17 @@ extension AddCourseListingViewController: WKNavigationDelegate {
         return jsonDepartments.count - 1
     }
     
-//    /// Find a session in the cache array with a given session name, and create one if not found
-//    /// - Parameter name: A string indicating the session name of the department
-//    /// - Returns: <#description#>
-//    func findSessionIndexByName(name: String) -> Int {
-//        for jsonSession in jsonSessions {
-//            if jsonSession.name == name {
-//                return jsonSessions.firstIndex(of: jsonSession)!
-//            }
-//        }
-//        jsonSessions.append(JSONSession(name: <#T##String#>, start: <#T##Date#>, end: <#T##Date#>))
-//        return jsonDepartments.count - 1
-//    }
+    //    /// Find a session in the cache array with a given session name, and create one if not found
+    //    /// - Parameter name: A string indicating the session name of the department
+    //    /// - Returns: <#description#>
+    //    func findSessionIndexByName(name: String) -> Int {
+    //        for jsonSession in jsonSessions {
+    //            if jsonSession.name == name {
+    //                return jsonSessions.firstIndex(of: jsonSession)!
+    //            }
+    //        }
+    //        jsonSessions.append(JSONSession(name: <#T##String#>, start: <#T##Date#>, end: <#T##Date#>))
+    //        return jsonDepartments.count - 1
+    //    }
     
 }
