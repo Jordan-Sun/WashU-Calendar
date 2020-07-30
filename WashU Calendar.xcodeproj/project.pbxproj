@@ -44,6 +44,26 @@
 		3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */; };
 		3E79817424C3E7430023BE89 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */; };
 		3E87BFF024C4D04D00ADB2CF /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E87BFEF24C4D04D00ADB2CF /* CoreDataController.swift */; };
+		3E8BB71E24D2C89A0028DB20 /* School+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816724C3BF770023BE89 /* School+CoreDataClass.swift */; };
+		3E8BB71F24D2C89C0028DB20 /* School+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816824C3BF770023BE89 /* School+CoreDataProperties.swift */; };
+		3E8BB72024D2C89E0028DB20 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */; };
+		3E8BB72124D2C8A00028DB20 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */; };
+		3E8BB72224D2C8A30028DB20 /* WashU_Calendar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2D24C23DD700C76056 /* WashU_Calendar.xcdatamodeld */; };
+		3E8BB72324D2C8A70028DB20 /* Professor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516624C3B766002C7220 /* Professor+CoreDataClass.swift */; };
+		3E8BB72424D2C8B80028DB20 /* Professor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516724C3B766002C7220 /* Professor+CoreDataProperties.swift */; };
+		3E8BB72524D2C8BA0028DB20 /* Semester+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516024C3B766002C7220 /* Semester+CoreDataClass.swift */; };
+		3E8BB72624D2C8BD0028DB20 /* Semester+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516124C3B766002C7220 /* Semester+CoreDataProperties.swift */; };
+		3E8BB72724D2C8E90028DB20 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515E24C3B766002C7220 /* Session+CoreDataClass.swift */; };
+		3E8BB72824D2C8EC0028DB20 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD515F24C3B766002C7220 /* Session+CoreDataProperties.swift */; };
+		3E8BB72924D2C8EE0028DB20 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516424C3B766002C7220 /* Course+CoreDataClass.swift */; };
+		3E8BB72A24D2C8F00028DB20 /* Course+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD516524C3B766002C7220 /* Course+CoreDataProperties.swift */; };
+		3E8BB72B24D2C8F20028DB20 /* Section+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55FC24C7E6AB004DFB5D /* Section+CoreDataClass.swift */; };
+		3E8BB72C24D2C8F40028DB20 /* Section+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55FD24C7E6AB004DFB5D /* Section+CoreDataProperties.swift */; };
+		3E8BB72D24D2C8F60028DB20 /* Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55F624C7E603004DFB5D /* Event+CoreDataClass.swift */; };
+		3E8BB72E24D2C8F90028DB20 /* Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55F724C7E603004DFB5D /* Event+CoreDataProperties.swift */; };
+		3E8BB72F24D2C8FB0028DB20 /* Attribute+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816D24C3DB0C0023BE89 /* Attribute+CoreDataClass.swift */; };
+		3E8BB73024D2C8FD0028DB20 /* Attribute+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E79816E24C3DB0C0023BE89 /* Attribute+CoreDataProperties.swift */; };
+		3E8BB73324D2CA7C0028DB20 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E8BB73224D2CA7C0028DB20 /* CloudKit.framework */; };
 		3E946B2224D2201500B8504A /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E946B2124D2201500B8504A /* EventView.swift */; };
 		3EA2FCEC24D0B46200F34E56 /* AddCourseListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */; };
 		3EA2FCED24D0B46200F34E56 /* JsonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE024D0B46200F34E56 /* JsonController.swift */; };
@@ -131,6 +151,9 @@
 		3E79817124C3E7430023BE89 /* Department+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3E79817224C3E7430023BE89 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3E87BFEF24C4D04D00ADB2CF /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
+		3E8BB73124D2CA790028DB20 /* WashU Calendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WashU Calendar.entitlements"; sourceTree = "<group>"; };
+		3E8BB73224D2CA7C0028DB20 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		3E8BB73424D2CCFA0028DB20 /* WashU Calendar WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WashU Calendar WidgetExtension.entitlements"; sourceTree = "<group>"; };
 		3E946B2124D2201500B8504A /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCourseListingViewController.swift; sourceTree = "<group>"; };
 		3EA2FCE024D0B46200F34E56 /* JsonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonController.swift; sourceTree = "<group>"; };
@@ -167,6 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E8BB73324D2CA7C0028DB20 /* CloudKit.framework in Frameworks */,
 				3E2AE82E24D0DF20003BF6EF /* WebKit.framework in Frameworks */,
 				3EA2FCF924D0B56700F34E56 /* SwiftSoup in Frameworks */,
 			);
@@ -189,6 +213,7 @@
 		3E2AE82B24D0DF13003BF6EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E8BB73224D2CA7C0028DB20 /* CloudKit.framework */,
 				3E2AE82C24D0DF13003BF6EF /* WebKit.framework */,
 				3E1ACD5724D23F1A00EEC1FC /* WidgetKit.framework */,
 				3E1ACD5924D23F1A00EEC1FC /* SwiftUI.framework */,
@@ -199,6 +224,7 @@
 		3E606B1824C23DD700C76056 = {
 			isa = PBXGroup;
 			children = (
+				3E8BB73424D2CCFA0028DB20 /* WashU Calendar WidgetExtension.entitlements */,
 				3E606B2324C23DD700C76056 /* WashU Calendar */,
 				3E1ACD5B24D23F1A00EEC1FC /* WashU Calendar Widget */,
 				3E606B2224C23DD700C76056 /* Products */,
@@ -218,6 +244,7 @@
 		3E606B2324C23DD700C76056 /* WashU Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				3E8BB73124D2CA790028DB20 /* WashU Calendar.entitlements */,
 				3E606B3B24C23DF700C76056 /* Storyboard */,
 				3EDD515524C38C40002C7220 /* View */,
 				3E606B3C24C23E0D00C76056 /* Delegate */,
@@ -432,8 +459,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E8BB72024D2C89E0028DB20 /* Department+CoreDataClass.swift in Sources */,
+				3E8BB72A24D2C8F00028DB20 /* Course+CoreDataProperties.swift in Sources */,
+				3E8BB72124D2C8A00028DB20 /* Department+CoreDataProperties.swift in Sources */,
+				3E8BB72724D2C8E90028DB20 /* Session+CoreDataClass.swift in Sources */,
+				3E8BB72D24D2C8F60028DB20 /* Event+CoreDataClass.swift in Sources */,
+				3E8BB72224D2C8A30028DB20 /* WashU_Calendar.xcdatamodeld in Sources */,
+				3E8BB72C24D2C8F40028DB20 /* Section+CoreDataProperties.swift in Sources */,
+				3E8BB72524D2C8BA0028DB20 /* Semester+CoreDataClass.swift in Sources */,
+				3E8BB71E24D2C89A0028DB20 /* School+CoreDataClass.swift in Sources */,
+				3E8BB71F24D2C89C0028DB20 /* School+CoreDataProperties.swift in Sources */,
+				3E8BB72824D2C8EC0028DB20 /* Session+CoreDataProperties.swift in Sources */,
+				3E8BB72E24D2C8F90028DB20 /* Event+CoreDataProperties.swift in Sources */,
+				3E8BB72F24D2C8FB0028DB20 /* Attribute+CoreDataClass.swift in Sources */,
+				3E8BB72924D2C8EE0028DB20 /* Course+CoreDataClass.swift in Sources */,
+				3E8BB72624D2C8BD0028DB20 /* Semester+CoreDataProperties.swift in Sources */,
 				3E1ACD5D24D23F1A00EEC1FC /* WashU_Calendar_Widget.swift in Sources */,
+				3E8BB72424D2C8B80028DB20 /* Professor+CoreDataProperties.swift in Sources */,
 				3E1ACD6224D23F1B00EEC1FC /* WashU_Calendar_Widget.intentdefinition in Sources */,
+				3E8BB72324D2C8A70028DB20 /* Professor+CoreDataClass.swift in Sources */,
+				3E8BB72B24D2C8F20028DB20 /* Section+CoreDataClass.swift in Sources */,
+				3E8BB73024D2C8FD0028DB20 /* Attribute+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +568,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "WashU Calendar WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 48QJL4Q43T;
@@ -545,6 +592,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "WashU Calendar WidgetExtension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 48QJL4Q43T;
@@ -684,6 +732,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "WashU Calendar/WashU Calendar.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -708,6 +757,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "WashU Calendar/WashU Calendar.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
