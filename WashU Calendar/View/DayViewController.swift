@@ -29,6 +29,8 @@ class DayViewController: UIViewController {
     // Collection View Component
     /// Collection view
     @IBOutlet weak var dayCollectionView: UICollectionView!
+    /// A scroll view delegate
+    private var dayScrollViewDelegate: DayScrollViewDelegate!
     /// Collection view section
     enum Section {
         case main
@@ -37,14 +39,15 @@ class DayViewController: UIViewController {
     private var dayCollectionViewDiffableDataSource: UICollectionViewDiffableDataSource<Section,DayEvents>!
     /// Collection view per hour height
     private var hourHeight: Double = 60
-    /// Collection view scroll view current y
-    private var currentY: Double = 480
+    private var baseHourHeight: Double = 60
     /// The min section
     private var minDateFromNow = -3
     /// The max section
     private var maxDateFromNow = 3
     /// A boolean indicating whether the collection view should preload cell
     private var shouldPreloadCell = false
+    /// DO NOT USE
+    private var updateTimeInterval = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +59,8 @@ class DayViewController: UIViewController {
         configureCollectionDataSource()
         configureCollectionLayout()
         dayCollectionView.delegate = self
+        
+        dayScrollViewDelegate = DayScrollViewDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -224,6 +229,7 @@ extension DayViewController {
                 locationLabel.textAlignment = .left
                 eventView.addSubview(locationLabel)
                 
+                // Tap Gesture Recognizer
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didSelectEventViewAt(_:)))
                 tapGestureRecognizer.numberOfTapsRequired = 1
                 tapGestureRecognizer.numberOfTouchesRequired = 1
@@ -246,8 +252,13 @@ extension DayViewController {
                 
             }
             
+            // Pinch Gesture Recognizer
+            let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.didZoomScrollViewAt(_:)))
+            cell.contentScrollView.addGestureRecognizer(pinchGestureRecognizer)
+            
+            cell.contentScrollView.delegate = self.dayScrollViewDelegate
             cell.contentScrollView.layoutSubviews()
-            cell.contentScrollView.contentOffset = .init(x: 0, y: self.currentY)
+            cell.contentScrollView.contentOffset = .init(x: 0, y: self.dayScrollViewDelegate.currentY)
             
             return cell
             
@@ -307,14 +318,24 @@ extension DayViewController {
     }
     
     /// Updates the snapshot using NSFetchRequest
-    private func updateSnapshot() {
+    private func updateSnapshot(forced: Bool = false) {
         
         shouldPreloadCell = false
         // Update snapshot
         var snapshot = NSDiffableDataSourceSnapshot<Section,DayEvents>()
         snapshot.appendSections([.main])
         let calendar = Calendar.current
-        let now = appDelegate.currentDate
+        var now = appDelegate.currentDate
+        
+        if forced {
+            if updateTimeInterval.isZero {
+                updateTimeInterval = 1.0
+                now.addTimeInterval(updateTimeInterval)
+            } else {
+                updateTimeInterval = 0.0
+            }
+        }
+        
         for daysFromNow in minDateFromNow ... maxDateFromNow {
             guard let then = calendar.date(byAdding: DateComponents(day: daysFromNow), to: now) else {
                 print("Fail to compute the date \(daysFromNow) days from now.")
@@ -339,6 +360,7 @@ extension DayViewController: UICollectionViewDelegate {
         if shouldPreloadCell {
             if indexPath.row == 0 {
                 minDateFromNow -= 1
+                dayCollectionView.scrollToItem(at: IndexPath(row: 1, section: 0), at: .left, animated: true)
             } else if indexPath.row == maxDateFromNow - minDateFromNow {
                 maxDateFromNow += 1
             }
@@ -351,7 +373,7 @@ extension DayViewController: UICollectionViewDelegate {
         
     }
     
-    @objc func didSelectEventViewAt(_ sender: UIGestureRecognizer) {
+    @objc func didSelectEventViewAt(_ sender: UITapGestureRecognizer) {
         
         guard let senderView = sender.view as? EventView else {
             print("Fail to get the event view attached to the UIGestureRecognizer")
@@ -365,8 +387,21 @@ extension DayViewController: UICollectionViewDelegate {
         
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        dayCollectionView.scrollToItem(at: IndexPath(row: -minDateFromNow, section: 0), at: .left, animated: true)
+    @objc func didZoomScrollViewAt(_ sender: UIPinchGestureRecognizer) {
+        
+        switch sender.state {
+        case .began, .changed:
+            hourHeight = baseHourHeight * Double(sender.scale)
+            hourHeight = (hourHeight < 30) ? 30 : hourHeight
+            hourHeight = (hourHeight > 120) ? 120 : hourHeight
+        case .ended:
+            baseHourHeight = hourHeight
+        default:
+            hourHeight = baseHourHeight
+        }
+        
+        updateSnapshot(forced: true)
+        
     }
     
 }

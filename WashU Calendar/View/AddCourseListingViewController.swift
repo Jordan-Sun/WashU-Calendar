@@ -421,13 +421,16 @@ extension AddCourseListingViewController: WKNavigationDelegate {
                 // Assign section
                 let timeSplits = resultStrings[2].split(separator: "-")
                 if (!startDayString.isEmpty) && (!endDayString.isEmpty) && (timeSplits.count == 2) {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = " MM/dd/yyyy hh:mma"
-                    let startDateString = startDayString + " " + String(timeSplits[0]) + "M"
-                    let startDate = dateFormatter.date(from: startDateString)!
-                    let endDateString = endDayString + " " + String(timeSplits[1]) + "M"
-                    let endDate = dateFormatter.date(from: endDateString)!
-                    let _ = JSONSection(id: resultStrings[0], desc: desc, start: startDate, end: endDate, days: resultStrings[1], location: resultStrings[3], course: newCourse)
+                    
+                    if let startDate = convertDateStringToDate(dayString: startDayString, timeString: String(timeSplits[0])) {
+                        if let endDate = convertDateStringToDate(dayString: endDayString, timeString: String(timeSplits[1])) {
+                            let _ = JSONSection(id: resultStrings[0], desc: desc, start: startDate, end: endDate, days: resultStrings[1], location: resultStrings[3], course: newCourse)
+                        } else {
+                            print("Fail to cast end time from string to date")
+                        }
+                    } else {
+                        print("Fail to cast start time from string to date")
+                    }
                 } else {
                     print("Fail to cast course div result table div result row 2 div item row td into json section")
                 }
@@ -442,6 +445,25 @@ extension AddCourseListingViewController: WKNavigationDelegate {
         view.layoutSubviews()
         updateSnapshot()
         jsonController.writeEncodableToDocuments(jsonDepartments)
+        
+    }
+    
+    func convertDateStringToDate(dayString: String, timeString: String) -> Date? {
+        
+        var string = dayString
+        let _ = string.removeFirst()
+        string.append(", ")
+        string.append(timeString)
+        let apChar = string.removeLast()
+        string.append(" ")
+        string.append(apChar)
+        string.append("M")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yyyy hh:mma")
+        
+        return dateFormatter.date(from: string)
         
     }
     

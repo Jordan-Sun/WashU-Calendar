@@ -322,10 +322,20 @@ class AddEventViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func cancelAdding(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Are you sure you want to discard this new event?", message: .none, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Keep Editing", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Discard Changes", style: .destructive, handler: { action in self.dismiss(animated: true, completion: nil)}))
-        self.present(alert, animated: true, completion: nil)
+        
+        if eventTextField.hasText == false && locTextField.hasText == false && startTimeTextField.hasText == false && endTimeTextField.hasText == false && repeatSwitch.isOn == false && color == UIColor.systemOrange {
+            
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+        else {
+            
+            let alert = UIAlertController(title: "Are you sure you want to discard this new event?", message: .none, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Keep Editing", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Discard Changes", style: .destructive, handler: { action in self.dismiss(animated: true, completion: nil)}))
+            self.present(alert, animated: true, completion: nil)
+            
+        }
     }
     
     @objc func dismissDatePicker() {

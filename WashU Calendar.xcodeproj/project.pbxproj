@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E1ACD5824D23F1A00EEC1FC /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1ACD5724D23F1A00EEC1FC /* WidgetKit.framework */; };
+		3E1ACD5A24D23F1A00EEC1FC /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1ACD5924D23F1A00EEC1FC /* SwiftUI.framework */; };
+		3E1ACD5D24D23F1A00EEC1FC /* WashU_Calendar_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD5C24D23F1A00EEC1FC /* WashU_Calendar_Widget.swift */; };
+		3E1ACD6024D23F1B00EEC1FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E1ACD5F24D23F1B00EEC1FC /* Assets.xcassets */; };
+		3E1ACD6224D23F1B00EEC1FC /* WashU_Calendar_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD5E24D23F1A00EEC1FC /* WashU_Calendar_Widget.intentdefinition */; };
+		3E1ACD6324D23F1B00EEC1FC /* WashU_Calendar_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD5E24D23F1A00EEC1FC /* WashU_Calendar_Widget.intentdefinition */; };
+		3E1ACD6624D23F1B00EEC1FC /* WashU Calendar WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3E1ACD5624D23F1A00EEC1FC /* WashU Calendar WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3E1ACD7324D247F000EEC1FC /* JsonDepartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD6C24D247F000EEC1FC /* JsonDepartment.swift */; };
+		3E1ACD7424D247F000EEC1FC /* JsonCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD6D24D247F000EEC1FC /* JsonCourse.swift */; };
+		3E1ACD7524D247F000EEC1FC /* JsonSemester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD6E24D247F000EEC1FC /* JsonSemester.swift */; };
+		3E1ACD7624D247F000EEC1FC /* JsonSchool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD6F24D247F000EEC1FC /* JsonSchool.swift */; };
+		3E1ACD7724D247F000EEC1FC /* JsonSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD7024D247F000EEC1FC /* JsonSection.swift */; };
+		3E1ACD7824D247F000EEC1FC /* JsonProfessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD7124D247F000EEC1FC /* JsonProfessor.swift */; };
+		3E1ACD7924D247F000EEC1FC /* JsonSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1ACD7224D247F000EEC1FC /* JsonSession.swift */; };
 		3E2AE82E24D0DF20003BF6EF /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2AE82C24D0DF13003BF6EF /* WebKit.framework */; };
 		3E2AE83224D0E1B6003BF6EF /* AddCourseListingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2AE83124D0E1B6003BF6EF /* AddCourseListingViewController.xib */; };
 		3E2AE83924D0EB57003BF6EF /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AE83724D0EB57003BF6EF /* CollectionViewCell.swift */; };
@@ -14,6 +28,7 @@
 		3E2AE84124D11902003BF6EF /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AE83F24D11902003BF6EF /* EventDetailViewController.swift */; };
 		3E2AE84224D11902003BF6EF /* EventDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2AE84024D11902003BF6EF /* EventDetailViewController.xib */; };
 		3E33FFB824CC495D0067BA48 /* MonthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FFB724CC495D0067BA48 /* MonthViewController.swift */; };
+		3E5A3EBC24D26D1300D0F3A6 /* ScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A3EBB24D26D1300D0F3A6 /* ScrollViewDelegate.swift */; };
 		3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2424C23DD700C76056 /* AppDelegate.swift */; };
 		3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2624C23DD700C76056 /* SceneDelegate.swift */; };
 		3E606B2924C23DD700C76056 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E606B2824C23DD700C76056 /* ListViewController.swift */; };
@@ -32,13 +47,6 @@
 		3E946B2224D2201500B8504A /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E946B2124D2201500B8504A /* EventView.swift */; };
 		3EA2FCEC24D0B46200F34E56 /* AddCourseListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */; };
 		3EA2FCED24D0B46200F34E56 /* JsonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE024D0B46200F34E56 /* JsonController.swift */; };
-		3EA2FCEE24D0B46200F34E56 /* JsonProfessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE224D0B46200F34E56 /* JsonProfessor.swift */; };
-		3EA2FCEF24D0B46200F34E56 /* JsonSchool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE324D0B46200F34E56 /* JsonSchool.swift */; };
-		3EA2FCF024D0B46200F34E56 /* JsonSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE424D0B46200F34E56 /* JsonSession.swift */; };
-		3EA2FCF124D0B46200F34E56 /* JsonSemester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE524D0B46200F34E56 /* JsonSemester.swift */; };
-		3EA2FCF224D0B46200F34E56 /* JsonCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE624D0B46200F34E56 /* JsonCourse.swift */; };
-		3EA2FCF324D0B46200F34E56 /* JsonDepartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE724D0B46200F34E56 /* JsonDepartment.swift */; };
-		3EA2FCF424D0B46200F34E56 /* JsonSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA2FCE824D0B46200F34E56 /* JsonSection.swift */; };
 		3EA2FCF924D0B56700F34E56 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 3EA2FCF824D0B56700F34E56 /* SwiftSoup */; };
 		3EBB55F024C797DC004DFB5D /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55EF24C797DC004DFB5D /* DayViewController.swift */; };
 		3EBB55F224C798F4004DFB5D /* DayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB55F124C798F4004DFB5D /* DayCollectionViewCell.swift */; };
@@ -59,7 +67,45 @@
 		566BB84D24CE902D00EC4221 /* AddEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566BB84B24CE902D00EC4221 /* AddEventViewController.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3E1ACD6424D23F1B00EEC1FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E606B1924C23DD700C76056 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E1ACD5524D23F1A00EEC1FC;
+			remoteInfo = "WashU Calendar WidgetExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E1ACD6724D23F1B00EEC1FC /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3E1ACD6624D23F1B00EEC1FC /* WashU Calendar WidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		3E1ACD5624D23F1A00EEC1FC /* WashU Calendar WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WashU Calendar WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E1ACD5724D23F1A00EEC1FC /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		3E1ACD5924D23F1A00EEC1FC /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		3E1ACD5C24D23F1A00EEC1FC /* WashU_Calendar_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WashU_Calendar_Widget.swift; sourceTree = "<group>"; };
+		3E1ACD5E24D23F1A00EEC1FC /* WashU_Calendar_Widget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WashU_Calendar_Widget.intentdefinition; sourceTree = "<group>"; };
+		3E1ACD5F24D23F1B00EEC1FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3E1ACD6124D23F1B00EEC1FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E1ACD6C24D247F000EEC1FC /* JsonDepartment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDepartment.swift; sourceTree = "<group>"; };
+		3E1ACD6D24D247F000EEC1FC /* JsonCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonCourse.swift; sourceTree = "<group>"; };
+		3E1ACD6E24D247F000EEC1FC /* JsonSemester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSemester.swift; sourceTree = "<group>"; };
+		3E1ACD6F24D247F000EEC1FC /* JsonSchool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSchool.swift; sourceTree = "<group>"; };
+		3E1ACD7024D247F000EEC1FC /* JsonSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSection.swift; sourceTree = "<group>"; };
+		3E1ACD7124D247F000EEC1FC /* JsonProfessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonProfessor.swift; sourceTree = "<group>"; };
+		3E1ACD7224D247F000EEC1FC /* JsonSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSession.swift; sourceTree = "<group>"; };
 		3E2AE82C24D0DF13003BF6EF /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		3E2AE83124D0E1B6003BF6EF /* AddCourseListingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddCourseListingViewController.xib; sourceTree = "<group>"; };
 		3E2AE83724D0EB57003BF6EF /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -67,6 +113,7 @@
 		3E2AE83F24D11902003BF6EF /* EventDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		3E2AE84024D11902003BF6EF /* EventDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventDetailViewController.xib; sourceTree = "<group>"; };
 		3E33FFB724CC495D0067BA48 /* MonthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewController.swift; sourceTree = "<group>"; };
+		3E5A3EBB24D26D1300D0F3A6 /* ScrollViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewDelegate.swift; sourceTree = "<group>"; };
 		3E606B2124C23DD700C76056 /* WashU Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WashU Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E606B2424C23DD700C76056 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E606B2624C23DD700C76056 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,13 +134,6 @@
 		3E946B2124D2201500B8504A /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCourseListingViewController.swift; sourceTree = "<group>"; };
 		3EA2FCE024D0B46200F34E56 /* JsonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonController.swift; sourceTree = "<group>"; };
-		3EA2FCE224D0B46200F34E56 /* JsonProfessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonProfessor.swift; sourceTree = "<group>"; };
-		3EA2FCE324D0B46200F34E56 /* JsonSchool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSchool.swift; sourceTree = "<group>"; };
-		3EA2FCE424D0B46200F34E56 /* JsonSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSession.swift; sourceTree = "<group>"; };
-		3EA2FCE524D0B46200F34E56 /* JsonSemester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSemester.swift; sourceTree = "<group>"; };
-		3EA2FCE624D0B46200F34E56 /* JsonCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonCourse.swift; sourceTree = "<group>"; };
-		3EA2FCE724D0B46200F34E56 /* JsonDepartment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDepartment.swift; sourceTree = "<group>"; };
-		3EA2FCE824D0B46200F34E56 /* JsonSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSection.swift; sourceTree = "<group>"; };
 		3EBB55EF24C797DC004DFB5D /* DayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		3EBB55F124C798F4004DFB5D /* DayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCollectionViewCell.swift; sourceTree = "<group>"; };
 		3EBB55F624C7E603004DFB5D /* Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Event+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -114,6 +154,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3E1ACD5324D23F1A00EEC1FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E1ACD5A24D23F1A00EEC1FC /* SwiftUI.framework in Frameworks */,
+				3E1ACD5824D23F1A00EEC1FC /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3E606B1E24C23DD700C76056 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -126,10 +175,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E1ACD5B24D23F1A00EEC1FC /* WashU Calendar Widget */ = {
+			isa = PBXGroup;
+			children = (
+				3E1ACD5C24D23F1A00EEC1FC /* WashU_Calendar_Widget.swift */,
+				3E1ACD5E24D23F1A00EEC1FC /* WashU_Calendar_Widget.intentdefinition */,
+				3E1ACD5F24D23F1B00EEC1FC /* Assets.xcassets */,
+				3E1ACD6124D23F1B00EEC1FC /* Info.plist */,
+			);
+			path = "WashU Calendar Widget";
+			sourceTree = "<group>";
+		};
 		3E2AE82B24D0DF13003BF6EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				3E2AE82C24D0DF13003BF6EF /* WebKit.framework */,
+				3E1ACD5724D23F1A00EEC1FC /* WidgetKit.framework */,
+				3E1ACD5924D23F1A00EEC1FC /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -138,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				3E606B2324C23DD700C76056 /* WashU Calendar */,
+				3E1ACD5B24D23F1A00EEC1FC /* WashU Calendar Widget */,
 				3E606B2224C23DD700C76056 /* Products */,
 				3E2AE82B24D0DF13003BF6EF /* Frameworks */,
 			);
@@ -147,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				3E606B2124C23DD700C76056 /* WashU Calendar.app */,
+				3E1ACD5624D23F1A00EEC1FC /* WashU Calendar WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -226,13 +290,13 @@
 		3EA2FCE124D0B46200F34E56 /* Data Types */ = {
 			isa = PBXGroup;
 			children = (
-				3EA2FCE224D0B46200F34E56 /* JsonProfessor.swift */,
-				3EA2FCE324D0B46200F34E56 /* JsonSchool.swift */,
-				3EA2FCE424D0B46200F34E56 /* JsonSession.swift */,
-				3EA2FCE524D0B46200F34E56 /* JsonSemester.swift */,
-				3EA2FCE624D0B46200F34E56 /* JsonCourse.swift */,
-				3EA2FCE724D0B46200F34E56 /* JsonDepartment.swift */,
-				3EA2FCE824D0B46200F34E56 /* JsonSection.swift */,
+				3E1ACD6D24D247F000EEC1FC /* JsonCourse.swift */,
+				3E1ACD6C24D247F000EEC1FC /* JsonDepartment.swift */,
+				3E1ACD7124D247F000EEC1FC /* JsonProfessor.swift */,
+				3E1ACD6F24D247F000EEC1FC /* JsonSchool.swift */,
+				3E1ACD7024D247F000EEC1FC /* JsonSection.swift */,
+				3E1ACD6E24D247F000EEC1FC /* JsonSemester.swift */,
+				3E1ACD7224D247F000EEC1FC /* JsonSession.swift */,
 			);
 			path = "Data Types";
 			sourceTree = "<group>";
@@ -243,6 +307,7 @@
 				3E606B2824C23DD700C76056 /* ListViewController.swift */,
 				3EBB55EF24C797DC004DFB5D /* DayViewController.swift */,
 				3E33FFB724CC495D0067BA48 /* MonthViewController.swift */,
+				3E5A3EBB24D26D1300D0F3A6 /* ScrollViewDelegate.swift */,
 				566BB84A24CE902D00EC4221 /* AddEventViewController.swift */,
 				3EA2FCDF24D0B46200F34E56 /* AddCourseListingViewController.swift */,
 				3E2AE83F24D11902003BF6EF /* EventDetailViewController.swift */,
@@ -258,6 +323,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3E1ACD5524D23F1A00EEC1FC /* WashU Calendar WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E1ACD6A24D23F1B00EEC1FC /* Build configuration list for PBXNativeTarget "WashU Calendar WidgetExtension" */;
+			buildPhases = (
+				3E1ACD5224D23F1A00EEC1FC /* Sources */,
+				3E1ACD5324D23F1A00EEC1FC /* Frameworks */,
+				3E1ACD5424D23F1A00EEC1FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WashU Calendar WidgetExtension";
+			productName = "WashU Calendar WidgetExtension";
+			productReference = 3E1ACD5624D23F1A00EEC1FC /* WashU Calendar WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		3E606B2024C23DD700C76056 /* WashU Calendar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3E606B3824C23DDB00C76056 /* Build configuration list for PBXNativeTarget "WashU Calendar" */;
@@ -265,10 +347,12 @@
 				3E606B1D24C23DD700C76056 /* Sources */,
 				3E606B1E24C23DD700C76056 /* Frameworks */,
 				3E606B1F24C23DD700C76056 /* Resources */,
+				3E1ACD6724D23F1B00EEC1FC /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3E1ACD6524D23F1B00EEC1FC /* PBXTargetDependency */,
 			);
 			name = "WashU Calendar";
 			packageProductDependencies = (
@@ -284,10 +368,13 @@
 		3E606B1924C23DD700C76056 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1160;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = washu;
 				TargetAttributes = {
+					3E1ACD5524D23F1A00EEC1FC = {
+						CreatedOnToolsVersion = 12.0;
+					};
 					3E606B2024C23DD700C76056 = {
 						CreatedOnToolsVersion = 11.6;
 					};
@@ -310,11 +397,20 @@
 			projectRoot = "";
 			targets = (
 				3E606B2024C23DD700C76056 /* WashU Calendar */,
+				3E1ACD5524D23F1A00EEC1FC /* WashU Calendar WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3E1ACD5424D23F1A00EEC1FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E1ACD6024D23F1B00EEC1FC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3E606B1F24C23DD700C76056 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -332,35 +428,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3E1ACD5224D23F1A00EEC1FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E1ACD5D24D23F1A00EEC1FC /* WashU_Calendar_Widget.swift in Sources */,
+				3E1ACD6224D23F1B00EEC1FC /* WashU_Calendar_Widget.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3E606B1D24C23DD700C76056 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EA2FCF124D0B46200F34E56 /* JsonSemester.swift in Sources */,
 				3EA2FCEC24D0B46200F34E56 /* AddCourseListingViewController.swift in Sources */,
 				3EDD517424C3B766002C7220 /* Course+CoreDataClass.swift in Sources */,
-				3EA2FCF324D0B46200F34E56 /* JsonDepartment.swift in Sources */,
 				566BB84C24CE902D00EC4221 /* AddEventViewController.swift in Sources */,
 				3EBB55F224C798F4004DFB5D /* DayCollectionViewCell.swift in Sources */,
 				3EDD517524C3B766002C7220 /* Course+CoreDataProperties.swift in Sources */,
 				3EBB55FB24C7E603004DFB5D /* Event+CoreDataProperties.swift in Sources */,
 				3E2AE83924D0EB57003BF6EF /* CollectionViewCell.swift in Sources */,
 				3EDD515724C38C88002C7220 /* EventCollectionViewCell.swift in Sources */,
+				3E1ACD7924D247F000EEC1FC /* JsonSession.swift in Sources */,
 				3EDD516E24C3B766002C7220 /* Session+CoreDataClass.swift in Sources */,
 				3EBB55FE24C7E6AB004DFB5D /* Section+CoreDataClass.swift in Sources */,
 				3EBB55FF24C7E6AB004DFB5D /* Section+CoreDataProperties.swift in Sources */,
 				3E79817324C3E7430023BE89 /* Department+CoreDataClass.swift in Sources */,
-				3EA2FCEE24D0B46200F34E56 /* JsonProfessor.swift in Sources */,
 				3E66184824C5957D008A57C8 /* HeaderCollectionReusableView.swift in Sources */,
 				3E606B2F24C23DD700C76056 /* WashU_Calendar.xcdatamodeld in Sources */,
 				3EA2FCED24D0B46200F34E56 /* JsonController.swift in Sources */,
 				3EDD517724C3B766002C7220 /* Professor+CoreDataProperties.swift in Sources */,
 				3E79816A24C3BF770023BE89 /* School+CoreDataProperties.swift in Sources */,
-				3EA2FCF424D0B46200F34E56 /* JsonSection.swift in Sources */,
+				3E1ACD7524D247F000EEC1FC /* JsonSemester.swift in Sources */,
+				3E1ACD7724D247F000EEC1FC /* JsonSection.swift in Sources */,
+				3E1ACD7624D247F000EEC1FC /* JsonSchool.swift in Sources */,
 				3E79816924C3BF770023BE89 /* School+CoreDataClass.swift in Sources */,
 				3EDD517124C3B766002C7220 /* Semester+CoreDataProperties.swift in Sources */,
 				3E606B2924C23DD700C76056 /* ListViewController.swift in Sources */,
-				3EA2FCF024D0B46200F34E56 /* JsonSession.swift in Sources */,
+				3E5A3EBC24D26D1300D0F3A6 /* ScrollViewDelegate.swift in Sources */,
 				3E946B2224D2201500B8504A /* EventView.swift in Sources */,
 				3E79816F24C3DB0C0023BE89 /* Attribute+CoreDataClass.swift in Sources */,
 				3EBB55F024C797DC004DFB5D /* DayViewController.swift in Sources */,
@@ -370,17 +475,27 @@
 				3E2AE84124D11902003BF6EF /* EventDetailViewController.swift in Sources */,
 				3EBB55FA24C7E603004DFB5D /* Event+CoreDataClass.swift in Sources */,
 				3E606B2524C23DD700C76056 /* AppDelegate.swift in Sources */,
+				3E1ACD7424D247F000EEC1FC /* JsonCourse.swift in Sources */,
 				3E33FFB824CC495D0067BA48 /* MonthViewController.swift in Sources */,
 				3E87BFF024C4D04D00ADB2CF /* CoreDataController.swift in Sources */,
 				3E606B2724C23DD700C76056 /* SceneDelegate.swift in Sources */,
 				3E79817424C3E7430023BE89 /* Department+CoreDataProperties.swift in Sources */,
 				3E79817024C3DB0C0023BE89 /* Attribute+CoreDataProperties.swift in Sources */,
-				3EA2FCF224D0B46200F34E56 /* JsonCourse.swift in Sources */,
-				3EA2FCEF24D0B46200F34E56 /* JsonSchool.swift in Sources */,
+				3E1ACD7824D247F000EEC1FC /* JsonProfessor.swift in Sources */,
+				3E1ACD6324D23F1B00EEC1FC /* WashU_Calendar_Widget.intentdefinition in Sources */,
+				3E1ACD7324D247F000EEC1FC /* JsonDepartment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3E1ACD6524D23F1B00EEC1FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3E1ACD5524D23F1A00EEC1FC /* WashU Calendar WidgetExtension */;
+			targetProxy = 3E1ACD6424D23F1B00EEC1FC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3E606B2A24C23DD700C76056 /* Main.storyboard */ = {
@@ -402,6 +517,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3E1ACD6824D23F1B00EEC1FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 48QJL4Q43T;
+				INFOPLIST_FILE = "WashU Calendar Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.washu.zhuoransun.washu-calendar.WashU-Calendar-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3E1ACD6924D23F1B00EEC1FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 48QJL4Q43T;
+				INFOPLIST_FILE = "WashU Calendar Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.washu.zhuoransun.washu-calendar.WashU-Calendar-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		3E606B3624C23DDB00C76056 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -521,6 +682,7 @@
 		3E606B3924C23DDB00C76056 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -544,6 +706,7 @@
 		3E606B3A24C23DDB00C76056 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -567,6 +730,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3E1ACD6A24D23F1B00EEC1FC /* Build configuration list for PBXNativeTarget "WashU Calendar WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E1ACD6824D23F1B00EEC1FC /* Debug */,
+				3E1ACD6924D23F1B00EEC1FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3E606B1C24C23DD700C76056 /* Build configuration list for PBXProject "WashU Calendar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
